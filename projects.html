@@ -140,7 +140,31 @@
         <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
       </div>
+      <div class="music-player" data-music-player>
+        <button class="music-toggle" type="button" data-music-toggle aria-expanded="false">
+          <i class="ri-music-2-line"></i> MUSIC
+        </button>
+        <div class="music-panel" data-music-panel>
+          <div class="music-display">
+            <span class="music-led" data-music-led></span>
+            <span data-music-title>8-bit 海面信号</span>
+          </div>
+          <div class="music-controls">
+            <button class="music-button" type="button" data-music-play>▶</button>
+            <select class="music-select" data-music-track aria-label="选择音乐">
+              <option value="signal">8-bit 海面信号</option>
+              <option value="orbit">像素轨道巡航</option>
+              <option value="terminal">终端夜航</option>
+            </select>
+          </div>
+          <label class="music-volume">
+            <span>VOL</span>
+            <input type="range" min="0" max="100" value="36" data-music-volume>
+          </label>
+        </div>
+      </div>
     </div>
   </footer>
+  <script src="js/music-player.js"></script>
 </body>
 </html>
