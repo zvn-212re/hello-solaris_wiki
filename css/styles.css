@@ -328,6 +328,18 @@ h3 {
   font-size: 1rem;
 }
 
+.identity-name {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 4px;
+  padding: 3px 8px;
+  border: var(--edge-sm) solid var(--line);
+  color: var(--ink);
+  background: var(--blue-soft);
+  font-weight: 800;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
 .quote-console {
   width: min(680px, 100%);
   margin-top: var(--space-4);
