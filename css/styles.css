@@ -46,9 +46,15 @@ body {
   background-image:
     linear-gradient(rgba(37, 35, 31, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(37, 35, 31, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 78% 24%, transparent 0 22px, rgba(37, 35, 31, 0.22) 23px 25px, transparent 26px),
+    radial-gradient(circle at 78% 24%, rgba(85, 127, 155, 0.28) 0 18px, rgba(255, 243, 214, 0.22) 19px 22px, transparent 23px),
+    radial-gradient(circle at 12% 64%, transparent 0 15px, rgba(37, 35, 31, 0.18) 16px 18px, transparent 19px),
+    radial-gradient(circle at 12% 64%, rgba(199, 109, 69, 0.24) 0 13px, rgba(255, 243, 214, 0.22) 14px 16px, transparent 17px),
     radial-gradient(circle at 16% 12%, rgba(199, 109, 69, 0.14), transparent 24%),
     radial-gradient(circle at 86% 18%, rgba(85, 127, 155, 0.13), transparent 26%);
-  background-size: 8px 8px, 8px 8px, auto, auto;
+  background-size: 8px 8px, 8px 8px, 360px 360px, 360px 360px, 280px 280px, 280px 280px, auto, auto;
+  background-position: 0 0, 0 0, right 8% top 12%, right 8% top 12%, left 5% top 52%, left 5% top 52%, center, center;
+  background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed;
   font-family: var(--font-ui);
   font-size: 15px;
   line-height: 1.58;
@@ -61,6 +67,13 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
+    radial-gradient(circle at 9% 18%, var(--ink) 0 1px, transparent 2px),
+    radial-gradient(circle at 42% 12%, var(--ink) 0 1px, transparent 2px),
+    radial-gradient(circle at 58% 36%, var(--ink) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 58%, var(--ink) 0 1px, transparent 2px),
+    radial-gradient(circle at 21% 82%, var(--ink) 0 1px, transparent 2px),
+    linear-gradient(90deg, transparent 0 46%, rgba(85, 127, 155, 0.08) 46% 53%, transparent 53%),
+    linear-gradient(0deg, transparent 0 70%, rgba(199, 109, 69, 0.08) 70% 76%, transparent 76%),
     repeating-linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.14) 0,
@@ -68,6 +81,25 @@ body::before {
       transparent 1px,
       transparent 4px
     );
+  background-size: 180px 180px, 220px 220px, 260px 260px, 210px 210px, 240px 240px, 190px 190px, 230px 230px, auto;
+  background-position: 0 0, 80px 20px, 40px 120px, 20px 60px, 100px 100px, center, center, center;
+  mix-blend-mode: multiply;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(37, 35, 31, 0.14) 0 2px, transparent 2px 10px),
+    linear-gradient(0deg, rgba(37, 35, 31, 0.08) 0 2px, transparent 2px 10px),
+    radial-gradient(ellipse at 74% 20%, rgba(85, 127, 155, 0.16), transparent 26%),
+    radial-gradient(ellipse at 18% 70%, rgba(185, 72, 63, 0.10), transparent 22%);
+  background-size: 120px 120px, 120px 120px, auto, auto;
+  background-position: right 10% top 12%, right 10% top 12%, center, center;
+  opacity: 0.62;
   mix-blend-mode: multiply;
 }
 
@@ -829,6 +861,13 @@ h3 {
 @media (max-width: 640px) {
   body {
     font-size: 14px;
+    background-attachment: scroll;
+    background-size: 8px 8px, 8px 8px, 240px 240px, 240px 240px, 210px 210px, 210px 210px, auto, auto;
+  }
+
+  body::before,
+  body::after {
+    opacity: 0.35;
   }
 
   .nav {
