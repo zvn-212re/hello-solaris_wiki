@@ -465,6 +465,11 @@
       font-weight: 800;
     }
 
+    .top-link:hover {
+      color: var(--tomato);
+      transform: translate(1px, 1px);
+    }
+
     .settings-card h1 {
       font-family: "Press Start 2P", "Microsoft YaHei", sans-serif;
       font-size: 1rem;
@@ -503,6 +508,12 @@
       box-shadow: 1px 1px 0 var(--line);
     }
 
+    .btn:active,
+    .btn-icon:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--line);
+    }
+
     .btn-primary {
       color: var(--text);
       box-shadow: 4px 4px 0 var(--line);
@@ -511,6 +522,11 @@
     .btn-secondary,
     .btn-icon {
       box-shadow: 4px 4px 0 var(--line);
+    }
+
+    .setting-field input:focus {
+      border-color: var(--line);
+      box-shadow: 3px 3px 0 var(--tomato);
     }
 
     .tomato-dot {
@@ -524,6 +540,15 @@
     .slider::before,
     .toast {
       border-radius: 0;
+    }
+
+    .slider {
+      border: 2px solid var(--line);
+      box-shadow: 3px 3px 0 var(--line);
+    }
+
+    .slider::before {
+      border: 2px solid var(--line);
     }
 
     .toast {
