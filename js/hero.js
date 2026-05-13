@@ -17,12 +17,6 @@ const quotes = [
   },
 ];
 
-const quoteButton = document.querySelector("#quoteRotator");
-const quoteText = document.querySelector("#quoteText");
-const quoteMeta = document.querySelector("#quoteMeta");
-const heroPortrait = document.querySelector("#heroPortrait");
-let quoteIndex = 0;
-
 const portraitImages = [
   {
     src: "images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif",
@@ -50,33 +44,52 @@ const portraitImages = [
   },
 ];
 
-function showQuote(nextIndex) {
-  quoteIndex = nextIndex % quotes.length;
-  quoteButton.classList.add("is-switching");
+let quoteTimer;
 
-  window.setTimeout(() => {
-    quoteText.textContent = quotes[quoteIndex].text;
-    quoteMeta.textContent = quotes[quoteIndex].meta;
-    quoteButton.classList.remove("is-switching");
-  }, 120);
-}
+function initHero() {
+  const quoteButton = document.querySelector("#quoteRotator");
+  const quoteText = document.querySelector("#quoteText");
+  const quoteMeta = document.querySelector("#quoteMeta");
+  const heroPortrait = document.querySelector("#heroPortrait");
+  let quoteIndex = 0;
 
-function nextQuote() {
-  showQuote(quoteIndex + 1);
-}
+  window.clearInterval(quoteTimer);
 
-if (quoteButton && quoteText && quoteMeta) {
-  quoteButton.addEventListener("click", nextQuote);
+  function showQuote(nextIndex) {
+    quoteIndex = nextIndex % quotes.length;
+    quoteButton.classList.add("is-switching");
 
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    window.setInterval(nextQuote, 6800);
+    window.setTimeout(() => {
+      quoteText.textContent = quotes[quoteIndex].text;
+      quoteMeta.textContent = quotes[quoteIndex].meta;
+      quoteButton.classList.remove("is-switching");
+    }, 120);
+  }
+
+  function nextQuote() {
+    showQuote(quoteIndex + 1);
+  }
+
+  if (quoteButton && quoteText && quoteMeta) {
+    quoteButton.addEventListener("click", nextQuote);
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      quoteTimer = window.setInterval(nextQuote, 6800);
+    }
+  }
+
+  if (heroPortrait) {
+    const selectedPortrait = portraitImages[Math.floor(Math.random() * portraitImages.length)];
+    const portraitScreen = heroPortrait.closest(".portrait-screen");
+    heroPortrait.src = selectedPortrait.src;
+    portraitScreen?.style.setProperty("--blink-top", selectedPortrait.blinkTop);
+    portraitScreen?.style.setProperty("--blink-left-x", selectedPortrait.blinkLeftX);
+    portraitScreen?.style.setProperty("--blink-right-x", selectedPortrait.blinkRightX);
   }
 }
 
-if (heroPortrait) {
-  const selectedPortrait = portraitImages[Math.floor(Math.random() * portraitImages.length)];
-  heroPortrait.src = selectedPortrait.src;
-  heroPortrait.closest(".portrait-screen")?.style.setProperty("--blink-top", selectedPortrait.blinkTop);
-  heroPortrait.closest(".portrait-screen")?.style.setProperty("--blink-left-x", selectedPortrait.blinkLeftX);
-  heroPortrait.closest(".portrait-screen")?.style.setProperty("--blink-right-x", selectedPortrait.blinkRightX);
-}
+window.SolarisHero = {
+  init: initHero,
+};
+
+initHero();
