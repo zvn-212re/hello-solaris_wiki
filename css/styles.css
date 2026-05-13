@@ -581,6 +581,12 @@ h3 {
   gap: 16px;
 }
 
+.footer-links span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .footer-links a:hover {
   color: var(--gold);
 }
