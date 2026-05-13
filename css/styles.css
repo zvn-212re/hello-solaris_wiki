@@ -329,15 +329,10 @@ h3 {
 }
 
 .identity-name {
-  display: inline-flex;
-  align-items: center;
   margin: 0 4px;
-  padding: 3px 8px;
-  border: var(--edge-sm) solid var(--line);
-  color: var(--ink);
-  background: var(--blue-soft);
-  font-weight: 800;
-  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink-soft);
+  font-style: italic;
+  font-weight: 700;
 }
 
 .quote-console {
