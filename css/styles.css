@@ -47,6 +47,7 @@ body {
   margin: 0;
   color: var(--ink);
   overflow-x: clip;
+  padding-bottom: 92px;
   background-color: var(--paper);
   background-image:
     linear-gradient(rgba(37, 35, 31, 0.045) 1px, transparent 1px),
@@ -1140,15 +1141,29 @@ h3 {
 }
 
 .site-footer {
-  margin-top: var(--space-6);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  margin-top: 0;
   border-top: var(--edge) solid var(--line);
+  border-bottom: 0;
   background: var(--paper-panel);
+}
+
+.site-footer::before {
+  content: "";
+  display: block;
+  height: 6px;
+  border-bottom: var(--edge) solid var(--line);
+  background: repeating-linear-gradient(90deg, var(--blue) 0 18px, var(--orange) 18px 36px, var(--red) 36px 54px);
 }
 
 .footer-inner {
   width: min(var(--content), calc(100% - var(--page-pad)));
   margin: 0 auto;
-  padding: 22px 0;
+  padding: 12px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1235,6 +1250,7 @@ h3 {
 @media (max-width: 640px) {
   body {
     font-size: 14px;
+    padding-bottom: 154px;
     background-attachment: scroll;
     background-size: 8px 8px, 8px 8px, 240px 240px, 240px 240px, 210px 210px, 210px 210px, auto, auto;
   }
@@ -1298,6 +1314,12 @@ h3 {
   .footer-inner {
     align-items: flex-start;
     flex-direction: column;
+    gap: var(--space-2);
+    padding: 10px 0;
+  }
+
+  .footer-links {
+    gap: var(--space-1);
   }
 
   .mode-tabs {
