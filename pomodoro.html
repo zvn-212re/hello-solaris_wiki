@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
   <meta name="description" content="Solaris Wiki 番茄钟 Web 应用，支持 25 分钟专注、5 分钟短休息、进度环和番茄计数。">
   <title>Solaris Wiki | 番茄钟</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +31,13 @@
         <a href="index.html">首页</a>
         <a class="active" href="projects.html">项目</a>
         <a href="about.html">关于</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+          <span class="lamp-cord" aria-hidden="true"></span>
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="lamp-glow" aria-hidden="true"></span>
+        </button>
       </div>
     </nav>
   </header>
@@ -132,6 +148,7 @@
     </div>
   </footer>
 
+  <script src="js/theme-toggle.js"></script>
   <script src="js/music-player.js"></script>
   <script src="js/pomodoro.js"></script>
 </body>

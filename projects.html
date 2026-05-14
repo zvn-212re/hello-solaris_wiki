@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
   <meta name="description" content="Solaris Wiki 项目档案，展示 Vibe Coding、AI Agent 与工程数据工具项目。">
   <title>Solaris Wiki | 项目档案</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +31,13 @@
         <a href="index.html">首页</a>
         <a class="active" href="projects.html" aria-current="page">项目</a>
         <a href="about.html">关于</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+          <span class="lamp-cord" aria-hidden="true"></span>
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="lamp-glow" aria-hidden="true"></span>
+        </button>
       </div>
     </nav>
   </header>
@@ -165,6 +181,7 @@
       </div>
     </div>
   </footer>
+  <script src="js/theme-toggle.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
   <script src="js/site-router.js"></script>

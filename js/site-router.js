@@ -47,6 +47,8 @@ async function loadPage(url, pushState = true) {
   }
 
   window.SolarisHero?.init();
+  window.SolarisTheme?.init();
+  window.SolarisMusic?.render();
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
