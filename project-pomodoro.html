@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
+  <meta name="description" content="番茄钟 Web 应用项目详情，记录 Solaris Wiki 的专注计时工具设计和开发状态。">
+  <title>Solaris Wiki | 番茄钟 Web 应用</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="index.html"><span class="brand-mark"><i class="ri-planet-line"></i></span><span>Solaris Wiki</span></a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a class="active" href="projects.html" aria-current="page">项目</a>
+        <a href="about.html">关于</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+          <span class="lamp-cord" aria-hidden="true"></span>
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="lamp-glow" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow"><i class="ri-timer-flash-line"></i> Project Detail</p>
+        <h1 class="project-title">番茄钟 Web 应用</h1>
+        <p>一个轻量、专注、适合长时间编码和资料整理的计时器。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container detail-layout">
+        <article class="detail-panel">
+          <div class="detail-meta">
+            <span class="tag">Web 应用</span>
+            <span class="tag dev">效率工具</span>
+            <span class="tag">已上线初版</span>
+          </div>
+          <h2>项目概览</h2>
+          <p>这个工具用于快速进入专注节奏，主站版偏展示和轻量使用，独立工具页保留更多参数设置。当前重点是把计时、状态、番茄数量和基础交互跑顺。</p>
+          <h2>当前功能</h2>
+          <ul class="detail-list">
+            <li>25 分钟专注和 5 分钟短休息模式。</li>
+            <li>进度环、状态提示和完成番茄计数。</li>
+            <li>独立工具页支持自定义时长、长休息和提示音。</li>
+          </ul>
+        </article>
+
+        <aside class="detail-side-panel">
+          <div class="detail-visual" aria-hidden="true"><i class="ri-timer-flash-line"></i></div>
+          <div class="detail-status">
+            <div class="detail-status-row"><span>状态</span><strong>可用初版</strong></div>
+            <div class="detail-status-row"><span>页面</span><strong>站内版 + 独立工具页</strong></div>
+            <div class="detail-status-row"><span>下一步</span><strong>移动端细节验收</strong></div>
+          </div>
+          <div class="detail-actions">
+            <a class="button" href="pomodoro.html"><i class="ri-external-link-line"></i> 打开站内版</a>
+            <a class="button secondary" href="pomodoro-tool.html"><i class="ri-window-line"></i> 打开独立工具页</a>
+            <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
+      <div class="footer-links">
+        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
+        <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
+      </div>
+      <div class="music-player" data-music-player>
+        <button class="music-toggle" type="button" data-music-toggle aria-expanded="false"><i class="ri-music-2-line"></i> MUSIC</button>
+        <div class="music-panel" data-music-panel>
+          <div class="music-display"><span class="music-led" data-music-led></span><span data-music-title>8-bit 海面信号</span></div>
+          <div class="music-controls">
+            <button class="music-button" type="button" data-music-play>▶</button>
+            <select class="music-select" data-music-track aria-label="选择音乐">
+              <option value="signal">8-bit 海面信号</option>
+              <option value="orbit">像素轨道巡航</option>
+              <option value="terminal">终端夜航</option>
+            </select>
+          </div>
+          <label class="music-volume"><span>VOL</span><input type="range" min="0" max="100" value="36" data-music-volume></label>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/hero.js"></script>
+  <script src="js/music-player.js"></script>
+  <script src="js/site-router.js"></script>
+</body>
+</html>

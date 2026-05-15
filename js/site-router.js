@@ -8,7 +8,8 @@ function getPageName(url) {
 function updateActiveNav(pageName) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const linkPage = getPageName(new URL(link.href, window.location.href));
-    const isActive = linkPage === pageName;
+    const isProjectDetail = pageName.startsWith("project-") && linkPage === "projects.html";
+    const isActive = linkPage === pageName || isProjectDetail;
     link.classList.toggle("active", isActive);
 
     if (isActive) {
@@ -59,6 +60,11 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  if (link.getAttribute("href") === "#") {
+    event.preventDefault();
+    return;
+  }
+
   const url = new URL(link.href, window.location.href);
   const pageName = getPageName(url);
 
@@ -70,6 +76,44 @@ document.addEventListener("click", (event) => {
   loadPage(url).catch(() => {
     window.location.href = url.href;
   });
+});
+
+function openProjectCard(card) {
+  const detailUrl = card?.dataset.detailUrl;
+
+  if (!detailUrl) {
+    return;
+  }
+
+  window.location.href = new URL(detailUrl, window.location.href).href;
+}
+
+document.addEventListener("click", (event) => {
+  if (event.target.closest("a, button, input, select, textarea")) {
+    return;
+  }
+
+  const card = event.target.closest("[data-detail-url]");
+  openProjectCard(card);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.target.closest("a, button, input, select, textarea")) {
+    return;
+  }
+
+  if (event.key !== "Enter" && event.key !== " ") {
+    return;
+  }
+
+  const card = event.target.closest("[data-detail-url]");
+
+  if (!card) {
+    return;
+  }
+
+  event.preventDefault();
+  openProjectCard(card);
 });
 
 window.addEventListener("popstate", () => {

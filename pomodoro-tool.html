@@ -44,6 +44,8 @@
         var(--bg);
       font-family: "IBM Plex Mono", "Segoe UI", "PingFang SC", "Microsoft YaHei", monospace;
       -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     button,
@@ -169,7 +171,7 @@
     .time-number {
       color: var(--text);
       font-family: "SF Mono", "JetBrains Mono", Consolas, Monaco, monospace;
-      font-size: clamp(3.5rem, 9vw, 4.35rem);
+      font-size: 4rem;
       font-variant-numeric: tabular-nums;
       font-weight: 800;
       line-height: 1;
@@ -498,7 +500,7 @@
 
     .time-number {
       font-family: "Press Start 2P", "Microsoft YaHei", monospace;
-      font-size: clamp(2.4rem, 7vw, 3.55rem);
+      font-size: 3.2rem;
       letter-spacing: 0;
     }
 
@@ -588,6 +590,10 @@
       .ring-container {
         width: 220px;
         height: 220px;
+      }
+
+      .time-number {
+        font-size: 2.35rem;
       }
 
       .btn {

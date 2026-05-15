@@ -203,22 +203,105 @@ node --check js/site-router.js
 - 桌面端形成“左侧品牌，右侧导航链接 + 吊灯”的布局。
 - 移动端取消 `.brand` 的 `margin-right`，保持纵向堆叠布局。
 
-### 当前待提交改动
+### 稳定页面缩放表现
 
-当前改动包括：
+问题：
 
-- `AGENTS.md`
+- 浏览器缩放或不同设备宽度下，部分字体、边框、像素阴影和计时数字会因为 `vw` 参与计算而发生二次缩放。
+- 独立番茄钟工具页的倒计时数字也会跟随视口宽度继续变化，容易放大布局挤压。
+
+处理：
+
+- 主站 `css/styles.css` 中将核心视觉尺度从 `vw/clamp()` 改为稳定的 `px/rem`。
+- 保留 `1040px`、`860px`、`640px` 响应式断点，在小屏场景单独降低标题和计时数字尺寸。
+- 增加 `text-size-adjust: 100%`，避免移动端浏览器额外自动放大文本。
+- 同步处理 `pomodoro-tool.html` 的倒计时数字，减少缩放时的布局跳动。
+
+注意：
+
+- 没有使用 `user-scalable=no` 强行禁用用户缩放，避免影响无障碍和浏览器可控性。
+- 桌面浏览器的缩放比例不能被网页可靠锁死，本次处理目标是稳定站点内部布局尺度。
+
+### 项目档案改为长条列表
+
+需求：
+
+- `projects.html` 中详细项目展示不再使用多列卡片网格。
+- 每个项目改为一行长条样式，方便按项目逐条扫描。
+
+处理：
+
+- 保留现有 HTML 结构，只在 `css/styles.css` 中针对 `.project-grid` 覆盖布局。
+- 桌面端项目行使用“左侧像素图标 / 中间项目说明 / 右侧操作按钮”的横向结构。
+- 平板和手机端自动收窄，手机端回到上下堆叠，避免按钮和正文挤压。
+
+### 首页新增站点更新区块
+
+需求：
+
+- 首页增加一个区域，用来展示网站最近更新情况。
+
+处理：
+
+- 在 `index.html` 的“最新项目”后新增“站点更新”区块。
+- 以三条像素风时间线展示最近改动：项目档案长条列表、缩放稳定、夜间模式和音乐状态保持。
+- 在 `css/styles.css` 中新增 `.update-section`、`.update-list`、`.update-item` 等样式。
+- 桌面端使用日期 / 更新内容 / 类型标签三列展示，平板和手机端自动收窄。
+
+### 项目档案接入详情页
+
+需求：
+
+- 项目档案里的每个项目长条可以点击进入对应的详细说明页面。
+- 详情页先做简单布局，用于预览后续内容组织方式。
+
+处理：
+
+- 在 `projects.html` 的项目行上增加 `data-detail-url`、`tabindex`、`role="link"` 和可访问标签。
+- 在 `js/site-router.js` 中增加项目行点击和键盘 Enter/Space 跳转逻辑。
+- 保留项目行内部按钮的独立行为，点击按钮不会触发整行跳转。
+- 新增 5 个详情页：
+  - `project-pomodoro.html`
+  - `project-3d-printing.html`
+  - `project-agent-workflow.html`
+  - `project-claude-notes.html`
+  - `project-sh-info-price.html`
+- 在 `css/styles.css` 中新增详情页双栏布局、状态面板、项目图标占位和移动端堆叠样式。
+
+### 统一项目标题混排字体
+
+问题：
+
+- 项目名称里经常混排英文和中文，例如 `AI Agent 工作流实验`、`Claude Code 深度使用笔记`。
+- 原先项目标题继承像素英文字体，英文使用 `Press Start 2P`，中文回退到微软雅黑，视觉差异过大。
+
+处理：
+
+- 将项目卡片标题、首页更新标题和详情页项目标题改为 `var(--font-ui)`。
+- 详情页项目名增加 `project-title` 类，单独控制混排标题尺寸。
+- 保留页面主视觉、标签、装饰文字等位置的像素字体，避免整体风格被抹平。
+
+### 本轮提交改动
+
+本轮准备提交的改动包括：
+
 - `docs/development-log.md`
 - `index.html`
 - `projects.html`
-- `about.html`
-- `pomodoro.html`
+- `pomodoro-tool.html`
 - `css/styles.css`
-- `js/theme-toggle.js`
-- `js/music-player.js`
 - `js/site-router.js`
+- `AGENTS.md`
+- `project-pomodoro.html`
+- `project-3d-printing.html`
+- `project-agent-workflow.html`
+- `project-claude-notes.html`
+- `project-sh-info-price.html`
 
-尚未执行提交。
+提交前验证范围：
+
+- `node --check` 检查 5 个 JS 文件。
+- 使用临时静态服务检查首页、项目页、项目详情页、CSS 和关键 JS 资源返回 `200`。
 
 ## 长期约定
 

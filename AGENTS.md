@@ -33,15 +33,20 @@
 
 ## 当前页面结构
 
-- `index.html`：首页，包含主视觉、随机头像电视框、引用切换、最新项目卡片。
-- `projects.html`：项目档案页，包含番茄钟、3D 打印、AI Agent、Claude Code、上海信息价数据库比对系统等项目卡片。
+- `index.html`：首页，包含主视觉、随机头像电视框、引用切换、最新项目卡片和站点更新区块。
+- `projects.html`：项目档案页，包含番茄钟、3D 打印、AI Agent、Claude Code、上海信息价数据库比对系统等项目长条列表。
+- `project-pomodoro.html`：番茄钟 Web 应用详情页。
+- `project-3d-printing.html`：酒厂厂房 3D 打印详情页。
+- `project-agent-workflow.html`：AI Agent 工作流实验详情页。
+- `project-claude-notes.html`：Claude Code 深度使用笔记详情页。
+- `project-sh-info-price.html`：上海信息价数据库比对系统详情页。
 - `about.html`：关于页，包含个人介绍、技能标签、联系方式。
 - `pomodoro.html`：站内番茄钟展示页。
 - `pomodoro-tool.html`：独立番茄钟工具页，包含更完整的参数设置。
 
 ## 当前脚本
 
-- `js/site-router.js`：为 `index.html`、`projects.html`、`about.html` 提供静态页面间的局部加载和导航高亮。
+- `js/site-router.js`：为 `index.html`、`projects.html`、`about.html` 提供静态页面间的局部加载和导航高亮，并支持项目长条点击进入详情页。
 - `js/hero.js`：首页头像、引用切换和主视觉相关交互。
 - `js/theme-toggle.js`：白天/夜间主题切换，使用右上角像素吊灯按钮和 `localStorage` 保存用户选择。
 - `js/music-player.js`：底部音乐播放器交互。
@@ -59,7 +64,9 @@
 - 白天/夜间模式通过 `html[data-theme="night"]` 和 CSS 变量切换。
 - 夜间模式是 8-bit 星际宇宙风，背景使用 CSS 像素星空，不依赖图片。
 - 响应式断点主要在 `1040px`、`860px`、`640px`。
-- 桌面项目网格为 3 列，平板 2 列，手机 1 列。
+- 项目档案页使用长条列表，桌面端为“左侧图标 / 中间说明 / 右侧按钮”，移动端自动堆叠。
+- 首页最新项目仍使用卡片网格。
+- 项目标题混排英文和中文时使用 `var(--font-ui)`，避免像素英文字体与中文回退字体差距过大。
 - 底部 footer 固定在视口底部，移动端需特别注意遮挡内容。
 
 ## 当前资源
@@ -76,6 +83,10 @@
 - 已添加番茄钟展示页和独立番茄钟工具页。
 - 已有底部音乐播放器。
 - 已有静态路由增强脚本。
+- 首页已新增“站点更新”区块。
+- 项目档案页已改为长条列表。
+- 已新增 5 个项目详情页入口和初版详情页布局。
+- 已处理浏览器缩放时部分字体、阴影和计时数字二次缩放的问题。
 - `projects.html` 中已预留“上海信息价数据库比对系统”卡片。
 
 ## 尚未完成
