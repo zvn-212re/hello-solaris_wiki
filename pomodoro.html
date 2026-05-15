@@ -13,6 +13,19 @@
     })();
   </script>
   <meta name="description" content="Solaris Wiki 番茄钟 Web 应用，支持 25 分钟专注、5 分钟短休息、进度环和番茄计数。">
+  <meta name="theme-color" content="#f4ead6">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Solaris Wiki">
+  <meta property="og:title" content="Solaris Wiki | 番茄钟">
+  <meta property="og:description" content="Solaris Wiki 番茄钟 Web 应用，支持 25 分钟专注、5 分钟短休息、进度环和番茄计数。">
+  <meta property="og:url" content="https://solaris.wiki/pomodoro.html">
+  <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Solaris Wiki | 番茄钟">
+  <meta name="twitter:description" content="Solaris Wiki 番茄钟 Web 应用，支持 25 分钟专注、5 分钟短休息、进度环和番茄计数。">
+  <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <link rel="canonical" href="https://solaris.wiki/pomodoro.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Solaris Wiki | 番茄钟</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +42,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html">首页</a>
-        <a class="active" href="projects.html">项目</a>
+        <a class="active" aria-current="page" href="projects.html">项目</a>
         <a href="about.html">关于</a>
       </div>
       <div class="nav-actions">
@@ -56,7 +69,7 @@
     </section>
 
     <section class="section pomodoro-section">
-      <div class="container pomodoro-layout">
+      <div class="container pomodoro-layout" data-pomodoro-root>
         <section class="timer-panel" aria-label="番茄钟计时器">
           <div class="mode-tabs" role="tablist" aria-label="计时模式">
             <button class="mode-tab active" type="button" data-mode="work" aria-pressed="true">专注 25:00</button>
@@ -132,7 +145,7 @@
             <span data-music-title>8-bit 海面信号</span>
           </div>
           <div class="music-controls">
-            <button class="music-button" type="button" data-music-play>▶</button>
+            <button class="music-button" type="button" data-music-play>PLAY</button>
             <select class="music-select" data-music-track aria-label="选择音乐">
               <option value="signal">8-bit 海面信号</option>
               <option value="orbit">像素轨道巡航</option>
@@ -147,9 +160,10 @@
       </div>
     </div>
   </footer>
-
   <script src="js/theme-toggle.js"></script>
+  <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
   <script src="js/pomodoro.js"></script>
+  <script src="js/site-router.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+{
+  "name": "solaris-wiki",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Solaris Wiki static personal archive.",
+  "scripts": {
+    "build": "node scripts/build-site.js",
+    "build:ps": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-site.ps1",
+    "check": "node --check scripts/build-site.js && node --check js/hero.js && node --check js/music-player.js && node --check js/pomodoro.js && node --check js/site-router.js && node --check js/theme-toggle.js"
+  }
+}

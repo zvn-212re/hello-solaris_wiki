@@ -3,22 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>(() => { try { if (localStorage.getItem("solarisTheme") === "night") document.documentElement.dataset.theme = "night"; } catch {} })();</script>
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
   <meta name="description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="theme-color" content="#f4ead6">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Solaris Wiki">
+  <meta property="og:title" content="Solaris Wiki | Claude Code 深度使用笔记">
+  <meta property="og:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta property="og:url" content="https://solaris.wiki/project-claude-notes.html">
+  <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Solaris Wiki | Claude Code 深度使用笔记">
+  <meta name="twitter:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <link rel="canonical" href="https://solaris.wiki/project-claude-notes.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Solaris Wiki | Claude Code 深度使用笔记</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"><link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header class="site-header"><nav class="nav" aria-label="主导航"><a class="brand" href="index.html"><span class="brand-mark"><i class="ri-planet-line"></i></span><span>Solaris Wiki</span></a><div class="nav-links"><a href="index.html">首页</a><a class="active" href="projects.html" aria-current="page">项目</a><a href="about.html">关于</a></div><div class="nav-actions"><button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false"><span class="lamp-cord" aria-hidden="true"></span><span class="lamp-head" aria-hidden="true"></span><span class="lamp-glow" aria-hidden="true"></span></button></div></nav></header>
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><i class="ri-planet-line"></i></span>
+        <span>Solaris Wiki</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a class="active" aria-current="page" href="projects.html">项目</a>
+        <a href="about.html">关于</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+          <span class="lamp-cord" aria-hidden="true"></span>
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="lamp-glow" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
   <main>
-    <section class="page-hero"><div class="container"><p class="eyebrow"><i class="ri-book-open-line"></i> Project Detail</p><h1 class="project-title">Claude Code 深度使用笔记</h1><p>沉淀命令行编码、项目重构、上下文管理和提示词策略。</p></div></section>
-    <section class="section"><div class="container detail-layout">
-      <article class="detail-panel"><div class="detail-meta"><span class="tag">Claude Code</span><span class="tag dev">笔记</span><span class="tag alert">草稿中</span></div><h2>项目概览</h2><p>这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。</p><h2>笔记结构</h2><ul class="detail-list"><li>上下文压缩、任务拆解和验证策略。</li><li>代码审查、重构和多文件修改的协作方式。</li><li>失败案例、提示词调整和复盘记录。</li></ul></article>
-      <aside class="detail-side-panel"><div class="detail-visual" aria-hidden="true"><i class="ri-book-open-line"></i></div><div class="detail-status"><div class="detail-status-row"><span>状态</span><strong>内容草稿</strong></div><div class="detail-status-row"><span>形式</span><strong>长期笔记</strong></div><div class="detail-status-row"><span>下一步</span><strong>补目录结构</strong></div></div><div class="detail-actions"><a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a></div></aside>
-    </div></section>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow"><i class="ri-book-open-line"></i> Project Detail</p>
+        <h1 class="project-title">Claude Code 深度使用笔记</h1>
+        <p>沉淀命令行编码、项目重构、上下文管理和提示词策略。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container detail-layout">
+        <article class="detail-panel">
+          <div class="detail-meta">
+            <span class="tag">Claude Code</span>
+                <span class="tag dev">笔记</span>
+                <span class="tag alert">草稿中</span>
+          </div>
+          <h2>项目概览</h2>
+          <p>这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。</p>
+          <h2>笔记结构</h2>
+          <ul class="detail-list">
+            <li>上下文压缩、任务拆解和验证策略。</li>
+            <li>代码审查、重构和多文件修改的协作方式。</li>
+            <li>失败案例、提示词调整和复盘记录。</li>
+          </ul>
+        </article>
+
+        <aside class="detail-side-panel">
+          <div class="detail-visual" aria-hidden="true"><i class="ri-book-open-line"></i></div>
+          <div class="detail-status">
+            <div class="detail-status-row"><span>状态</span><strong>内容草稿</strong></div>
+            <div class="detail-status-row"><span>形式</span><strong>长期笔记</strong></div>
+            <div class="detail-status-row"><span>下一步</span><strong>补目录结构</strong></div>
+          </div>
+          <div class="detail-actions">
+            <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
+          </div>
+        </aside>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a><div class="footer-links"><a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a><a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a></div><div class="music-player" data-music-player><button class="music-toggle" type="button" data-music-toggle aria-expanded="false"><i class="ri-music-2-line"></i> MUSIC</button><div class="music-panel" data-music-panel><div class="music-display"><span class="music-led" data-music-led></span><span data-music-title>8-bit 海面信号</span></div><div class="music-controls"><button class="music-button" type="button" data-music-play>▶</button><select class="music-select" data-music-track aria-label="选择音乐"><option value="signal">8-bit 海面信号</option><option value="orbit">像素轨道巡航</option><option value="terminal">终端夜航</option></select></div><label class="music-volume"><span>VOL</span><input type="range" min="0" max="100" value="36" data-music-volume></label></div></div></div></footer>
-  <script src="js/theme-toggle.js"></script><script src="js/hero.js"></script><script src="js/music-player.js"></script><script src="js/site-router.js"></script>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
+      <div class="footer-links">
+        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
+        <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
+      </div>
+      <div class="music-player" data-music-player>
+        <button class="music-toggle" type="button" data-music-toggle aria-expanded="false">
+          <i class="ri-music-2-line"></i> MUSIC
+        </button>
+        <div class="music-panel" data-music-panel>
+          <div class="music-display">
+            <span class="music-led" data-music-led></span>
+            <span data-music-title>8-bit 海面信号</span>
+          </div>
+          <div class="music-controls">
+            <button class="music-button" type="button" data-music-play>PLAY</button>
+            <select class="music-select" data-music-track aria-label="选择音乐">
+              <option value="signal">8-bit 海面信号</option>
+              <option value="orbit">像素轨道巡航</option>
+              <option value="terminal">终端夜航</option>
+            </select>
+          </div>
+          <label class="music-volume">
+            <span>VOL</span>
+            <input type="range" min="0" max="100" value="36" data-music-volume>
+          </label>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/hero.js"></script>
+  <script src="js/music-player.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/site-router.js"></script>
 </body>
 </html>

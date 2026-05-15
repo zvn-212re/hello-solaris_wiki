@@ -13,6 +13,19 @@
     })();
   </script>
   <meta name="description" content="Solaris Wiki - 索拉里斯星档案，记录 Vibe Coding、AI Agent 实验与工程数据工具。">
+  <meta name="theme-color" content="#f4ead6">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Solaris Wiki">
+  <meta property="og:title" content="Solaris Wiki | 首页">
+  <meta property="og:description" content="Solaris Wiki - 索拉里斯星档案，记录 Vibe Coding、AI Agent 实验与工程数据工具。">
+  <meta property="og:url" content="https://solaris.wiki/">
+  <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Solaris Wiki | 首页">
+  <meta name="twitter:description" content="Solaris Wiki - 索拉里斯星档案，记录 Vibe Coding、AI Agent 实验与工程数据工具。">
+  <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
+  <link rel="canonical" href="https://solaris.wiki/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Solaris Wiki | 首页</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +34,6 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- 全站导航：静态页面暂时复制维护，后续可抽成模板。 -->
   <header class="site-header">
     <nav class="nav" aria-label="主导航">
       <a class="brand" href="index.html">
@@ -29,7 +41,7 @@
         <span>Solaris Wiki</span>
       </a>
       <div class="nav-links">
-        <a class="active" href="index.html" aria-current="page">首页</a>
+        <a class="active" aria-current="page" href="index.html">首页</a>
         <a href="projects.html">项目</a>
         <a href="about.html">关于</a>
       </div>
@@ -80,7 +92,7 @@
       <div class="container">
         <div class="section-head">
           <h2>最新项目</h2>
-          <p class="section-note">这里会逐步沉淀我的实验、工具和工程化笔记，先用三张占位卡片搭好信息结构。</p>
+          <p class="section-note">这里会逐步沉淀我的实验、工具和工程化笔记，项目摘要由 data/projects.json 统一生成。</p>
         </div>
 
         <div class="grid home-grid">
@@ -96,7 +108,7 @@
                 <span class="tag dev">效率工具</span>
               </div>
               <div class="actions">
-                <a class="button" href="pomodoro.html"><i class="ri-external-link-line"></i> 打开应用</a>
+                <a class="button" href="pomodoro.html"><i class="ri-external-link-line"></i> 在线演示</a>
               </div>
             </div>
           </article>
@@ -106,12 +118,13 @@
               <i class="ri-robot-2-line"></i>
             </div>
             <div class="card-body">
-              <h3>Agent 工作流观察</h3>
+              <h3>AI Agent 工作流实验</h3>
               <p>整理多工具协作、MCP 连接和自动化任务的使用心得。</p>
               <div class="tags">
                 <span class="tag">AI Agent</span>
-                <span class="tag dev">MCP</span>
+                <span class="tag dev">工作流</span>
               </div>
+              <!-- no primary action -->
             </div>
           </article>
 
@@ -120,12 +133,13 @@
               <i class="ri-database-2-line"></i>
             </div>
             <div class="card-body">
-              <h3>工程数据工具箱</h3>
+              <h3>上海信息价数据库比对系统</h3>
               <p>为信息价、清单数据和工程资料比对预留的数据入口。</p>
               <div class="tags">
                 <span class="tag">工程数据</span>
                 <span class="tag alert">开发中</span>
               </div>
+              <!-- no primary action -->
             </div>
           </article>
         </div>
@@ -143,10 +157,19 @@
           <article class="update-item">
             <time datetime="2026-05-15">2026.05.15</time>
             <div class="update-copy">
-              <h3>项目档案改成长条列表</h3>
-              <p>项目页从多列卡片调整为一行一个项目，桌面端更适合逐条扫描。</p>
+              <h3>项目数据源与静态生成</h3>
+              <p>项目列表和详情页改为从数据文件生成，公共导航、页脚和分享信息统一维护。</p>
             </div>
-            <span class="update-badge">Layout</span>
+            <span class="update-badge">Architecture</span>
+          </article>
+
+          <article class="update-item">
+            <time datetime="2026-05-15">2026.05.15</time>
+            <div class="update-copy">
+              <h3>补齐站点基础物料</h3>
+              <p>新增 README、404、robots、sitemap、favicon 和 Open Graph 分享信息。</p>
+            </div>
+            <span class="update-badge">SEO</span>
           </article>
 
           <article class="update-item">
@@ -156,15 +179,6 @@
               <p>收紧标题、阴影和番茄钟数字的尺寸逻辑，减少浏览器缩放时的布局跳动。</p>
             </div>
             <span class="update-badge">Fix</span>
-          </article>
-
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>新增夜间模式和音乐状态保持</h3>
-              <p>右上角吊灯可以切换星空夜间模式，主站局部切页时音乐播放器状态会同步保留。</p>
-            </div>
-            <span class="update-badge">Feature</span>
           </article>
         </div>
       </div>
@@ -188,7 +202,7 @@
             <span data-music-title>8-bit 海面信号</span>
           </div>
           <div class="music-controls">
-            <button class="music-button" type="button" data-music-play>▶</button>
+            <button class="music-button" type="button" data-music-play>PLAY</button>
             <select class="music-select" data-music-track aria-label="选择音乐">
               <option value="signal">8-bit 海面信号</option>
               <option value="orbit">像素轨道巡航</option>
@@ -206,6 +220,7 @@
   <script src="js/theme-toggle.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
+  <script src="js/pomodoro.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

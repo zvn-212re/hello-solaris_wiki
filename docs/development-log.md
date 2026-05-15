@@ -73,6 +73,36 @@
 
 ## 2026-05-15
 
+### 架构整理与站点基础物料
+
+需求：
+
+- 按架构评估建议逐步提高站点可维护性、SEO 和后续扩展能力。
+- 保持纯静态站路线，不引入 React/Vue 等前端框架。
+
+处理：
+
+- 新增 `data/projects.json` 作为项目档案数据源。
+- 新增 `scripts/build-site.js`，用于从项目数据生成首页、项目页、项目详情页、404 页面和 `sitemap.xml`。
+- 新增 `scripts/build-site.ps1`，作为当前 Windows 环境的无 Node fallback 生成脚本。
+- 新增 `package.json`，提供 `npm run build`、`npm run build:ps` 和 `npm run check`。
+- 重写 `README.md`，补充项目定位、本地预览、构建命令、内容维护方式和页面说明。
+- 新增 `404.html`、`robots.txt`、`sitemap.xml`、`favicon.svg`。
+- 为主站页面和独立番茄钟工具页补充 canonical、favicon、Open Graph 和 Twitter Card meta。
+- 项目档案页中的占位 `href="#"` 替换为不可点击的禁用按钮状态，避免空链接。
+
+脚本调整：
+
+- `js/site-router.js` 扩展局部切页范围，覆盖项目详情页和站内番茄钟页。
+- 局部切页后统一重新初始化 Hero、主题、音乐播放器和番茄钟模块，并派发 `solaris:pagechange` 事件。
+- `js/pomodoro.js` 改为可重复初始化的页面增强模块，只在存在 `[data-pomodoro-root]` 时绑定计时器。
+
+验证：
+
+- 当前执行环境没有 `node`/`npm`，无法运行 `npm run build` 或 `npm run check`。
+- 已使用 `scripts/build-site.ps1` 生成主站页面和 `sitemap.xml`。
+- 已检查主站 HTML 中不再存在 `href="#"` 占位链接。
+
 ### 新增项目接手说明
 
 新增：

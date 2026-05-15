@@ -1,15 +1,26 @@
-const routablePages = new Set(["index.html", "projects.html", "about.html"]);
+const routablePages = new Set([
+  "index.html",
+  "projects.html",
+  "about.html",
+  "pomodoro.html",
+]);
 
 function getPageName(url) {
   const name = url.pathname.split("/").pop();
   return name || "index.html";
 }
 
+function isRoutablePage(pageName) {
+  return routablePages.has(pageName) || /^project-[a-z0-9-]+\.html$/i.test(pageName);
+}
+
 function updateActiveNav(pageName) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const linkPage = getPageName(new URL(link.href, window.location.href));
-    const isProjectDetail = pageName.startsWith("project-") && linkPage === "projects.html";
-    const isActive = linkPage === pageName || isProjectDetail;
+    const isProjectPage =
+      (pageName.startsWith("project-") || pageName === "pomodoro.html") &&
+      linkPage === "projects.html";
+    const isActive = linkPage === pageName || isProjectPage;
     link.classList.toggle("active", isActive);
 
     if (isActive) {
@@ -23,12 +34,18 @@ function updateActiveNav(pageName) {
 async function loadPage(url, pushState = true) {
   const pageName = getPageName(url);
 
-  if (!routablePages.has(pageName)) {
+  if (!isRoutablePage(pageName)) {
     window.location.href = url.href;
     return;
   }
 
   const response = await fetch(url.href, { cache: "no-cache" });
+
+  if (!response.ok) {
+    window.location.href = url.href;
+    return;
+  }
+
   const html = await response.text();
   const nextDocument = new DOMParser().parseFromString(html, "text/html");
   const nextMain = nextDocument.querySelector("main");
@@ -50,6 +67,8 @@ async function loadPage(url, pushState = true) {
   window.SolarisHero?.init();
   window.SolarisTheme?.init();
   window.SolarisMusic?.render();
+  window.SolarisPomodoro?.init();
+  window.dispatchEvent(new CustomEvent("solaris:pagechange", { detail: { pageName } }));
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
@@ -68,7 +87,7 @@ document.addEventListener("click", (event) => {
   const url = new URL(link.href, window.location.href);
   const pageName = getPageName(url);
 
-  if (url.origin !== window.location.origin || !routablePages.has(pageName)) {
+  if (url.origin !== window.location.origin || !isRoutablePage(pageName)) {
     return;
   }
 
@@ -85,11 +104,21 @@ function openProjectCard(card) {
     return;
   }
 
-  window.location.href = new URL(detailUrl, window.location.href).href;
+  const url = new URL(detailUrl, window.location.href);
+  const pageName = getPageName(url);
+
+  if (url.origin === window.location.origin && isRoutablePage(pageName)) {
+    loadPage(url).catch(() => {
+      window.location.href = url.href;
+    });
+    return;
+  }
+
+  window.location.href = url.href;
 }
 
 document.addEventListener("click", (event) => {
-  if (event.target.closest("a, button, input, select, textarea")) {
+  if (event.target.closest("a, button, input, select, textarea, .button")) {
     return;
   }
 
