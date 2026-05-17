@@ -1,8 +1,11 @@
 const routablePages = new Set([
   "index.html",
   "projects.html",
+  "articles.html",
   "about.html",
   "pomodoro.html",
+  "search.html",
+  "submit.html",
 ]);
 
 function getPageName(url) {
@@ -11,16 +14,21 @@ function getPageName(url) {
 }
 
 function isRoutablePage(pageName) {
-  return routablePages.has(pageName) || /^project-[a-z0-9-]+\.html$/i.test(pageName);
+  return (
+    routablePages.has(pageName) ||
+    /^project-[a-z0-9-]+\.html$/i.test(pageName) ||
+    /^article-[a-z0-9-]+\.html$/i.test(pageName)
+  );
 }
 
 function updateActiveNav(pageName) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const linkPage = getPageName(new URL(link.href, window.location.href));
-    const isProjectPage =
+  const isProjectPage =
       (pageName.startsWith("project-") || pageName === "pomodoro.html") &&
       linkPage === "projects.html";
-    const isActive = linkPage === pageName || isProjectPage;
+    const isArticlePage = pageName.startsWith("article-") && linkPage === "articles.html";
+    const isActive = linkPage === pageName || isProjectPage || isArticlePage;
     link.classList.toggle("active", isActive);
 
     if (isActive) {
@@ -68,8 +76,17 @@ async function loadPage(url, pushState = true) {
   window.SolarisTheme?.init();
   window.SolarisMusic?.render();
   window.SolarisPomodoro?.init();
+  window.SolarisUpdates?.init();
+  window.SolarisGuestbook?.init();
+  window.SolarisSearch?.init();
+  window.SolarisSubmissionForm?.init();
   window.dispatchEvent(new CustomEvent("solaris:pagechange", { detail: { pageName } }));
-  window.scrollTo({ top: 0, behavior: "instant" });
+
+  if (url.hash) {
+    document.querySelector(url.hash)?.scrollIntoView();
+  } else {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
 }
 
 document.addEventListener("click", (event) => {
@@ -86,6 +103,14 @@ document.addEventListener("click", (event) => {
 
   const url = new URL(link.href, window.location.href);
   const pageName = getPageName(url);
+
+  if (
+    url.origin === window.location.origin &&
+    url.pathname === window.location.pathname &&
+    url.hash
+  ) {
+    return;
+  }
 
   if (url.origin !== window.location.origin || !isRoutablePage(pageName)) {
     return;

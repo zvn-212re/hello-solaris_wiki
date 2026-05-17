@@ -1,0 +1,200 @@
+[
+  {
+    "title": "首页",
+    "url": "index.html",
+    "type": "Page",
+    "summary": "Solaris Wiki 首页、最新项目、站点更新与留言区。",
+    "tags": [
+      "Solaris Wiki"
+    ]
+  },
+  {
+    "title": "项目档案",
+    "url": "projects.html",
+    "type": "Page",
+    "summary": "项目、工具、AI Agent 实验与工程数据工具。",
+    "tags": [
+      "Projects"
+    ]
+  },
+  {
+    "title": "文章与笔记",
+    "url": "articles.html",
+    "type": "Page",
+    "summary": "后台发布的 Markdown 文章。",
+    "tags": [
+      "Articles"
+    ]
+  },
+  {
+    "title": "番茄钟 Web 应用",
+    "url": "project-pomodoro.html",
+    "type": "Project",
+    "summary": "一个轻量、专注、适合长时间编码和资料整理的计时器。",
+    "tags": [
+      "Web 应用",
+      "效率工具"
+    ]
+  },
+  {
+    "title": "酒厂厂房 3D 打印",
+    "url": "project-3d-printing.html",
+    "type": "Project",
+    "summary": "把厂房设计、结构表达和 3D 打印流程连接起来的实践记录。",
+    "tags": [
+      "3D Printing",
+      "工程实践"
+    ]
+  },
+  {
+    "title": "AI Agent 工作流实验",
+    "url": "project-agent-workflow.html",
+    "type": "Project",
+    "summary": "测试 Agent 在资料检索、代码修改和自动化执行中的协作边界。",
+    "tags": [
+      "AI Agent",
+      "工作流"
+    ]
+  },
+  {
+    "title": "Claude Code 深度使用笔记",
+    "url": "project-claude-notes.html",
+    "type": "Project",
+    "summary": "沉淀命令行编码、项目重构、上下文管理和提示词策略。",
+    "tags": [
+      "Claude Code",
+      "笔记"
+    ]
+  },
+  {
+    "title": "上海信息价数据库比对系统",
+    "url": "project-sh-info-price.html",
+    "type": "Project",
+    "summary": "面向信息价 JSON、历史数据和工程清单的比对查询工具。",
+    "tags": [
+      "工程数据",
+      "开发中"
+    ]
+  },
+  {
+    "title": "CMS 地基：从静态站走向可管理内容",
+    "url": "article-cms-foundation.html",
+    "type": "Article",
+    "summary": "记录 Solaris Wiki 引入后台、投稿、公开留言和搜索索引的第一阶段。",
+    "tags": [
+      "CMS",
+      "Supabase",
+      "Decap"
+    ]
+  },
+  {
+    "title": "站点更新日志与留言区",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "站点更新改为版本化提交总结，默认显示 4 条，可展开到 7 条并翻页；首页新增本地留言区。",
+    "tags": [
+      "v.0.2.2",
+      "Feature",
+      "minor"
+    ]
+  },
+  {
+    "title": "定时维护与像素维护页",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "接入 Vercel Edge Middleware 和像素维护页；定时维护默认关闭，需要时再显式启用维护窗口。",
+    "tags": [
+      "v.0.2.1",
+      "Ops",
+      "minor"
+    ]
+  },
+  {
+    "title": "项目数据化与 SEO 基建",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "项目列表和详情页改为从数据源生成，并补齐 README、404、robots、sitemap、favicon 和分享信息。",
+    "tags": [
+      "v.0.1.1",
+      "Architecture",
+      "major"
+    ]
+  },
+  {
+    "title": "项目详情页入口",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "项目档案接入 5 个详情页，支持整行点击和键盘进入，并保留内部按钮独立行为。",
+    "tags": [
+      "v.0.0.7",
+      "Content",
+      "patch"
+    ]
+  },
+  {
+    "title": "项目档案长条列表",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "项目页从多列卡片调整为一行一个项目，首页新增站点更新区块。",
+    "tags": [
+      "v.0.0.6",
+      "Layout",
+      "patch"
+    ]
+  },
+  {
+    "title": "夜间模式与音乐状态",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "新增右上角吊灯主题切换，夜间模式转为 8-bit 星际风，并保持音乐播放器状态。",
+    "tags": [
+      "v.0.0.5",
+      "Feature",
+      "patch"
+    ]
+  },
+  {
+    "title": "缩放与移动端稳定",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "收紧标题、阴影、按钮和番茄钟数字尺寸，降低浏览器缩放和小屏下的布局跳动。",
+    "tags": [
+      "v.0.0.4",
+      "Fix",
+      "patch"
+    ]
+  },
+  {
+    "title": "番茄钟工具页",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "新增站内番茄钟展示页和独立番茄钟工具页，支持专注计时、休息和番茄计数。",
+    "tags": [
+      "v.0.0.3",
+      "Tool",
+      "patch"
+    ]
+  },
+  {
+    "title": "复古像素纸张风",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "视觉方向从深色科幻极简演进为复古像素档案站，建立硬边框、纸张质感和贴纸式标签。",
+    "tags": [
+      "v.0.0.2",
+      "Design",
+      "patch"
+    ]
+  },
+  {
+    "title": "Solaris Wiki 初始化",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "创建纯静态个人网站基础结构，搭建首页、项目页、关于页和 Vercel 部署方向。",
+    "tags": [
+      "v.0.0.1",
+      "Init",
+      "patch"
+    ]
+  }
+]

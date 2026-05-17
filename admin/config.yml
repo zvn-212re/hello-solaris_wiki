@@ -1,0 +1,62 @@
+backend:
+  name: github
+  repo: zvn-212re/hello-solaris_wiki
+  branch: main
+  squash_merges: true
+
+local_backend: true
+publish_mode: editorial_workflow
+media_folder: images/uploads
+public_folder: /images/uploads
+site_url: https://solaris.wiki
+display_url: https://solaris.wiki
+logo_url: /favicon.svg
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    preview_path: "article-{{slug}}.html"
+    fields:
+      - { label: 标题, name: title, widget: string }
+      - { label: 摘要, name: summary, widget: text, required: false }
+      - { label: 发布日期, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: 状态, name: status, widget: select, options: ["draft", "published"], default: "draft" }
+      - { label: 标签, name: tags, widget: list, required: false }
+      - { label: 正文, name: body, widget: markdown }
+
+  - name: project_drafts
+    label: 项目草稿
+    label_singular: 项目草稿
+    folder: content/project-drafts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: 项目名, name: title, widget: string }
+      - { label: 摘要, name: summary, widget: text }
+      - { label: 状态, name: status, widget: select, options: ["draft", "review", "published"], default: "draft" }
+      - { label: 标签, name: tags, widget: list, required: false }
+      - { label: 正文, name: body, widget: markdown }
+
+  - name: update_notes
+    label: 站点更新草稿
+    label_singular: 更新记录
+    folder: content/update-notes
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: 版本号, name: version, widget: string, hint: "例如 v.0.2.3；大更新可以使用 v.0.3.1" }
+      - { label: 标题, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: 类型, name: type, widget: select, options: ["Init", "Design", "Tool", "Feature", "Fix", "Layout", "Content", "Architecture", "Ops"] }
+      - { label: 更新级别, name: level, widget: select, options: ["patch", "minor", "major"], default: "patch" }
+      - { label: 摘要, name: summary, widget: text }

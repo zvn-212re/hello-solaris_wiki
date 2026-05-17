@@ -43,6 +43,7 @@
       <div class="nav-links">
         <a class="active" aria-current="page" href="index.html">首页</a>
         <a href="projects.html">项目</a>
+        <a href="articles.html">文章</a>
         <a href="about.html">关于</a>
       </div>
       <div class="nav-actions">
@@ -147,39 +148,210 @@
     </section>
 
     <section class="section update-section" aria-labelledby="siteUpdatesTitle">
-      <div class="container">
+      <div class="container" data-site-updates>
         <div class="section-head">
-          <h2 id="siteUpdatesTitle">站点更新</h2>
-          <p class="section-note">记录这个小站最近修了什么、加了什么，免得改完就忘。</p>
+          <div>
+            <h2 id="siteUpdatesTitle">站点更新</h2>
+            <p class="section-note">每次提交后的简短总结，从 <code>v.0.0.1</code> 开始记录；较大的结构更新使用 <code>v.0.1.1</code> 这类编号。</p>
+          </div>
+          <div class="update-controls" aria-label="站点更新控制">
+            <span class="update-count" data-updates-count></span>
+            <button class="button secondary update-control" type="button" data-updates-more aria-expanded="false">显示更多</button>
+          </div>
         </div>
 
         <div class="update-list">
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>项目数据源与静态生成</h3>
-              <p>项目列表和详情页改为从数据文件生成，公共导航、页脚和分享信息统一维护。</p>
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.2.2</span>
+              <time datetime="2026-05-16">2026.05.16</time>
             </div>
-            <span class="update-badge">Architecture</span>
+            <div class="update-copy">
+              <h3>站点更新日志与留言区</h3>
+              <p>站点更新改为版本化提交总结，默认显示 4 条，可展开到 7 条并翻页；首页新增本地留言区。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Feature</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
           </article>
 
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>补齐站点基础物料</h3>
-              <p>新增 README、404、robots、sitemap、favicon 和 Open Graph 分享信息。</p>
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.2.1</span>
+              <time datetime="2026-05-16">2026.05.16</time>
             </div>
-            <span class="update-badge">SEO</span>
+            <div class="update-copy">
+              <h3>定时维护与像素维护页</h3>
+              <p>接入 Vercel Edge Middleware 和像素维护页；定时维护默认关闭，需要时再显式启用维护窗口。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Ops</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
           </article>
 
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>稳定页面缩放表现</h3>
-              <p>收紧标题、阴影和番茄钟数字的尺寸逻辑，减少浏览器缩放时的布局跳动。</p>
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.1.1</span>
+              <time datetime="2026-05-15">2026.05.15</time>
             </div>
-            <span class="update-badge">Fix</span>
+            <div class="update-copy">
+              <h3>项目数据化与 SEO 基建</h3>
+              <p>项目列表和详情页改为从数据源生成，并补齐 README、404、robots、sitemap、favicon 和分享信息。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Architecture</span>
+              <span class="update-badge secondary">大版本</span>
+            </div>
           </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.7</span>
+              <time datetime="2026-05-15">2026.05.15</time>
+            </div>
+            <div class="update-copy">
+              <h3>项目详情页入口</h3>
+              <p>项目档案接入 5 个详情页，支持整行点击和键盘进入，并保留内部按钮独立行为。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Content</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.6</span>
+              <time datetime="2026-05-15">2026.05.15</time>
+            </div>
+            <div class="update-copy">
+              <h3>项目档案长条列表</h3>
+              <p>项目页从多列卡片调整为一行一个项目，首页新增站点更新区块。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Layout</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.5</span>
+              <time datetime="2026-05-15">2026.05.15</time>
+            </div>
+            <div class="update-copy">
+              <h3>夜间模式与音乐状态</h3>
+              <p>新增右上角吊灯主题切换，夜间模式转为 8-bit 星际风，并保持音乐播放器状态。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Feature</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.4</span>
+              <time datetime="2026-05-15">2026.05.15</time>
+            </div>
+            <div class="update-copy">
+              <h3>缩放与移动端稳定</h3>
+              <p>收紧标题、阴影、按钮和番茄钟数字尺寸，降低浏览器缩放和小屏下的布局跳动。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Fix</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.3</span>
+              <time datetime="2026-05-14">2026.05.14</time>
+            </div>
+            <div class="update-copy">
+              <h3>番茄钟工具页</h3>
+              <p>新增站内番茄钟展示页和独立番茄钟工具页，支持专注计时、休息和番茄计数。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Tool</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.2</span>
+              <time datetime="2026-05-14">2026.05.14</time>
+            </div>
+            <div class="update-copy">
+              <h3>复古像素纸张风</h3>
+              <p>视觉方向从深色科幻极简演进为复古像素档案站，建立硬边框、纸张质感和贴纸式标签。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Design</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>v.0.0.1</span>
+              <time datetime="2026-05-14">2026.05.14</time>
+            </div>
+            <div class="update-copy">
+              <h3>Solaris Wiki 初始化</h3>
+              <p>创建纯静态个人网站基础结构，搭建首页、项目页、关于页和 Vercel 部署方向。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Init</span>
+              <span class="update-badge secondary">小更新</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="update-pager" aria-label="站点更新分页">
+          <button class="button secondary update-control" type="button" data-updates-prev>上一页</button>
+          <span data-updates-page>1 / 1</span>
+          <button class="button secondary update-control" type="button" data-updates-next>下一页</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section guestbook-section" aria-labelledby="guestbookTitle">
+      <div class="container guestbook-layout" data-guestbook>
+        <div class="section-head guestbook-head">
+          <div>
+            <h2 id="guestbookTitle">留言区</h2>
+            <p class="section-note">静态站留言会保存在当前浏览器本地；想让我真的收到，可以顺手发邮件。</p>
+          </div>
+          <a class="button secondary update-control" href="mailto:xiechanghui9@gmail.com?subject=Solaris%20Wiki%20留言"><i class="ri-mail-line"></i> 发邮件</a>
+        </div>
+
+        <div class="guestbook-grid">
+          <form class="guestbook-form" data-guestbook-form>
+            <label>
+              <span>昵称</span>
+              <input type="text" name="name" maxlength="24" placeholder="匿名访客" data-guestbook-name>
+            </label>
+            <label>
+              <span>留言</span>
+              <textarea name="message" rows="5" maxlength="220" placeholder="在这里留下一段信号..." data-guestbook-message required></textarea>
+            </label>
+            <button class="button" type="submit"><i class="ri-send-plane-line"></i> 留下信号</button>
+          </form>
+
+          <div class="guestbook-board">
+            <div class="guestbook-toolbar">
+              <span class="panel-kicker" data-guestbook-mode>Public Signals</span>
+              <button class="button secondary update-control" type="button" data-guestbook-clear hidden>清空</button>
+            </div>
+            <p class="empty-tomato" data-guestbook-empty>还没有留言。第一条信号就交给哥哥啦。</p>
+            <p class="guestbook-status" data-guestbook-status>留言服务连接中...</p>
+            <div class="guestbook-list" data-guestbook-list></div>
+          </div>
         </div>
       </div>
     </section>
@@ -221,6 +393,8 @@
   <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
   <script src="js/pomodoro.js"></script>
+  <script src="js/site-updates.js"></script>
+  <script src="js/guestbook.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

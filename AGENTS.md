@@ -8,16 +8,18 @@
 远端仓库：`https://github.com/zvn-212re/hello-solaris_wiki.git`  
 部署目标：Vercel  
 
-这是一个纯静态个人网站，用于记录 Vibe Coding、AI Agent 实验、工程数据工具、个人项目和技术笔记。
+这是一个以静态页面为主、带轻量构建和少量 Vercel API 的个人网站，用于记录 Vibe Coding、AI Agent 实验、工程数据工具、个人项目和技术笔记。
 
 ## 当前技术状态
 
 - 使用原生 HTML/CSS/JavaScript。
-- 没有前端框架，没有构建流程，没有 `package.json`。
-- 可以直接打开 HTML 文件，也可以作为静态站部署到 Vercel。
-- `vercel.json` 当前为空对象 `{}`，没有特殊部署配置。
-- `api/` 和 `data/` 目录是预留目录，目前只有 `.gitkeep`。
-- 全站导航和页脚通过复制 HTML 片段维护，暂未组件化。
+- 没有前端框架，但已有零依赖 Node 构建脚本和 `package.json`。
+- `vercel.json` 使用 `npm run build`，输出目录为 `dist`。
+- 根目录 HTML 可以直接打开；涉及局部路由、搜索、投稿或 API 时建议用本地静态服务器预览。
+- `api/` 已启用 Vercel Serverless Function，用于留言、投稿和审核。
+- `data/` 已启用项目数据、站点更新和搜索索引。
+- `content/posts/` 已启用 Markdown 文章源，构建时生成文章页和文章列表。
+- 全站导航和页脚主要由构建脚本生成，少数独立页面仍需手动同步。
 
 ## 当前视觉方向
 
@@ -43,14 +45,21 @@
 - `about.html`：关于页，包含个人介绍、技能标签、联系方式。
 - `pomodoro.html`：站内番茄钟展示页。
 - `pomodoro-tool.html`：独立番茄钟工具页，包含更完整的参数设置。
+- `articles.html` / `article-*.html`：文章列表和文章详情页。
+- `search.html` / `submit.html`：站内搜索和投稿入口。
+- `login.html` / `moderation.html` / `admin/`：后台验证、审核台和 Decap CMS。
 
 ## 当前脚本
 
-- `js/site-router.js`：为 `index.html`、`projects.html`、`about.html` 提供静态页面间的局部加载和导航高亮，并支持项目长条点击进入详情页。
+- `js/site-router.js`：为主站页面、文章页和项目详情页提供局部加载和导航高亮，并支持项目长条点击进入详情页。
 - `js/hero.js`：首页头像、引用切换和主视觉相关交互。
 - `js/theme-toggle.js`：白天/夜间主题切换，使用右上角像素吊灯按钮和 `localStorage` 保存用户选择。
 - `js/music-player.js`：底部音乐播放器交互。
 - `js/pomodoro.js`：番茄钟展示页逻辑。
+- `js/search.js`：站内搜索逻辑。
+- `js/guestbook.js`：留言区本地/远端模式。
+- `js/submission-form.js`：投稿表单提交。
+- `js/login.js`、`js/moderation-dashboard.js`：后台验证和审核台交互。
 
 ## 当前样式
 
@@ -91,14 +100,14 @@
 
 ## 尚未完成
 
-- README 仍较简略，需要更新为当前真实项目说明。
-- 尚未添加主站 favicon。
-- 尚未添加 `404.html`。
-- 尚未添加 `robots.txt` 和 `sitemap.xml`。
-- 尚未添加 Open Graph / Twitter Card 分享图和完整 meta 信息。
-- 项目页仍有多个占位链接 `#`，需要逐步替换为真实演示地址和源码地址。
+- README 已更新为当前构建、CMS 和 API 状态。
+- 已添加主站 favicon。
+- 已添加 `404.html`。
+- 已添加 `robots.txt` 和 `sitemap.xml`。
+- 主站核心页面已添加 Open Graph / Twitter Card 分享信息，新增页面需继续同步。
+- 项目页不再使用 `href="#"` 占位链接；没有真实地址时使用禁用按钮状态。
 - “上海信息价数据库比对系统”尚未接入预览 iframe、截图或完整外链。
-- `api/` 与 `data/` 只是预留目录，暂未启用。
+- `api/` 与 `data/` 已启用；后续变更需同步检查构建输出和 Vercel 环境变量。
 - 尚未做系统的移动端视觉验收。
 - 尚未做无障碍和 SEO 细节检查。
 

@@ -981,7 +981,7 @@ h3 {
 .update-item {
   position: relative;
   display: grid;
-  grid-template-columns: 124px minmax(0, 1fr) auto;
+  grid-template-columns: 148px minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-4);
@@ -996,14 +996,35 @@ h3 {
 .update-item::before {
   content: "";
   position: absolute;
-  left: 145px;
+  left: 169px;
   top: 0;
   bottom: 0;
   width: var(--edge-sm);
   background: var(--line);
 }
 
-.update-item time {
+.update-item[hidden] {
+  display: none;
+}
+
+.update-version {
+  display: grid;
+  gap: 8px;
+}
+
+.update-version span {
+  width: fit-content;
+  padding: 5px 8px;
+  border: var(--edge-sm) solid var(--line);
+  color: var(--cream);
+  background: var(--blue);
+  font-family: var(--font-pixel);
+  font-size: 0.54rem;
+  line-height: 1.5;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.update-version time {
   color: var(--blue);
   font-family: var(--font-pixel);
   font-size: 0.56rem;
@@ -1034,6 +1055,271 @@ h3 {
   font-weight: 800;
   text-align: center;
   box-shadow: 2px 2px 0 var(--ink);
+}
+
+.update-badges,
+.update-controls,
+.update-pager,
+.guestbook-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.update-badges {
+  justify-content: flex-end;
+}
+
+.update-badge.secondary {
+  background: var(--blue-soft);
+}
+
+.update-controls {
+  justify-content: flex-end;
+}
+
+.update-control {
+  flex: 0 0 auto;
+  min-width: auto;
+  min-height: 36px;
+  padding: 7px 10px;
+  font-size: 0.82rem;
+}
+
+.update-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+  transform: none;
+}
+
+.update-count,
+.update-pager span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.update-pager {
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.guestbook-section {
+  padding-top: 0;
+}
+
+.guestbook-layout {
+  padding: var(--space-5);
+  border: var(--edge) solid var(--line);
+  background: var(--paper-panel);
+  box-shadow: var(--shadow);
+}
+
+.guestbook-head {
+  margin-bottom: var(--space-4);
+}
+
+.guestbook-grid {
+  display: grid;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.guestbook-form,
+.guestbook-board,
+.guestbook-item {
+  border: var(--edge) solid var(--line);
+  background: var(--cream);
+  box-shadow: var(--shadow-sm);
+}
+
+.guestbook-form {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.42fr) minmax(260px, 1fr) auto;
+  gap: var(--space-3);
+  align-items: end;
+  padding: var(--space-4);
+}
+
+.guestbook-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--ink-soft);
+  font-weight: 900;
+}
+
+.guestbook-form input,
+.guestbook-form textarea {
+  width: 100%;
+  border: var(--edge-sm) solid var(--line);
+  color: var(--ink);
+  background: var(--paper-panel);
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.guestbook-form textarea {
+  resize: vertical;
+  min-height: 92px;
+}
+
+.guestbook-board {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  min-height: 176px;
+}
+
+.guestbook-toolbar {
+  justify-content: space-between;
+}
+
+.guestbook-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.guestbook-item {
+  padding: var(--space-3);
+  background: var(--paper-panel);
+}
+
+.guestbook-meta {
+  margin: 0 0 7px;
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.guestbook-message {
+  margin: 0;
+  color: var(--ink-soft);
+  font-weight: 800;
+  white-space: pre-wrap;
+}
+
+.guestbook-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.tool-layout,
+.moderation-layout {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.tool-panel {
+  border: var(--edge) solid var(--line);
+  background: var(--paper-panel);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.field-stack {
+  display: grid;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-weight: 900;
+}
+
+.field-stack input,
+.guestbook-form select {
+  width: 100%;
+  border: var(--edge-sm) solid var(--line);
+  color: var(--ink);
+  background: var(--paper-panel);
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 800;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.cms-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.cms-form .wide-field,
+.cms-form button,
+.cms-form .guestbook-status {
+  grid-column: 1 / -1;
+}
+
+.cms-form textarea {
+  min-height: 220px;
+}
+
+.article-layout {
+  max-width: 860px;
+}
+
+.article-content {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.article-content h2,
+.article-content h3 {
+  margin: var(--space-3) 0 0;
+}
+
+.article-content p,
+.article-content ul {
+  margin: 0;
+}
+
+.article-card .panel-kicker {
+  margin-bottom: var(--space-2);
+}
+
+.search-result h3 {
+  margin: 0 0 8px;
+}
+
+.search-result a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.search-result a:hover {
+  color: var(--red);
+}
+
+.moderation-token {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) auto;
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.moderation-token .guestbook-status {
+  grid-column: 1 / -1;
+}
+
+.moderation-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.moderation-item h3 {
+  margin: 0 0 8px;
+}
+
+.compact-actions {
+  gap: 8px;
+  margin-top: var(--space-3);
+}
+
+.compact-actions .button {
+  min-width: auto;
+  min-height: 34px;
+  padding: 6px 9px;
+  font-size: 0.78rem;
 }
 
 .page-hero {
@@ -1778,6 +2064,15 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .guestbook-form {
+    grid-template-columns: 1fr;
+  }
+
+  .moderation-token,
+  .moderation-columns {
+    grid-template-columns: 1fr;
+  }
+
   .project-grid .card {
     grid-template-columns: 118px minmax(0, 1fr);
   }
@@ -1793,17 +2088,22 @@ h3 {
   }
 
   .update-item {
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: 128px minmax(0, 1fr);
     align-items: start;
   }
 
   .update-item::before {
-    left: 132px;
+    left: 148px;
   }
 
-  .update-badge {
+  .update-badges {
     grid-column: 2;
     justify-self: start;
+    justify-content: flex-start;
+  }
+
+  .update-controls {
+    justify-content: flex-start;
   }
 
   .avatar {
@@ -1879,7 +2179,7 @@ h3 {
   .nav-links {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .nav-actions {
@@ -1951,8 +2251,12 @@ h3 {
     display: none;
   }
 
-  .update-badge {
+  .update-badges {
     grid-column: 1;
+  }
+
+  .guestbook-layout {
+    padding: var(--space-3);
   }
 
   h1 {

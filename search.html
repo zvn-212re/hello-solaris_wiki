@@ -12,21 +12,21 @@
       } catch {}
     })();
   </script>
-  <meta name="description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="description" content="Solaris Wiki 站内搜索。">
   <meta name="theme-color" content="#f4ead6">
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Solaris Wiki">
-  <meta property="og:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta property="og:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
-  <meta property="og:url" content="https://solaris.wiki/project-claude-notes.html">
+  <meta property="og:title" content="Solaris Wiki | 搜索">
+  <meta property="og:description" content="Solaris Wiki 站内搜索。">
+  <meta property="og:url" content="https://solaris.wiki/search.html">
   <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta name="twitter:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="twitter:title" content="Solaris Wiki | 搜索">
+  <meta name="twitter:description" content="Solaris Wiki 站内搜索。">
   <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
-  <link rel="canonical" href="https://solaris.wiki/project-claude-notes.html">
+  <link rel="canonical" href="https://solaris.wiki/search.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <title>Solaris Wiki | Claude Code 深度使用笔记</title>
+  <title>Solaris Wiki | 搜索</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html">首页</a>
-        <a class="active" aria-current="page" href="projects.html">项目</a>
+        <a href="projects.html">项目</a>
         <a href="articles.html">文章</a>
         <a href="about.html">关于</a>
       </div>
@@ -59,41 +59,25 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow"><i class="ri-book-open-line"></i> Project Detail</p>
-        <h1 class="project-title">Claude Code 深度使用笔记</h1>
-        <p>沉淀命令行编码、项目重构、上下文管理和提示词策略。</p>
+        <p class="eyebrow"><i class="ri-search-line"></i> Search</p>
+        <h1>站内搜索</h1>
+        <p>搜索项目、文章和站点更新。索引会在每次构建时自动生成。</p>
       </div>
     </section>
 
     <section class="section">
-      <div class="container detail-layout">
-        <article class="detail-panel">
-          <div class="detail-meta">
-            <span class="tag">Claude Code</span>
-                <span class="tag dev">笔记</span>
-                <span class="tag alert">草稿中</span>
-          </div>
-          <h2>项目概览</h2>
-          <p>这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。</p>
-          <h2>笔记结构</h2>
-          <ul class="detail-list">
-            <li>上下文压缩、任务拆解和验证策略。</li>
-            <li>代码审查、重构和多文件修改的协作方式。</li>
-            <li>失败案例、提示词调整和复盘记录。</li>
-          </ul>
-        </article>
-
-        <aside class="detail-side-panel">
-          <div class="detail-visual" aria-hidden="true"><i class="ri-book-open-line"></i></div>
-          <div class="detail-status">
-            <div class="detail-status-row"><span>状态</span><strong>内容草稿</strong></div>
-            <div class="detail-status-row"><span>形式</span><strong>长期笔记</strong></div>
-            <div class="detail-status-row"><span>下一步</span><strong>补目录结构</strong></div>
-          </div>
-          <div class="detail-actions">
-            <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
-          </div>
-        </aside>
+      <div class="container tool-layout" data-search>
+        <div class="tool-panel">
+          <label class="field-stack">
+            <span>关键词</span>
+            <input type="search" placeholder="例如：Agent、番茄钟、CMS" data-search-input autofocus>
+          </label>
+          <p class="guestbook-status">结果数：<span data-search-count>0 / 0</span></p>
+        </div>
+        <div class="guestbook-board">
+          <p class="empty-tomato" data-search-empty hidden>没有搜索结果。</p>
+          <div class="guestbook-list" data-search-results></div>
+        </div>
       </div>
     </section>
   </main>
@@ -102,7 +86,7 @@
     <div class="footer-inner">
       <a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
       <div class="footer-links">
-        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
+        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
       </div>
       <div class="music-player" data-music-player>
@@ -130,12 +114,10 @@
       </div>
     </div>
   </footer>
+
   <script src="js/theme-toggle.js"></script>
-  <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
-  <script src="js/pomodoro.js"></script>
-  <script src="js/site-updates.js"></script>
-  <script src="js/guestbook.js"></script>
+  <script src="js/search.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

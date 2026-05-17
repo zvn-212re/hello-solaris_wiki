@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Solaris Wiki | 验证登录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <div class="auth-scenery" aria-hidden="true">
+      <span class="auth-sun"></span>
+      <span class="auth-mountain mountain-back"></span>
+      <span class="auth-mountain mountain-mid"></span>
+      <span class="auth-mountain mountain-front"></span>
+      <span class="auth-shore"></span>
+      <span class="auth-rock rock-left"></span>
+      <span class="auth-rock rock-right"></span>
+    </div>
+
+    <section class="auth-panel" aria-labelledby="authTitle">
+      <div class="auth-brand">
+        <div>
+          <p class="auth-kicker">SOLARIS ACCESS</p>
+          <h1 id="authTitle">Solaris Wiki</h1>
+          <p class="auth-tagline">- 让信号回到档案室 -</p>
+        </div>
+        <div class="auth-tools" aria-label="辅助入口">
+          <a href="index.html" aria-label="返回首页"><i class="ri-home-4-line"></i></a>
+        </div>
+      </div>
+
+      <form class="auth-form" data-auth-form>
+        <p class="auth-mode-label">ADMIN TOKEN</p>
+
+        <label class="auth-field">
+          <span>管理员令牌</span>
+          <input type="password" name="token" autocomplete="current-password" placeholder="输入 SOLARIS_ADMIN_TOKEN" data-auth-token required>
+        </label>
+
+        <div class="auth-row">
+          <div class="auth-social">
+            <span>后台入口：</span>
+            <a href="admin/" aria-label="内容后台"><i class="ri-settings-3-line"></i></a>
+          </div>
+          <button class="auth-submit" type="submit">验证 / 进入</button>
+        </div>
+
+        <p class="auth-status" data-auth-status aria-live="polite">令牌只保存在当前浏览器会话，用于访问审核 API。</p>
+      </form>
+
+      <footer class="auth-foot">
+        <span>这是站点后台验证入口，不开放注册。</span>
+        <a href="moderation.html">前往审核台 <i class="ri-arrow-right-s-line"></i></a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

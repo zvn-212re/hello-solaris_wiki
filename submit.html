@@ -12,21 +12,12 @@
       } catch {}
     })();
   </script>
-  <meta name="description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="description" content="向 Solaris Wiki 投稿。">
+  <meta name="robots" content="noindex">
   <meta name="theme-color" content="#f4ead6">
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Solaris Wiki">
-  <meta property="og:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta property="og:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
-  <meta property="og:url" content="https://solaris.wiki/project-claude-notes.html">
-  <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta name="twitter:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
-  <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
-  <link rel="canonical" href="https://solaris.wiki/project-claude-notes.html">
+  <link rel="canonical" href="https://solaris.wiki/submit.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <title>Solaris Wiki | Claude Code 深度使用笔记</title>
+  <title>Solaris Wiki | 投稿</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -42,7 +33,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html">首页</a>
-        <a class="active" aria-current="page" href="projects.html">项目</a>
+        <a href="projects.html">项目</a>
         <a href="articles.html">文章</a>
         <a href="about.html">关于</a>
       </div>
@@ -59,41 +50,46 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow"><i class="ri-book-open-line"></i> Project Detail</p>
-        <h1 class="project-title">Claude Code 深度使用笔记</h1>
-        <p>沉淀命令行编码、项目重构、上下文管理和提示词策略。</p>
+        <p class="eyebrow"><i class="ri-send-plane-line"></i> Submission</p>
+        <h1>投稿入口</h1>
+        <p>访客可以提交文章、项目线索或反馈。内容会进入审核队列，不会直接公开。</p>
       </div>
     </section>
 
     <section class="section">
-      <div class="container detail-layout">
-        <article class="detail-panel">
-          <div class="detail-meta">
-            <span class="tag">Claude Code</span>
-                <span class="tag dev">笔记</span>
-                <span class="tag alert">草稿中</span>
-          </div>
-          <h2>项目概览</h2>
-          <p>这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。</p>
-          <h2>笔记结构</h2>
-          <ul class="detail-list">
-            <li>上下文压缩、任务拆解和验证策略。</li>
-            <li>代码审查、重构和多文件修改的协作方式。</li>
-            <li>失败案例、提示词调整和复盘记录。</li>
-          </ul>
-        </article>
-
-        <aside class="detail-side-panel">
-          <div class="detail-visual" aria-hidden="true"><i class="ri-book-open-line"></i></div>
-          <div class="detail-status">
-            <div class="detail-status-row"><span>状态</span><strong>内容草稿</strong></div>
-            <div class="detail-status-row"><span>形式</span><strong>长期笔记</strong></div>
-            <div class="detail-status-row"><span>下一步</span><strong>补目录结构</strong></div>
-          </div>
-          <div class="detail-actions">
-            <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
-          </div>
-        </aside>
+      <div class="container tool-layout">
+        <form class="guestbook-form cms-form" data-submission-form>
+          <label>
+            <span>类型</span>
+            <select name="type">
+              <option value="post">文章</option>
+              <option value="project">项目</option>
+              <option value="feedback">反馈</option>
+            </select>
+          </label>
+          <label>
+            <span>标题</span>
+            <input name="title" maxlength="80" required>
+          </label>
+          <label>
+            <span>作者</span>
+            <input name="author" maxlength="40" placeholder="匿名投稿者">
+          </label>
+          <label>
+            <span>联系方式</span>
+            <input name="contact" maxlength="120" placeholder="邮箱 / GitHub / 其他">
+          </label>
+          <label class="wide-field">
+            <span>摘要</span>
+            <input name="summary" maxlength="260">
+          </label>
+          <label class="wide-field">
+            <span>正文</span>
+            <textarea name="content" rows="10" maxlength="8000" required placeholder="可以写 Markdown。"></textarea>
+          </label>
+          <button class="button" type="submit"><i class="ri-send-plane-line"></i> 发送投稿</button>
+          <p class="guestbook-status" data-submission-status>投稿会进入审核队列。</p>
+        </form>
       </div>
     </section>
   </main>
@@ -102,7 +98,7 @@
     <div class="footer-inner">
       <a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
       <div class="footer-links">
-        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
+        <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
       </div>
       <div class="music-player" data-music-player>
@@ -130,12 +126,10 @@
       </div>
     </div>
   </footer>
+
   <script src="js/theme-toggle.js"></script>
-  <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
-  <script src="js/pomodoro.js"></script>
-  <script src="js/site-updates.js"></script>
-  <script src="js/guestbook.js"></script>
+  <script src="js/submission-form.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

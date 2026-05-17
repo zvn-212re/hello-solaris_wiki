@@ -2,11 +2,25 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const ROOT = path.resolve(__dirname, "..");
+const OUT_DIR = path.join(ROOT, "dist");
 const SITE_URL = "https://solaris.wiki";
 const OG_IMAGE = `${SITE_URL}/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif`;
+const STATIC_DIRS = ["admin", "css", "images", "js"];
+const STATIC_FILES = [
+  "favicon.svg",
+  "login.html",
+  "maintenance.html",
+  "moderation.html",
+  "robots.txt",
+  "search.html",
+  "submit.html",
+];
 
 const projects = JSON.parse(
   fs.readFileSync(path.join(ROOT, "data", "projects.json"), "utf8")
+);
+const siteUpdates = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "data", "site-updates.json"), "utf8")
 );
 
 const site = {
@@ -22,6 +36,31 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function resetOutput() {
+  fs.rmSync(OUT_DIR, { recursive: true, force: true });
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+}
+
+function copyPublicAssets() {
+  for (const dir of STATIC_DIRS) {
+    const from = path.join(ROOT, dir);
+    const to = path.join(OUT_DIR, dir);
+
+    if (fs.existsSync(from)) {
+      fs.cpSync(from, to, { recursive: true });
+    }
+  }
+
+  for (const file of STATIC_FILES) {
+    const from = path.join(ROOT, file);
+    const to = path.join(OUT_DIR, file);
+
+    if (fs.existsSync(from)) {
+      fs.copyFileSync(from, to);
+    }
+  }
 }
 
 function attr(value) {
@@ -101,6 +140,7 @@ function nav(active) {
   const links = [
     ["index", "index.html", "首页"],
     ["projects", "projects.html", "项目"],
+    ["articles", "articles.html", "文章"],
     ["about", "about.html", "关于"],
   ];
 
@@ -169,6 +209,8 @@ function scripts() {
   <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
   <script src="js/pomodoro.js"></script>
+  <script src="js/site-updates.js"></script>
+  <script src="js/guestbook.js"></script>
   <script src="js/site-router.js"></script>`;
 }
 
@@ -207,6 +249,90 @@ function homeProjectCard(project) {
               </div>` : "<!-- no primary action -->"}
             </div>
           </article>`;
+}
+
+function siteUpdateItem(update) {
+  const levelLabel = update.level === "major" ? "大版本" : "小更新";
+
+  return `<article class="update-item" data-update-item>
+            <div class="update-version">
+              <span>${escapeHtml(update.version)}</span>
+              <time datetime="${attr(update.date)}">${escapeHtml(update.date.replaceAll("-", "."))}</time>
+            </div>
+            <div class="update-copy">
+              <h3>${escapeHtml(update.title)}</h3>
+              <p>${escapeHtml(update.summary)}</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">${escapeHtml(update.type)}</span>
+              <span class="update-badge secondary">${levelLabel}</span>
+            </div>
+          </article>`;
+}
+
+function siteUpdatesSection() {
+  return `    <section class="section update-section" aria-labelledby="siteUpdatesTitle">
+      <div class="container" data-site-updates>
+        <div class="section-head">
+          <div>
+            <h2 id="siteUpdatesTitle">站点更新</h2>
+            <p class="section-note">每次提交后的简短总结，从 <code>v.0.0.1</code> 开始记录；较大的结构更新使用 <code>v.0.1.1</code> 这类编号。</p>
+          </div>
+          <div class="update-controls" aria-label="站点更新控制">
+            <span class="update-count" data-updates-count></span>
+            <button class="button secondary update-control" type="button" data-updates-more aria-expanded="false">显示更多</button>
+          </div>
+        </div>
+
+        <div class="update-list">
+          ${siteUpdates.map(siteUpdateItem).join("\n\n          ")}
+        </div>
+
+        <div class="update-pager" aria-label="站点更新分页">
+          <button class="button secondary update-control" type="button" data-updates-prev>上一页</button>
+          <span data-updates-page>1 / 1</span>
+          <button class="button secondary update-control" type="button" data-updates-next>下一页</button>
+        </div>
+      </div>
+    </section>`;
+}
+
+function guestbookSection() {
+  return `    <section class="section guestbook-section" aria-labelledby="guestbookTitle">
+      <div class="container guestbook-layout" data-guestbook>
+        <div class="section-head guestbook-head">
+          <div>
+            <h2 id="guestbookTitle">留言区</h2>
+            <p class="section-note">静态站留言会保存在当前浏览器本地；想让我真的收到，可以顺手发邮件。</p>
+          </div>
+          <a class="button secondary update-control" href="mailto:${site.email}?subject=Solaris%20Wiki%20留言"><i class="ri-mail-line"></i> 发邮件</a>
+        </div>
+
+        <div class="guestbook-grid">
+          <form class="guestbook-form" data-guestbook-form>
+            <label>
+              <span>昵称</span>
+              <input type="text" name="name" maxlength="24" placeholder="匿名访客" data-guestbook-name>
+            </label>
+            <label>
+              <span>留言</span>
+              <textarea name="message" rows="5" maxlength="220" placeholder="在这里留下一段信号..." data-guestbook-message required></textarea>
+            </label>
+            <button class="button" type="submit"><i class="ri-send-plane-line"></i> 留下信号</button>
+          </form>
+
+          <div class="guestbook-board">
+            <div class="guestbook-toolbar">
+              <span class="panel-kicker" data-guestbook-mode>Public Signals</span>
+              <button class="button secondary update-control" type="button" data-guestbook-clear hidden>清空</button>
+            </div>
+            <p class="empty-tomato" data-guestbook-empty>还没有留言。第一条信号就交给哥哥啦。</p>
+            <p class="guestbook-status" data-guestbook-status>留言服务连接中...</p>
+            <div class="guestbook-list" data-guestbook-list></div>
+          </div>
+        </div>
+      </div>
+    </section>`;
 }
 
 function indexMain() {
@@ -256,43 +382,9 @@ function indexMain() {
       </div>
     </section>
 
-    <section class="section update-section" aria-labelledby="siteUpdatesTitle">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="siteUpdatesTitle">站点更新</h2>
-          <p class="section-note">记录这个小站最近修了什么、加了什么，免得改完就忘。</p>
-        </div>
+${siteUpdatesSection()}
 
-        <div class="update-list">
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>项目数据源与静态生成</h3>
-              <p>项目列表和详情页改为从数据文件生成，公共导航、页脚和分享信息统一维护。</p>
-            </div>
-            <span class="update-badge">Architecture</span>
-          </article>
-
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>补齐站点基础物料</h3>
-              <p>新增 README、404、robots、sitemap、favicon 和 Open Graph 分享信息。</p>
-            </div>
-            <span class="update-badge">SEO</span>
-          </article>
-
-          <article class="update-item">
-            <time datetime="2026-05-15">2026.05.15</time>
-            <div class="update-copy">
-              <h3>稳定页面缩放表现</h3>
-              <p>收紧标题、阴影和番茄钟数字的尺寸逻辑，减少浏览器缩放时的布局跳动。</p>
-            </div>
-            <span class="update-badge">Fix</span>
-          </article>
-        </div>
-      </div>
-    </section>`;
+${guestbookSection()}`;
 }
 
 function projectRow(project) {
@@ -551,12 +643,13 @@ const pages = [
   })),
 ];
 
+resetOutput();
+copyPublicAssets();
+
 for (const item of pages) {
-  fs.writeFileSync(
-    path.join(ROOT, item.page),
-    page(item),
-    "utf8"
-  );
+  const html = page(item);
+  fs.writeFileSync(path.join(ROOT, item.page), html, "utf8");
+  fs.writeFileSync(path.join(OUT_DIR, item.page), html, "utf8");
 }
 
 const urls = [
@@ -575,4 +668,5 @@ ${urls.map((url) => `  <url><loc>${canonical(url)}</loc></url>`).join("\n")}
 `;
 
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap, "utf8");
+fs.writeFileSync(path.join(OUT_DIR, "sitemap.xml"), sitemap, "utf8");
 console.log(`Built ${pages.length} pages and sitemap.xml`);

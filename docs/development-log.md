@@ -103,6 +103,62 @@
 - 已使用 `scripts/build-site.ps1` 生成主站页面和 `sitemap.xml`。
 - 已检查主站 HTML 中不再存在 `href="#"` 占位链接。
 
+### 定时维护页与 Edge Middleware
+
+需求：
+
+- 网站需要在指定时间段内自动显示维护页。
+- 时间结束后自动恢复正常访问。
+- 维护页保持 Solaris Wiki 像素纸张风，并支持夜间模式。
+
+处理：
+
+- 新增 `maintenance.html`，作为独立维护页，不依赖主站 CSS。
+- 维护页右侧使用 `images/` 中现有 AVIF 图片完整展示。
+- 维护页加入单条科幻文学摘录轮播，30 秒自动切换，也可点击手动切换。
+- 维护页复用 `solarisTheme`，支持与主站一致的白天/夜间模式。
+- 新增 `middleware.js`，使用 Vercel Routing Middleware 判断维护时间窗口。
+- 定时维护窗口配置为北京时间每天 `00:00-06:00`。
+- 预留 `TEMPORARY_MAINTENANCE_WINDOWS`，后续可将 `enabled` 改为 `true` 并设置临时时间段。
+- 临时维护优先级高于每日定时维护。
+- 维护期间访问普通页面会临时重定向到 `/maintenance.html`。
+- 维护页会根据 URL 参数显示当前是“定时维护”还是“临时维护”。
+- 静态资源、`maintenance.html`、`favicon.svg`、`robots.txt`、`sitemap.xml` 会被排除，避免维护页资源加载失败。
+- 增加 `maintenance_bypass` 查询参数，用于临时跳过维护重定向。
+- `npm run check` 增加 `middleware.js` 语法检查。
+
+验证：
+
+- 已执行 `node --check middleware.js`。
+- 已确认 `maintenance.html` 不在 `sitemap.xml` 中，并含有 `noindex`。
+
+### 版本化站点更新与留言区
+
+需求：
+
+- 首页“站点更新”作为每次 commit 的内容总结。
+- 编号从 `v.0.0.1` 开始。
+- 普通小更新递增末位，例如 `v.0.0.2`、`v.0.0.3`。
+- 较大的结构或功能更新使用中位递增，例如 `v.0.1.1`。
+- 首页最多默认显示 4 条，点击“显示更多”后同屏显示 7 条。
+- 支持翻页查看更早的更新内容。
+- 首页最后增加网页留言区。
+
+处理：
+
+- 新增 `data/site-updates.json`，作为站点更新的单一数据源。
+- 新增 `js/site-updates.js`，控制默认 4 条、展开 7 条和分页。
+- 新增 `js/guestbook.js`，实现静态站本地留言区，留言保存在当前浏览器 `localStorage`。
+- 更新 `scripts/build-site.js` 和 `scripts/build-site.ps1`，首页站点更新和留言区都由生成脚本输出。
+- 更新 `css/styles.css`，补充版本号、更新控制、分页、留言表单和本地留言列表样式。
+- 更新 `js/site-router.js`，局部切页后重新初始化站点更新和留言区模块。
+
+验证：
+
+- 已执行 Node 生成脚本和 PowerShell 生成脚本，均成功生成页面。
+- 已执行新增脚本语法检查。
+- 已执行 `git diff --check`。
+
 ### 新增项目接手说明
 
 新增：
@@ -355,3 +411,45 @@ docs/development-log.md
 
 `AGENTS.md` 负责记录“当前状态和接手说明”。  
 `docs/development-log.md` 负责记录“开发过程和决策历史”。
+
+## 2026-05-17
+
+### CMS 与公开互动地基
+
+- 新增 `/admin/` Decap CMS 入口，用于手机端编辑文章、项目草稿和站点更新草稿。
+- 新增 `content/posts/` Markdown 内容目录，并增加 `scripts/build-cms-content.js`，构建时生成 `articles.html`、文章详情页、搜索索引和 sitemap。
+- 新增 `/api/guestbook`、`/api/submissions`、`/api/moderation`，通过 Supabase 存储公开留言、访客投稿和审核状态。
+- 首页留言区改为优先读取公开留言 API，未配置 Supabase 时自动退回浏览器本地留言。
+- 新增 `submit.html` 投稿页、`moderation.html` 审核台和 `search.html` 站内搜索页。
+- 新增 `docs/cms-setup.md`，记录 Vercel 环境变量、Supabase SQL 和后台使用说明。
+
+### 架构与视觉审阅整改
+
+发现的问题：
+
+- 项目已经接入构建、CMS、API 和 Supabase，但 README 与 `AGENTS.md` 仍描述为“无构建、无 package、api/data 预留”。
+- `scripts/build-site.js` 只写入 `dist/`，根目录 HTML 会滞后，导致本地直接预览和 Vercel 输出不一致。
+- 定时维护默认每天 00:00-06:00 生效，线上可用性风险过高。
+- `site-router.js` 未覆盖文章、搜索、投稿页面，也未初始化搜索和投稿脚本；带 hash 的站内链接会被拦截后滚回顶部。
+- CMS 生成页缺少分享 meta，页脚没有音乐播放器但加载了音乐脚本。
+- 搜索页、投稿页的 head、页脚和脚本集合与主站不一致。
+- 移动端导航仍按 3 列排布，但主导航已经变为 4 个入口。
+- 登录页“保持登录”勾选项没有真实持久化逻辑，会误导用户。
+- 投稿正文前端没有长度限制提示，服务端会静默截断。
+
+处理：
+
+- 更新 README 与 `AGENTS.md`，记录当前构建、CMS、API、数据源和部署方式。
+- `scripts/build-site.js` 同时写入根目录和 `dist/`；`scripts/build-cms-content.js` 同时写入根目录和 `dist/` 的搜索索引。
+- `middleware.js` 为每日定时维护增加 `enabled: false` 显式开关，默认不自动封站。
+- 扩展 `site-router.js` 的可路由页面，支持文章、搜索、投稿、hash 滚动，并初始化搜索/投稿模块。
+- CMS 文章模板补齐 theme-color、OG、Twitter Card 和音乐播放器页脚。
+- 搜索页、投稿页补齐 meta、统一页脚播放器和路由脚本；投稿正文增加 `maxlength="8000"`。
+- 移动端主导航从 3 列改为 2 列，避免 4 个入口排成不平衡的 3+1。
+- 移除登录页未使用的“保持登录”勾选和对应 localStorage 逻辑。
+
+验证：
+
+- 已运行 `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`，成功生成 10 个主站页面、1 个 CMS 文章页、文章列表、搜索索引和 sitemap。
+- 已使用同一本机 Node 路径对 `package.json` 中覆盖的 JS 文件执行 `node --check`，全部通过。
+- 当前环境的默认 `node` / `npm` 不在 PATH；构建脚本通过本机 fnm Node 路径完成验证。

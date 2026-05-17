@@ -12,21 +12,21 @@
       } catch {}
     })();
   </script>
-  <meta name="description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="description" content="记录 Solaris Wiki 引入后台、投稿、公开留言和搜索索引的第一阶段。">
   <meta name="theme-color" content="#f4ead6">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Solaris Wiki">
-  <meta property="og:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta property="og:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
-  <meta property="og:url" content="https://solaris.wiki/project-claude-notes.html">
+  <meta property="og:title" content="Solaris Wiki | CMS 地基：从静态站走向可管理内容">
+  <meta property="og:description" content="记录 Solaris Wiki 引入后台、投稿、公开留言和搜索索引的第一阶段。">
+  <meta property="og:url" content="https://solaris.wiki/article-cms-foundation.html">
   <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Solaris Wiki | Claude Code 深度使用笔记">
-  <meta name="twitter:description" content="Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。">
+  <meta name="twitter:title" content="Solaris Wiki | CMS 地基：从静态站走向可管理内容">
+  <meta name="twitter:description" content="记录 Solaris Wiki 引入后台、投稿、公开留言和搜索索引的第一阶段。">
   <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
-  <link rel="canonical" href="https://solaris.wiki/project-claude-notes.html">
+  <link rel="canonical" href="https://solaris.wiki/article-cms-foundation.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <title>Solaris Wiki | Claude Code 深度使用笔记</title>
+  <title>Solaris Wiki | CMS 地基：从静态站走向可管理内容</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -42,8 +42,8 @@
       </a>
       <div class="nav-links">
         <a href="index.html">首页</a>
-        <a class="active" aria-current="page" href="projects.html">项目</a>
-        <a href="articles.html">文章</a>
+        <a href="projects.html">项目</a>
+        <a class="active" aria-current="page" href="articles.html">文章</a>
         <a href="about.html">关于</a>
       </div>
       <div class="nav-actions">
@@ -57,43 +57,26 @@
   </header>
 
   <main>
-    <section class="page-hero">
+    <section class="page-hero article-hero">
       <div class="container">
-        <p class="eyebrow"><i class="ri-book-open-line"></i> Project Detail</p>
-        <h1 class="project-title">Claude Code 深度使用笔记</h1>
-        <p>沉淀命令行编码、项目重构、上下文管理和提示词策略。</p>
+        <p class="eyebrow"><i class="ri-book-open-line"></i> 2026-05-17</p>
+        <h1>CMS 地基：从静态站走向可管理内容</h1>
+        <p>记录 Solaris Wiki 引入后台、投稿、公开留言和搜索索引的第一阶段。</p>
+        <div class="tags">
+          <span class="tag">CMS</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Decap</span>
+        </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container detail-layout">
-        <article class="detail-panel">
-          <div class="detail-meta">
-            <span class="tag">Claude Code</span>
-                <span class="tag dev">笔记</span>
-                <span class="tag alert">草稿中</span>
-          </div>
-          <h2>项目概览</h2>
-          <p>这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。</p>
-          <h2>笔记结构</h2>
-          <ul class="detail-list">
-            <li>上下文压缩、任务拆解和验证策略。</li>
-            <li>代码审查、重构和多文件修改的协作方式。</li>
-            <li>失败案例、提示词调整和复盘记录。</li>
-          </ul>
+      <div class="container article-layout">
+        <article class="detail-panel article-content">
+          <p>这一阶段的目标不是把 Solaris Wiki 立刻改成复杂系统，而是保留静态站的轻巧，同时给内容增长预留后台、审核和搜索能力。</p>
+            <p>后台写作交给 Decap CMS，公开留言和投稿交给 Supabase，构建阶段会把 Markdown 内容生成静态文章页与搜索索引。</p>
+            <p>这样手机上可以写文章，访客可以留言和投稿，站点仍然能以静态页面为主部署在 Vercel 上。</p>
         </article>
-
-        <aside class="detail-side-panel">
-          <div class="detail-visual" aria-hidden="true"><i class="ri-book-open-line"></i></div>
-          <div class="detail-status">
-            <div class="detail-status-row"><span>状态</span><strong>内容草稿</strong></div>
-            <div class="detail-status-row"><span>形式</span><strong>长期笔记</strong></div>
-            <div class="detail-status-row"><span>下一步</span><strong>补目录结构</strong></div>
-          </div>
-          <div class="detail-actions">
-            <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
-          </div>
-        </aside>
       </div>
     </section>
   </main>
@@ -131,11 +114,7 @@
     </div>
   </footer>
   <script src="js/theme-toggle.js"></script>
-  <script src="js/hero.js"></script>
   <script src="js/music-player.js"></script>
-  <script src="js/pomodoro.js"></script>
-  <script src="js/site-updates.js"></script>
-  <script src="js/guestbook.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

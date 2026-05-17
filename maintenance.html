@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f4ead6">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Solaris Wiki | 维护中</title>
+  <style>
+    :root {
+      --paper: #f4ead6;
+      --paper-panel: #fff8e7;
+      --ink: #25231f;
+      --ink-soft: #514b42;
+      --muted: #756d60;
+      --blue: #557f9b;
+      --blue-soft: #dbe8ec;
+      --orange: #c76d45;
+      --orange-soft: #f0c9a7;
+      --red: #b9483f;
+      --cream: #fff3d6;
+      --edge: 3px;
+      --shadow: 6px 6px 0 var(--ink);
+      --font-ui: "IBM Plex Mono", "Microsoft YaHei", monospace;
+      --font-pixel: "Press Start 2P", "Microsoft YaHei", sans-serif;
+      --lamp-core: #ffe6a6;
+      --lamp-glow: rgba(255, 214, 130, 0.52);
+      --star-1: rgba(255, 252, 224, 0);
+      --star-2: rgba(125, 211, 252, 0);
+      --nebula: rgba(85, 127, 155, 0.13);
+    }
+
+    html[data-theme="night"] {
+      --paper: #070b18;
+      --paper-panel: #111a35;
+      --ink: #eef5ff;
+      --ink-soft: #d8e6ff;
+      --muted: #9fb0d0;
+      --blue: #7dd3fc;
+      --blue-soft: #16294a;
+      --orange: #ffd166;
+      --orange-soft: #4b3a1d;
+      --red: #ff6b7a;
+      --cream: #101a32;
+      --lamp-core: #bce9ff;
+      --lamp-glow: rgba(125, 211, 252, 0.46);
+      --star-1: rgba(255, 252, 224, 0.92);
+      --star-2: rgba(125, 211, 252, 0.82);
+      --nebula: rgba(125, 211, 252, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(rgba(37, 35, 31, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 35, 31, 0.045) 1px, transparent 1px),
+        radial-gradient(circle at 18% 22%, rgba(199, 109, 69, 0.18), transparent 24%),
+        radial-gradient(circle at 82% 76%, rgba(85, 127, 155, 0.16), transparent 28%);
+      background-size: 8px 8px, 8px 8px, auto, auto;
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      transition: background-color 620ms ease, color 620ms ease;
+    }
+
+    html[data-theme="night"] body {
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(circle at 12% 16%, var(--star-1) 0 1px, transparent 2px),
+        radial-gradient(circle at 24% 76%, var(--star-2) 0 1px, transparent 2px),
+        radial-gradient(circle at 58% 22%, var(--star-1) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 62%, var(--star-2) 0 1px, transparent 2px),
+        radial-gradient(ellipse at 24% 32%, rgba(125, 211, 252, 0.12), transparent 32%),
+        radial-gradient(ellipse at 82% 22%, rgba(255, 107, 122, 0.10), transparent 30%),
+        linear-gradient(180deg, #050814 0%, #09132b 54%, #050814 100%);
+      background-size: 92px 92px, 130px 130px, 170px 170px, 116px 116px, auto, auto, auto;
+      background-position: 0 0, 18px 42px, 70px 20px, 38px 88px, center, center, center;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 12% 18%, var(--ink) 0 1px, transparent 2px),
+        radial-gradient(circle at 48% 16%, var(--ink) 0 1px, transparent 2px),
+        radial-gradient(circle at 88% 58%, var(--ink) 0 1px, transparent 2px),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.14) 0,
+          rgba(255, 255, 255, 0.14) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      background-size: 180px 180px, 220px 220px, 210px 210px, auto;
+      mix-blend-mode: multiply;
+      opacity: 0.62;
+    }
+
+    html[data-theme="night"] body::before {
+      opacity: 0.82;
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(circle at 9% 18%, var(--star-1) 0 1px, transparent 2px),
+        radial-gradient(circle at 42% 12%, var(--star-2) 0 1px, transparent 2px),
+        radial-gradient(circle at 58% 36%, var(--star-1) 0 1px, transparent 2px),
+        radial-gradient(circle at 88% 58%, var(--star-2) 0 1px, transparent 2px),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.07) 0,
+          rgba(255, 255, 255, 0.07) 1px,
+          transparent 1px,
+          transparent 5px
+        );
+      background-size: 180px 180px, 220px 220px, 260px 260px, 210px 210px, auto;
+    }
+
+    body::after {
+      background:
+        linear-gradient(90deg, rgba(37, 35, 31, 0.14) 0 2px, transparent 2px 10px),
+        linear-gradient(0deg, rgba(37, 35, 31, 0.08) 0 2px, transparent 2px 10px);
+      background-size: 120px 120px;
+      background-position: right 10% top 12%;
+      opacity: 0.48;
+      mix-blend-mode: multiply;
+    }
+
+    html[data-theme="night"] body::after {
+      opacity: 0.56;
+      mix-blend-mode: screen;
+      background:
+        linear-gradient(90deg, rgba(125, 211, 252, 0.13) 0 2px, transparent 2px 12px),
+        linear-gradient(0deg, rgba(125, 211, 252, 0.08) 0 2px, transparent 2px 12px),
+        radial-gradient(ellipse at 74% 20%, rgba(125, 211, 252, 0.18), transparent 26%),
+        radial-gradient(ellipse at 18% 70%, rgba(255, 107, 122, 0.10), transparent 22%);
+    }
+
+    .theme-lamp {
+      position: fixed;
+      top: 0;
+      right: 28px;
+      z-index: 10;
+      width: 54px;
+      height: 78px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .theme-lamp:focus-visible {
+      outline: 2px dashed var(--red);
+      outline-offset: 4px;
+    }
+
+    .lamp-cord,
+    .lamp-head,
+    .lamp-glow {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .lamp-cord {
+      top: 0;
+      width: 3px;
+      height: 32px;
+      background: var(--ink);
+    }
+
+    .lamp-head {
+      top: 28px;
+      width: 34px;
+      height: 22px;
+      border: 3px solid var(--ink);
+      background: var(--lamp-core);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .lamp-glow {
+      top: 42px;
+      width: 44px;
+      height: 32px;
+      background: var(--lamp-glow);
+      clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%);
+      opacity: 0.78;
+      filter: blur(1px);
+    }
+
+    .maintenance-shell {
+      width: min(880px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .message-panel,
+    .signal-panel {
+      border: var(--edge) solid var(--ink);
+      background: var(--paper-panel);
+      box-shadow: var(--shadow);
+    }
+
+    .message-panel {
+      padding: 34px;
+    }
+
+    .eyebrow,
+    .status-line,
+    .window-title,
+    .log-label {
+      font-family: var(--font-pixel);
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 8px 10px;
+      border: 2px solid var(--ink);
+      background: var(--orange-soft);
+      font-size: 0.62rem;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-pixel);
+      font-size: 2rem;
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin: 18px 0 0;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+      font-weight: 700;
+    }
+
+    .note {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .quote-stack {
+      margin-top: 26px;
+    }
+
+    .quote-card {
+      margin: 0;
+      cursor: pointer;
+      padding: 14px 16px;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 3px 3px 0 var(--ink);
+      text-align: left;
+      transition: transform 140ms ease, box-shadow 140ms ease, opacity 180ms ease;
+    }
+
+    .quote-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--ink);
+    }
+
+    .quote-card:focus-visible {
+      outline: 2px dashed var(--red);
+      outline-offset: 4px;
+    }
+
+    .quote-card.is-switching {
+      opacity: 0.36;
+    }
+
+    .quote-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+      font-weight: 800;
+    }
+
+    .quote-card cite {
+      display: block;
+      margin-top: 7px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-style: normal;
+      font-weight: 800;
+    }
+
+    .status-card {
+      margin-top: 28px;
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      color: var(--red);
+      font-size: 0.68rem;
+    }
+
+    .status-dot {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--ink);
+      background: var(--red);
+      box-shadow: 2px 2px 0 var(--ink);
+      animation: blink 1.1s steps(2, end) infinite;
+    }
+
+    .status-copy {
+      margin: 0;
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+
+    .status-mode {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      background: var(--blue-soft);
+      font-size: 0.78rem;
+      font-weight: 900;
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .signal-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 390px;
+      overflow: hidden;
+    }
+
+    .window-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      border-bottom: var(--edge) solid var(--ink);
+      background: var(--blue-soft);
+      font-size: 0.58rem;
+    }
+
+    .signal-screen {
+      position: relative;
+      min-height: 250px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 24%, #fffce0 0 2px, transparent 3px),
+        radial-gradient(circle at 68% 18%, #7dd3fc 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 66%, #fffce0 0 2px, transparent 3px),
+        radial-gradient(ellipse at 50% 80%, rgba(85, 127, 155, 0.46), transparent 42%),
+        linear-gradient(180deg, #071026 0%, #101a35 62%, #071026 100%);
+      background-size: 90px 90px, 130px 130px, 170px 170px, auto, auto;
+    }
+
+    .signal-image {
+      width: 100%;
+      height: min(330px, 56vw);
+      min-height: 250px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      filter: saturate(0.92) contrast(1.08);
+    }
+
+    .signal-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 10px solid rgba(7, 16, 38, 0.55);
+      box-shadow: inset 0 0 0 3px rgba(255, 248, 231, 0.18);
+      pointer-events: none;
+    }
+
+    .scanline {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.08) 0,
+        rgba(255, 255, 255, 0.08) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .log-strip {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border-top: var(--edge) solid var(--ink);
+      background: var(--cream);
+    }
+
+    .log-label {
+      color: var(--blue);
+      font-size: 0.58rem;
+    }
+
+    .log-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .log-row span:last-child {
+      color: var(--red);
+      text-align: right;
+    }
+
+    .signal-caption {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.28;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .maintenance-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .message-panel {
+        padding: 26px 22px;
+      }
+
+      h1 {
+        font-size: 1.45rem;
+      }
+
+      .signal-panel {
+        min-height: 340px;
+      }
+
+      .theme-lamp {
+        right: 18px;
+      }
+
+      .signal-image {
+        height: min(360px, 78vw);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 78px 12px 18px;
+      }
+
+      .eyebrow,
+      .status-line,
+      .window-title,
+      .log-label {
+        font-size: 0.5rem;
+      }
+
+      h1 {
+        font-size: 1.15rem;
+      }
+
+      .subtitle,
+      .note,
+      .status-copy,
+      .quote-card p {
+        font-size: 0.9rem;
+      }
+
+      .log-row {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .log-row span:last-child {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+    <span class="lamp-cord" aria-hidden="true"></span>
+    <span class="lamp-head" aria-hidden="true"></span>
+    <span class="lamp-glow" aria-hidden="true"></span>
+  </button>
+
+  <main class="maintenance-shell" aria-labelledby="maintenanceTitle">
+    <section class="message-panel">
+      <p class="eyebrow"><span aria-hidden="true">◆</span> SOLARIS MAINTENANCE</p>
+      <h1 id="maintenanceTitle">Solaris Wiki 正在维护中</h1>
+      <p class="subtitle">档案室正在重新整理信号、项目卡片和一点点宇宙尘埃。</p>
+
+      <div class="quote-stack" aria-label="科幻文学摘录">
+        <button class="quote-card" id="quoteRotator" type="button" aria-live="polite">
+          <p id="quoteText">“We need mirrors.”</p>
+          <cite id="quoteMeta">Stanisław Lem, Solaris</cite>
+        </button>
+      </div>
+
+      <div class="status-card" role="status" aria-live="polite">
+        <p class="status-line"><span class="status-dot" aria-hidden="true"></span> STATUS / ARCHIVE LOCKED</p>
+        <span class="status-mode" id="maintenanceMode">定时维护</span>
+        <p class="status-copy" id="maintenanceCopy">当前为每日 00:00-06:00 的定时维护窗口，原始内容没有丢失。</p>
+      </div>
+    </section>
+
+    <aside class="signal-panel" aria-label="维护状态信号屏">
+      <div class="window-title">
+        <span>OWNER TV</span>
+        <span>NO SIGNAL</span>
+      </div>
+      <div class="signal-screen">
+        <img
+          class="signal-image"
+          src="images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif"
+          alt="维护中的 Solaris Wiki 像素风图像"
+        >
+        <div class="scanline" aria-hidden="true"></div>
+      </div>
+      <div class="log-strip">
+        <span class="log-label">SIGNAL NOTE</span>
+        <p class="signal-caption">短暂离线，是为了把下一次抵达整理得更清楚。</p>
+      </div>
+    </aside>
+  </main>
+  <script>
+    (() => {
+      const STORAGE_KEY = "solarisTheme";
+      const NIGHT = "night";
+      const DAY = "day";
+      const quotes = [
+        {
+          text: "“We need mirrors.”",
+          meta: "Stanisław Lem, Solaris",
+        },
+        {
+          text: "“No one would have believed...”",
+          meta: "H. G. Wells, The War of the Worlds",
+        },
+        {
+          text: "“The sea is everything.”",
+          meta: "Jules Verne, Twenty Thousand Leagues Under the Seas",
+        },
+        {
+          text: "“A new world, material without being real...”",
+          meta: "Mary Shelley, Frankenstein",
+        },
+        {
+          text: "“The machine was standing there.”",
+          meta: "H. G. Wells, The Time Machine",
+        },
+      ];
+
+      let quoteIndex = 0;
+      let quoteTimer;
+      const quoteButton = document.querySelector("#quoteRotator");
+      const quoteText = document.querySelector("#quoteText");
+      const quoteMeta = document.querySelector("#quoteMeta");
+      const maintenanceMode = document.querySelector("#maintenanceMode");
+      const maintenanceCopy = document.querySelector("#maintenanceCopy");
+
+      function readTheme() {
+        try {
+          return localStorage.getItem(STORAGE_KEY) === NIGHT ? NIGHT : DAY;
+        } catch {
+          return DAY;
+        }
+      }
+
+      function saveTheme(theme) {
+        try {
+          localStorage.setItem(STORAGE_KEY, theme);
+        } catch {}
+      }
+
+      function applyTheme(theme) {
+        const isNight = theme === NIGHT;
+        if (isNight) {
+          document.documentElement.dataset.theme = NIGHT;
+        } else {
+          delete document.documentElement.dataset.theme;
+        }
+
+        document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(isNight));
+          button.setAttribute("aria-label", isNight ? "切换白天模式" : "切换夜间模式");
+          button.title = isNight ? "切换白天模式" : "切换夜间模式";
+        });
+      }
+
+      function toggleTheme() {
+        const nextTheme = document.documentElement.dataset.theme === NIGHT ? DAY : NIGHT;
+        applyTheme(nextTheme);
+        saveTheme(nextTheme);
+      }
+
+      function showQuote(nextIndex) {
+        quoteIndex = nextIndex % quotes.length;
+        quoteButton.classList.add("is-switching");
+
+        window.setTimeout(() => {
+          quoteText.textContent = quotes[quoteIndex].text;
+          quoteMeta.textContent = quotes[quoteIndex].meta;
+          quoteButton.classList.remove("is-switching");
+        }, 140);
+      }
+
+      function nextQuote() {
+        showQuote(quoteIndex + 1);
+      }
+
+      function renderMaintenanceState() {
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get("mode") === "temporary" ? "temporary" : "scheduled";
+        const label = params.get("label") || "";
+
+        if (mode === "temporary") {
+          maintenanceMode.textContent = "临时维护";
+          maintenanceCopy.textContent = label
+            ? `当前为临时维护窗口：${label}。原始内容没有丢失。`
+            : "当前为临时维护窗口，原始内容没有丢失。";
+          return;
+        }
+
+        maintenanceMode.textContent = "定时维护";
+        maintenanceCopy.textContent = "当前为每日 00:00-06:00 的定时维护窗口，原始内容没有丢失。";
+      }
+
+      document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+        button.addEventListener("click", toggleTheme);
+      });
+
+      quoteButton.addEventListener("click", nextQuote);
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        quoteTimer = window.setInterval(nextQuote, 30000);
+      }
+
+      window.addEventListener("beforeunload", () => {
+        window.clearInterval(quoteTimer);
+      });
+
+      applyTheme(readTheme());
+      renderMaintenanceState();
+    })();
+  </script>
+</body>
+</html>
