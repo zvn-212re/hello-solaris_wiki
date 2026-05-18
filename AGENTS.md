@@ -15,8 +15,13 @@
 - 使用原生 HTML/CSS/JavaScript。
 - 没有前端框架，但已有零依赖 Node 构建脚本和 `package.json`。
 - `vercel.json` 使用 `npm run build`，输出目录为 `dist`。
-- 根目录 HTML 可以直接打开；涉及局部路由、搜索、投稿或 API 时建议用本地静态服务器预览。
+- 根目录 HTML 可以直接打开；涉及局部路由、搜索、投稿或 API 时建议用 Vercel 预览或 `vercel dev`，普通静态服务器不会执行 middleware。
 - `api/` 已启用 Vercel Serverless Function，用于留言、投稿和审核。
+- 当前访问策略为整站私有访问，未登录访问普通页面会先跳转到 `login.html`。
+- `login.html` 是双通道独立访问首页：访客邀请码进入普通内容，管理员账号密码进入 `/admin/` 和审核台。
+- `api/auth.js` 校验访客邀请码或管理员账号密码，并设置带角色签名的 `HttpOnly` Cookie；`middleware.js` 根据该 Cookie 中的 `visitor/admin` 角色放行站点页面和 API。生产环境必须配置 `SOLARIS_AUTH_SECRET`、访客邀请码和管理员账号密码。
+- `api/auth.js`、`api/guestbook.js`、`api/submissions.js` 已有轻量 IP 限流；所有 API JSON 响应默认 `no-store`。
+- `vercel.json` 已配置基础安全响应头；当前私有期 `robots.txt` 使用 `Disallow: /`。
 - `data/` 已启用项目数据、站点更新和搜索索引。
 - `content/posts/` 已启用 Markdown 文章源，构建时生成文章页和文章列表。
 - 全站导航和页脚主要由构建脚本生成，少数独立页面仍需手动同步。
@@ -57,8 +62,9 @@
 - `js/music-player.js`：底部音乐播放器交互。
 - `js/pomodoro.js`：番茄钟展示页逻辑。
 - `js/search.js`：站内搜索逻辑。
-- `js/guestbook.js`：留言区本地/远端模式。
+- `js/guestbook.js`：云端留言区，依赖 `/api/guestbook` 和 Supabase。
 - `js/submission-form.js`：投稿表单提交。
+- `js/session-controls.js`：全站退出登录按钮，调用 `/api/auth` 的 `DELETE` 清理服务端 Cookie。
 - `js/login.js`、`js/moderation-dashboard.js`：后台验证和审核台交互。
 
 ## 当前样式
@@ -81,7 +87,7 @@
 ## 当前资源
 
 `images/` 中有 4 张 AVIF 图片，用于首页随机头像/电视框展示。  
-目前没有 favicon、Open Graph 图片、站点截图等正式站点物料。
+已有 `favicon.svg`，但还没有正式 Open Graph 分享图、站点截图、项目截图或个人头像物料。
 
 ## 已完成
 
@@ -100,12 +106,9 @@
 
 ## 尚未完成
 
-- README 已更新为当前构建、CMS 和 API 状态。
-- 已添加主站 favicon。
-- 已添加 `404.html`。
-- 已添加 `robots.txt` 和 `sitemap.xml`。
-- 主站核心页面已添加 Open Graph / Twitter Card 分享信息，新增页面需继续同步。
-- 项目页不再使用 `href="#"` 占位链接；没有真实地址时使用禁用按钮状态。
+- Vercel 生产环境变量、Supabase 表结构和 Decap CMS OAuth / Git Gateway 仍需在平台侧配置。
+- 当前是整站私有访问；如果未来要公开首页或文章，需要重新调整 `robots.txt`、middleware 放行规则和 sitemap 策略。
+- 主站核心页面已添加 Open Graph / Twitter Card 分享信息，独立页面新增时仍需继续同步。
 - “上海信息价数据库比对系统”尚未接入预览 iframe、截图或完整外链。
 - `api/` 与 `data/` 已启用；后续变更需同步检查构建输出和 Vercel 环境变量。
 - 尚未做系统的移动端视觉验收。

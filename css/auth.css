@@ -173,6 +173,19 @@ input {
   border-radius: 8px;
   background: var(--auth-panel);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: transform 360ms ease, opacity 360ms ease, box-shadow 240ms ease;
+}
+
+.auth-shell.is-verifying .auth-panel {
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.48),
+    0 0 0 1px rgba(88, 185, 255, 0.32),
+    0 0 32px rgba(78, 167, 242, 0.18);
+}
+
+.auth-shell.is-success .auth-panel {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
 }
 
 .auth-brand {
@@ -249,6 +262,45 @@ input {
   padding: 10px 0 34px;
 }
 
+.auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.auth-tab {
+  min-height: 38px;
+  border: 1px solid var(--auth-line);
+  border-radius: 10px;
+  color: var(--auth-muted);
+  background: rgba(6, 7, 9, 0.42);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.auth-tab:hover,
+.auth-tab.is-active {
+  color: #fff;
+  border-color: rgba(88, 185, 255, 0.64);
+  background: rgba(78, 167, 242, 0.18);
+  box-shadow: 0 0 0 3px rgba(78, 167, 242, 0.12);
+}
+
+.auth-channel {
+  display: none;
+  gap: 14px;
+  animation: authChannelIn 180ms ease;
+}
+
+.auth-channel.is-active {
+  display: grid;
+}
+
+.auth-channel[hidden] {
+  display: none;
+}
+
 .auth-mode-label {
   width: fit-content;
   margin: 0;
@@ -281,6 +333,13 @@ input {
 .auth-field input:focus {
   border-color: rgba(88, 185, 255, 0.86);
   box-shadow: 0 0 0 3px rgba(78, 167, 242, 0.16);
+}
+
+.auth-hint {
+  margin: -3px 0 0;
+  color: var(--auth-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
 .auth-input-action {
@@ -369,6 +428,12 @@ input {
   filter: brightness(1.08);
 }
 
+.auth-submit:disabled {
+  cursor: wait;
+  filter: grayscale(0.25);
+  opacity: 0.72;
+}
+
 .auth-status {
   min-height: 20px;
   margin: 0;
@@ -412,6 +477,49 @@ input {
   color: var(--auth-accent-strong);
 }
 
+.auth-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  color: #f7fbff;
+  background:
+    radial-gradient(circle at center, rgba(88, 185, 255, 0.22), transparent 0 18%),
+    rgba(3, 8, 14, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.88);
+  transition: opacity 420ms ease, transform 520ms ease;
+}
+
+.auth-transition.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.auth-transition span {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--auth-accent-strong);
+  background: rgba(6, 7, 9, 0.58);
+  font-family: var(--font-pixel);
+  font-size: 0.62rem;
+  box-shadow: 0 0 40px rgba(78, 167, 242, 0.22);
+}
+
+@keyframes authChannelIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 760px) {
   .auth-shell {
     padding: 18px;
@@ -438,6 +546,10 @@ input {
 
   .auth-mode-label {
     justify-self: center;
+  }
+
+  .auth-tabs {
+    grid-template-columns: 1fr;
   }
 
   .auth-row,

@@ -11,6 +11,7 @@ const STATIC_FILES = [
   "login.html",
   "maintenance.html",
   "moderation.html",
+  "pomodoro-tool.html",
   "robots.txt",
   "search.html",
   "submit.html",
@@ -176,6 +177,7 @@ function footer() {
       <div class="footer-links">
         <a href="${site.github}" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:${site.email}"><i class="ri-mail-line"></i> ${site.email}</a>
+        <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
       </div>
       <div class="music-player" data-music-player>
         <button class="music-toggle" type="button" data-music-toggle aria-expanded="false">
@@ -211,6 +213,7 @@ function scripts() {
   <script src="js/pomodoro.js"></script>
   <script src="js/site-updates.js"></script>
   <script src="js/guestbook.js"></script>
+  <script src="js/session-controls.js"></script>
   <script src="js/site-router.js"></script>`;
 }
 
@@ -303,7 +306,7 @@ function guestbookSection() {
         <div class="section-head guestbook-head">
           <div>
             <h2 id="guestbookTitle">留言区</h2>
-            <p class="section-note">静态站留言会保存在当前浏览器本地；想让我真的收到，可以顺手发邮件。</p>
+            <p class="section-note">留言会提交到云端，审核通过后公开展示；想直接联系我，也可以顺手发邮件。</p>
           </div>
           <a class="button secondary update-control" href="mailto:${site.email}?subject=Solaris%20Wiki%20留言"><i class="ri-mail-line"></i> 发邮件</a>
         </div>

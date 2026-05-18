@@ -24,7 +24,7 @@ function isRoutablePage(pageName) {
 function updateActiveNav(pageName) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const linkPage = getPageName(new URL(link.href, window.location.href));
-  const isProjectPage =
+    const isProjectPage =
       (pageName.startsWith("project-") || pageName === "pomodoro.html") &&
       linkPage === "projects.html";
     const isArticlePage = pageName.startsWith("article-") && linkPage === "articles.html";
@@ -54,6 +54,11 @@ async function loadPage(url, pushState = true) {
     return;
   }
 
+  if (response.redirected && new URL(response.url).pathname.endsWith("/login.html")) {
+    window.location.href = response.url;
+    return;
+  }
+
   const html = await response.text();
   const nextDocument = new DOMParser().parseFromString(html, "text/html");
   const nextMain = nextDocument.querySelector("main");
@@ -80,6 +85,7 @@ async function loadPage(url, pushState = true) {
   window.SolarisGuestbook?.init();
   window.SolarisSearch?.init();
   window.SolarisSubmissionForm?.init();
+  window.SolarisSession?.init();
   window.dispatchEvent(new CustomEvent("solaris:pagechange", { detail: { pageName } }));
 
   if (url.hash) {

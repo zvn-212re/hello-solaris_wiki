@@ -1,4 +1,5 @@
 const {
+  checkRateLimit,
   cleanText,
   readJsonBody,
   sendJson,
@@ -14,6 +15,11 @@ module.exports = async function handler(request, response) {
       sendJson(response, 405, { error: "Method not allowed." });
       return;
     }
+
+    checkRateLimit(request, "submissions", {
+      limit: 5,
+      windowMs: 60 * 60 * 1000,
+    });
 
     const body = await readJsonBody(request);
     const title = cleanText(body.title, 80);

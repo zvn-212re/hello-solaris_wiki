@@ -13,6 +13,8 @@
     })();
   </script>
   <meta name="robots" content="noindex">
+  <meta name="description" content="Solaris Wiki 留言与投稿审核台。">
+  <meta name="theme-color" content="#f4ead6">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Solaris Wiki | 审核台</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,8 +59,8 @@
       <div class="container moderation-layout" data-moderation>
         <div class="tool-panel moderation-token">
           <label class="field-stack">
-            <span>管理员令牌</span>
-            <input type="password" data-admin-token placeholder="SOLARIS_ADMIN_TOKEN">
+            <span>备用管理员令牌</span>
+            <input type="password" data-admin-token placeholder="已登录时可留空">
           </label>
           <button class="button" type="button" data-load-moderation><i class="ri-refresh-line"></i> 读取审核队列</button>
           <p class="guestbook-status" data-moderation-status>等待读取。</p>
@@ -87,11 +89,13 @@
       <a href="https://solaris.wiki" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
       <div class="footer-links">
         <a href="admin/"><i class="ri-settings-3-line"></i> Admin</a>
+        <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
       </div>
     </div>
   </footer>
 
   <script src="js/theme-toggle.js"></script>
   <script src="js/moderation-dashboard.js"></script>
+  <script src="js/session-controls.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 const {
+  checkRateLimit,
   cleanText,
   readJsonBody,
   sendJson,
@@ -18,6 +19,11 @@ module.exports = async function handler(request, response) {
     }
 
     if (request.method === "POST") {
+      checkRateLimit(request, "guestbook", {
+        limit: 10,
+        windowMs: 60 * 60 * 1000,
+      });
+
       const body = await readJsonBody(request);
       const name = cleanText(body.name || "匿名访客", 24) || "匿名访客";
       const message = cleanText(body.message, 500);

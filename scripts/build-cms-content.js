@@ -253,6 +253,7 @@ function footer() {
       <div class="footer-links">
         <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
+        <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
       </div>
       <div class="music-player" data-music-player>
         <button class="music-toggle" type="button" data-music-toggle aria-expanded="false">
@@ -284,6 +285,7 @@ function footer() {
 function scripts(extra = "") {
   return `<script src="js/theme-toggle.js"></script>
   <script src="js/music-player.js"></script>
+  <script src="js/session-controls.js"></script>
   <script src="js/site-router.js"></script>${extra ? `\n  ${extra}` : ""}`;
 }
 

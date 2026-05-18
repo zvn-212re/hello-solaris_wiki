@@ -10,13 +10,19 @@
   }
 
   async function requestModeration(path, options = {}) {
+    const token = getToken();
+    const headers = {
+      "content-type": "application/json",
+      ...(options.headers || {}),
+    };
+
+    if (token) {
+      headers["x-admin-token"] = token;
+    }
+
     const response = await fetch(path, {
       ...options,
-      headers: {
-        "content-type": "application/json",
-        "x-admin-token": getToken(),
-        ...(options.headers || {}),
-      },
+      headers,
     });
     const payload = await response.json().catch(() => ({}));
 
@@ -107,7 +113,7 @@
     tokenInput.value = getToken();
 
     if (!tokenInput.value && status) {
-      status.innerHTML = '尚未检测到管理员令牌，请先前往 <a href="login.html">验证登录</a>。';
+      status.textContent = "已通过站点登录时可直接读取；令牌输入框仅作为备用。";
     }
 
     loadButton.addEventListener("click", async () => {

@@ -2,6 +2,8 @@
 
 Solaris Wiki 是一个以静态页面为主的个人网站，用来记录 Vibe Coding、AI Agent 实验、工程数据工具、个人项目和技术笔记。当前项目已经接入轻量构建脚本、Decap CMS 文章生成、Vercel API 和 Supabase 留言/投稿审核能力。
 
+当前访问策略：整站私有访问。首次打开普通页面会先跳转到 `login.html`，访客可用邀请码进入普通内容，管理员可用账号密码进入 CMS 后台。验证后由服务端设置带角色签名的 `HttpOnly` Cookie，再由 middleware 按权限放行。生产环境必须配置 `SOLARIS_AUTH_SECRET`、访客邀请码和管理员账号密码。
+
 目标域名：`https://solaris.wiki`
 
 ## 技术栈
@@ -11,6 +13,8 @@ Solaris Wiki 是一个以静态页面为主的个人网站，用来记录 Vibe C
 - 项目数据源：`data/projects.json`
 - 内容源：`content/posts/*.md`
 - 互动接口：`api/guestbook.js`、`api/submissions.js`、`api/moderation.js`
+- 私有访问：`middleware.js` + `api/auth.js`
+- 站点安全：Vercel headers、基础 API 限流、`HttpOnly` Cookie、私有期 `robots.txt`
 - 部署目标：Vercel
 
 构建输出目录为 `dist/`，由 `vercel.json` 指定为 Vercel 的 `outputDirectory`。根目录中的 HTML 仍保留，便于本地直接预览和审阅生成结果。
@@ -29,16 +33,20 @@ python -m http.server 3000
 http://localhost:3000
 ```
 
+权限验证、`HttpOnly` Cookie 和 `/api/*` 接口需要 Vercel 运行时，直接双击 HTML 或普通静态服务器不会执行 middleware。要完整验证登录和留言流程，请使用线上 Vercel 部署或 `vercel dev`。
+
 ## 常用命令
 
 ```bash
 npm run build
 npm run build:ps
 npm run check
+npm run check:supabase
 ```
 
 `npm run build` 会根据 `data/projects.json` 生成首页、项目页、项目详情页、404 页面，再根据 `content/posts/*.md` 生成文章页、文章列表、搜索索引和 `sitemap.xml`。
 在当前 Windows 环境中也可以用 `npm run build:ps` 执行同等生成流程。
+`npm run check:supabase` 会读取 `.env.local` / `.env`，验证 Supabase service role key 是否能访问留言和投稿表，不会打印密钥。
 
 ## 内容维护
 
@@ -70,6 +78,14 @@ npm run check
 - `sitemap.xml`
 - Open Graph / Twitter Card meta
 - Canonical URL
+
+## 仍需补齐
+
+- 在 Vercel 配置生产环境变量，并轮换已经泄露过的 Supabase service role key。
+- 在 Supabase SQL Editor 执行 `supabase/schema.sql`，让留言、投稿和审核进入真实云端数据。
+- Decap CMS 的 GitHub OAuth / Git Gateway 仍需正式配置，否则 `/admin/` 只能算入口页。
+- 如果未来要公开个人站，需要把 `robots.txt` 从 `Disallow: /` 改回开放策略，并决定哪些页面不再需要登录。
+- 仍缺正式 OG 分享图、站点截图、项目截图、个人头像或可公开展示的作品封面。
 
 ## 注意事项
 

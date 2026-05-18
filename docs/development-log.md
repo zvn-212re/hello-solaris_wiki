@@ -453,3 +453,95 @@ docs/development-log.md
 - 已运行 `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`，成功生成 10 个主站页面、1 个 CMS 文章页、文章列表、搜索索引和 sitemap。
 - 已使用同一本机 Node 路径对 `package.json` 中覆盖的 JS 文件执行 `node --check`，全部通过。
 - 当前环境的默认 `node` / `npm` 不在 PATH；构建脚本通过本机 fnm Node 路径完成验证。
+
+### 整站私有访问
+
+需求：
+
+- 打开 Solaris Wiki 时先验证登录，不再让首页作为公开入口。
+
+处理：
+
+- 新增 `api/auth.js`，通过服务端配置校验访问凭据，成功后设置 `HttpOnly`、`SameSite=Lax` 的 `solaris_site_session` Cookie。
+- 新增 `lib/auth-session.js`，封装服务端 session 签名、Cookie 创建和审核 API 复用校验。
+- `middleware.js` 改为默认拦截普通页面、文章、数据文件和 API；未登录访问页面会跳到 `/login.html?next=...`，未登录访问 API 返回 `401` JSON。
+- `/css/`、`/js/`、`/images/`、`favicon.svg`、`/api/auth` 和 `/maintenance.html` 保持公开，以便登录页和维护页正常渲染。
+- `login.html` 和 `js/login.js` 改为私有访问登录，不再把 token 作为前端登录状态保存。
+- `js/moderation-dashboard.js` 改为优先依赖站点登录 Cookie，令牌输入框仅作为备用手动方式。
+- 更新 README、`AGENTS.md` 和 `docs/cms-setup.md`，记录整站私有访问逻辑和 `SOLARIS_AUTH_MAX_AGE_SECONDS` 可选环境变量。
+
+### 双通道真实访问验证
+
+需求：
+
+- 访问验证页作为独立首页使用。
+- 支持访客邀请码登录和管理员账号密码登录。
+- 访客只能访问普通受保护内容；管理员可以进入 CMS 和审核台。
+
+处理：
+
+- `login.html` 改为双标签页：访客邀请码和管理员登录。
+- `js/login.js` 增加标签页切换、前端格式校验、`/api/auth` 双通道请求、`sessionStorage` 非权威状态记录和成功转场动画。
+- `api/auth.js` 支持 `visitor` / `admin` 两种模式：访客邀请码默认 `SOLARIS2026`，管理员默认 `admin` / `solaris2026`，生产环境可用环境变量覆盖。
+- `lib/auth-session.js` 将 Cookie 改为 `role.expiresAt.signature`，签名包含角色，防止访客伪造管理员。
+- `middleware.js` 读取 Cookie 后按角色放行：`visitor` 可访问普通页面和数据，`admin` 可访问 `/admin/`、`/moderation.html` 和 `/api/moderation`。
+- `css/auth.css` 增加双标签页、登录卡片发光、卡片淡出和全屏访问通过遮罩动画。
+- 更新 `README.md`、`AGENTS.md` 和 `docs/cms-setup.md` 中的访问策略与环境变量说明。
+
+## 2026-05-18
+
+### 真实上线配置收紧
+
+发现的问题：
+
+- 管理员登录会在未配置 `SOLARIS_ADMIN_PASSWORD` 时回退到旧的 `SOLARIS_ADMIN_TOKEN`，容易造成“页面密码不对”的误解。
+- 生产环境缺少关键登录环境变量时仍可能使用演示默认值，不适合作为真实私有站。
+- 登录页上的辅助链接会让本地静态预览看起来可以绕过权限；实际 middleware 只在 Vercel / `vercel dev` 生效。
+- 留言区在 API 或 Supabase 未配置时会自动退回浏览器本地存储，容易被误认为线上留言已经生效。
+
+处理：
+
+- `api/auth.js` 生产环境必须配置 `SOLARIS_AUTH_SECRET`、`SOLARIS_VISITOR_INVITE_CODE`、`SOLARIS_ADMIN_USERNAME` 和 `SOLARIS_ADMIN_PASSWORD`。
+- `SOLARIS_ADMIN_TOKEN` 仅保留为审核 API 备用 header 令牌，不再作为网页登录密码。
+- `middleware.js` 与 `lib/auth-session.js` 生产环境只信任 `SOLARIS_AUTH_SECRET` 签名 Cookie；本地开发才允许演示默认值。
+- 登录页辅助链接改为回到 `login.html?next=...`，避免在静态预览中形成误导性入口。
+- `js/guestbook.js` 改为云端留言模式，Supabase/API 未配置时明确报错，不再写入本地留言。
+- 新增 `supabase/schema.sql`，集中保存留言和投稿表结构。
+
+### 全局架构审查与整改
+
+发现的问题：
+
+- `pomodoro-tool.html` 是 sitemap 和项目入口中引用的真实页面，但没有被复制到 Vercel `dist/` 输出目录。
+- 私有站仍使用 `robots.txt` 的 `Allow: /`，会诱导搜索引擎抓取登录保护页面。
+- `vercel.json` 缺少基础安全响应头和私有内容缓存控制。
+- `/api/auth`、留言和投稿接口缺少基础限流，公开邀请码泄露后容易被刷。
+- API JSON 解析失败会落到 500，不利于定位前端请求问题。
+- SPA 局部路由在登录过期后可能把 `login.html` 的主体误替换进当前页面。
+- 登录后没有明确的退出入口，只能手动清 Cookie。
+- 审核台允许 `hidden` 状态，但初版 Supabase schema 没把 `hidden` 放进状态约束。
+
+处理：
+
+- `scripts/build-site.js` 将 `pomodoro-tool.html` 纳入静态复制列表。
+- `robots.txt` 改为私有期 `Disallow: /`。
+- `vercel.json` 增加 `Cache-Control: private, no-store`、`X-Content-Type-Options`、`X-Frame-Options`、`Referrer-Policy`、`Permissions-Policy` 和 HSTS。
+- `lib/supabase-api.js` 增加轻量 IP 限流、API `no-store`、JSON 400 错误和管理员备用令牌恒定时间比较。
+- `api/auth.js`、`api/guestbook.js`、`api/submissions.js` 接入限流。
+- `js/site-router.js` 在 fetch 被重定向到登录页时改为整页跳转，并修正可读性缩进。
+- 新增 `js/session-controls.js`，全站底部“退出”按钮调用 `DELETE /api/auth` 清理 Cookie。
+- `supabase/schema.sql` 状态约束加入 `hidden`。
+- `data/site-updates.json` 新增 `v.0.3.0`，记录真实访问验证、云端留言和私有站安全加固。
+
+### Supabase 配置安全边界
+
+说明：
+
+- service role key 只能安全地放在服务端环境变量中，用于 Vercel API 访问已存在的表。
+- 创建表结构仍应通过 Supabase SQL Editor、Supabase CLI、数据库连接串或 Management API migration 完成，不能把 service role key 写进前端或仓库。
+- 当前本机没有 `psql` 和 Supabase CLI，因此新增 `scripts/check-supabase.js` 作为连通性检查，而不是直接建表工具。
+
+处理：
+
+- 新增 `npm run check:supabase`，读取 `.env.local` / `.env` 中的 `SUPABASE_URL` 和 `SUPABASE_SERVICE_ROLE_KEY`，验证 `guestbook_messages` 与 `content_submissions` 是否可访问。
+- 文档补充 `.env.local` 示例和检查命令，避免在聊天或 Git 中暴露密钥。

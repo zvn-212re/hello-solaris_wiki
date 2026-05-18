@@ -1,24 +1,4 @@
 (function () {
-  const STORAGE_KEY = "solarisGuestbookMessages";
-  const MAX_MESSAGES = 12;
-
-  function readLocalMessages() {
-    try {
-      const messages = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      return Array.isArray(messages) ? messages : [];
-    } catch {
-      return [];
-    }
-  }
-
-  function saveLocalMessages(messages) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(0, MAX_MESSAGES)));
-    } catch {
-      // Local fallback only; ignore storage errors.
-    }
-  }
-
   function formatDate(value) {
     try {
       return new Intl.DateTimeFormat("zh-CN", {
@@ -37,19 +17,28 @@
     return {
       id: row.id,
       name: row.name || "匿名访客",
-      text: row.message || row.text || "",
-      createdAt: row.created_at || row.createdAt || new Date().toISOString(),
-      remote: true,
+      text: row.message || "",
+      createdAt: row.created_at || new Date().toISOString(),
     };
   }
 
-  function renderMessages({ list, empty, clearButton, modeText }, messages, mode) {
+  function setStatus(element, message, tone) {
+    if (!element) {
+      return;
+    }
+
+    element.textContent = message;
+    element.classList.toggle("is-error", tone === "error");
+    element.classList.toggle("is-ok", tone === "ok");
+  }
+
+  function renderMessages({ list, empty, clearButton, modeText }, messages) {
     list.innerHTML = "";
     empty.hidden = messages.length > 0;
-    clearButton.hidden = mode !== "local" || messages.length === 0;
+    clearButton.hidden = true;
 
     if (modeText) {
-      modeText.textContent = mode === "remote" ? "Public Signals" : "Local Signals";
+      modeText.textContent = "Cloud Signals";
     }
 
     messages.forEach((message) => {
@@ -69,14 +58,22 @@
     });
   }
 
-  async function fetchRemoteMessages() {
-    const response = await fetch("/api/guestbook", { cache: "no-store" });
+  async function readJsonResponse(response, fallbackMessage) {
+    const payload = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error("Guestbook API unavailable.");
+      throw new Error(payload.error || fallbackMessage);
     }
 
-    const payload = await response.json();
+    return payload;
+  }
+
+  async function fetchRemoteMessages() {
+    const response = await fetch("/api/guestbook", {
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+    const payload = await readJsonResponse(response, "云端留言服务暂时不可用。");
     return (payload.messages || []).map(normalizeRemote);
   }
 
@@ -84,16 +81,11 @@
     const response = await fetch("/api/guestbook", {
       method: "POST",
       headers: { "content-type": "application/json" },
+      credentials: "same-origin",
       body: JSON.stringify({ name, message }),
     });
 
-    const payload = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      throw new Error(payload.error || "留言发送失败。");
-    }
-
-    return payload;
+    return readJsonResponse(response, "留言发送失败。");
   }
 
   function initGuestbook() {
@@ -112,22 +104,21 @@
     const modeText = root.querySelector("[data-guestbook-mode]");
     const statusText = root.querySelector("[data-guestbook-status]");
     const elements = { list, empty, clearButton, modeText };
-    let mode = "local";
 
-    function renderLocal() {
-      mode = "local";
-      renderMessages(elements, readLocalMessages(), mode);
-      if (statusText) {
-        statusText.textContent = "线上留言服务未配置时，会临时保存到当前浏览器。";
-      }
-    }
+    async function refreshMessages() {
+      setStatus(statusText, "正在读取云端留言...", "ok");
 
-    async function renderRemote() {
-      const messages = await fetchRemoteMessages();
-      mode = "remote";
-      renderMessages(elements, messages, mode);
-      if (statusText) {
-        statusText.textContent = "留言会提交到公开留言区，审核通过后展示。";
+      try {
+        const messages = await fetchRemoteMessages();
+        renderMessages(elements, messages);
+        setStatus(statusText, "留言会提交到云端，审核通过后公开展示。", "ok");
+      } catch (error) {
+        renderMessages(elements, []);
+        setStatus(
+          statusText,
+          `${error.message || "云端留言服务暂时不可用。"} 请检查 Supabase 表和 Vercel 环境变量。`,
+          "error"
+        );
       }
     }
 
@@ -145,43 +136,25 @@
       button.disabled = true;
 
       try {
-        if (mode === "remote") {
-          const payload = await postRemoteMessage(name.slice(0, 24), text.slice(0, 500));
-          form.reset();
-          if (statusText) {
-            statusText.textContent =
-              payload.status === "approved" ? "留言已发布。" : "留言已收到，等待审核。";
-          }
-          await renderRemote();
-        } else {
-          const messages = readLocalMessages();
-          messages.unshift({
-            name: name.slice(0, 24),
-            text: text.slice(0, 220),
-            createdAt: new Date().toISOString(),
-          });
-          saveLocalMessages(messages);
-          form.reset();
-          renderLocal();
-        }
+        const payload = await postRemoteMessage(name.slice(0, 24), text.slice(0, 500));
+        form.reset();
+        setStatus(
+          statusText,
+          payload.status === "approved" ? "留言已发布。" : "留言已收到，等待审核。",
+          "ok"
+        );
+        await refreshMessages();
       } catch (error) {
-        if (statusText) {
-          statusText.textContent = error.message || "留言发送失败，已切回本地模式。";
-        }
-        mode = "local";
-        renderLocal();
+        setStatus(statusText, error.message || "留言发送失败，请稍后再试。", "error");
       } finally {
         button.disabled = false;
       }
     });
 
-    clearButton.addEventListener("click", () => {
-      saveLocalMessages([]);
-      renderLocal();
-    });
+    clearButton.addEventListener("click", refreshMessages);
 
     root.dataset.bound = "true";
-    renderRemote().catch(renderLocal);
+    refreshMessages();
   }
 
   window.SolarisGuestbook = {

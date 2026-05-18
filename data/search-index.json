@@ -88,6 +88,17 @@
     ]
   },
   {
+    "title": "真实访问验证与云端留言",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "登录改为双通道服务端验证、HttpOnly Cookie 和角色权限；留言与投稿改为 Supabase 云端数据，并补充限流、退出登录和私有站安全头。",
+    "tags": [
+      "v.0.3.0",
+      "Architecture",
+      "major"
+    ]
+  },
+  {
     "title": "站点更新日志与留言区",
     "url": "index.html#siteUpdatesTitle",
     "type": "Update",

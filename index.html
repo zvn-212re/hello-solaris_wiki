@@ -163,6 +163,21 @@
         <div class="update-list">
           <article class="update-item" data-update-item>
             <div class="update-version">
+              <span>v.0.3.0</span>
+              <time datetime="2026-05-18">2026.05.18</time>
+            </div>
+            <div class="update-copy">
+              <h3>真实访问验证与云端留言</h3>
+              <p>登录改为双通道服务端验证、HttpOnly Cookie 和角色权限；留言与投稿改为 Supabase 云端数据，并补充限流、退出登录和私有站安全头。</p>
+            </div>
+            <div class="update-badges">
+              <span class="update-badge">Architecture</span>
+              <span class="update-badge secondary">大版本</span>
+            </div>
+          </article>
+
+          <article class="update-item" data-update-item>
+            <div class="update-version">
               <span>v.0.2.2</span>
               <time datetime="2026-05-16">2026.05.16</time>
             </div>
@@ -325,7 +340,7 @@
         <div class="section-head guestbook-head">
           <div>
             <h2 id="guestbookTitle">留言区</h2>
-            <p class="section-note">静态站留言会保存在当前浏览器本地；想让我真的收到，可以顺手发邮件。</p>
+            <p class="section-note">留言会提交到云端，审核通过后公开展示；想直接联系我，也可以顺手发邮件。</p>
           </div>
           <a class="button secondary update-control" href="mailto:xiechanghui9@gmail.com?subject=Solaris%20Wiki%20留言"><i class="ri-mail-line"></i> 发邮件</a>
         </div>
@@ -363,6 +378,7 @@
       <div class="footer-links">
         <a href="https://github.com/zvn-212re" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
+        <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
       </div>
       <div class="music-player" data-music-player>
         <button class="music-toggle" type="button" data-music-toggle aria-expanded="false">
@@ -395,6 +411,7 @@
   <script src="js/pomodoro.js"></script>
   <script src="js/site-updates.js"></script>
   <script src="js/guestbook.js"></script>
+  <script src="js/session-controls.js"></script>
   <script src="js/site-router.js"></script>
 </body>
 </html>

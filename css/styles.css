@@ -218,6 +218,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  font: inherit;
+}
+
 p,
 li,
 h1,
@@ -1206,6 +1210,14 @@ h3 {
   font-weight: 800;
 }
 
+.guestbook-status.is-ok {
+  color: var(--blue);
+}
+
+.guestbook-status.is-error {
+  color: var(--red);
+}
+
 .tool-layout,
 .moderation-layout {
   display: grid;
@@ -1844,6 +1856,7 @@ h3 {
 
 .footer-links a,
 .footer-links span,
+.footer-action,
 .footer-inner > a {
   display: inline-flex;
   align-items: center;
@@ -1855,7 +1868,14 @@ h3 {
   box-shadow: 3px 3px 0 var(--ink);
 }
 
+.footer-action {
+  color: inherit;
+  cursor: pointer;
+  font-weight: 800;
+}
+
 .footer-links a:hover,
+.footer-action:hover,
 .footer-inner > a:hover {
   background: var(--blue-soft);
   transform: translate(2px, 2px);
@@ -1863,9 +1883,15 @@ h3 {
 }
 
 .footer-links a:active,
+.footer-action:active,
 .footer-inner > a:active {
   transform: translate(3px, 3px);
   box-shadow: 0 0 0 var(--ink);
+}
+
+.footer-action:disabled {
+  cursor: wait;
+  opacity: 0.72;
 }
 
 .music-player {
