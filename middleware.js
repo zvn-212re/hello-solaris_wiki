@@ -252,7 +252,7 @@ function unauthorizedResponse(url) {
   if (isAdminPath(url.pathname)) {
     loginUrl.searchParams.set("mode", ROLE_ADMIN);
   }
-  const response = Response.redirect(loginUrl, 307);
+  const response = Response.redirect(loginUrl.toString(), 307);
   response.headers.set("cache-control", "no-store");
   return response;
 }
@@ -270,7 +270,7 @@ export default async function middleware(request) {
     const nextUrl = new URL(nextPath, request.url);
 
     if (hasAccess(sessionRole, nextUrl.pathname)) {
-      return Response.redirect(nextUrl, 307);
+      return Response.redirect(nextUrl.toString(), 307);
     }
   }
 
@@ -288,7 +288,7 @@ export default async function middleware(request) {
   maintenanceUrl.searchParams.set("mode", maintenance.type);
   maintenanceUrl.searchParams.set("label", maintenance.label);
 
-  const response = Response.redirect(maintenanceUrl, 307);
+  const response = Response.redirect(maintenanceUrl.toString(), 307);
   response.headers.set("cache-control", "no-store");
   response.headers.set("x-solaris-maintenance", maintenance.type);
 
