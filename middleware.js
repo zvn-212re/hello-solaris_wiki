@@ -236,6 +236,17 @@ function hasAccess(role, pathname) {
   return role === ROLE_VISITOR || role === ROLE_ADMIN;
 }
 
+function redirectResponse(url, status = 307, extraHeaders = {}) {
+  return new Response(null, {
+    status,
+    headers: {
+      location: url.toString(),
+      "cache-control": "no-store",
+      ...extraHeaders,
+    },
+  });
+}
+
 function unauthorizedResponse(url) {
   if (url.pathname.startsWith("/api/")) {
     return new Response(JSON.stringify({ error: "Authentication required." }), {
@@ -252,9 +263,7 @@ function unauthorizedResponse(url) {
   if (isAdminPath(url.pathname)) {
     loginUrl.searchParams.set("mode", ROLE_ADMIN);
   }
-  const response = Response.redirect(loginUrl.toString(), 307);
-  response.headers.set("cache-control", "no-store");
-  return response;
+  return redirectResponse(loginUrl);
 }
 
 export default async function middleware(request) {
@@ -270,7 +279,7 @@ export default async function middleware(request) {
     const nextUrl = new URL(nextPath, request.url);
 
     if (hasAccess(sessionRole, nextUrl.pathname)) {
-      return Response.redirect(nextUrl.toString(), 307);
+      return redirectResponse(nextUrl);
     }
   }
 
@@ -288,9 +297,7 @@ export default async function middleware(request) {
   maintenanceUrl.searchParams.set("mode", maintenance.type);
   maintenanceUrl.searchParams.set("label", maintenance.label);
 
-  const response = Response.redirect(maintenanceUrl.toString(), 307);
-  response.headers.set("cache-control", "no-store");
-  response.headers.set("x-solaris-maintenance", maintenance.type);
-
-  return response;
+  return redirectResponse(maintenanceUrl, 307, {
+    "x-solaris-maintenance": maintenance.type,
+  });
 }
