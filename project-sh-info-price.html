@@ -12,17 +12,17 @@
       } catch {}
     })();
   </script>
-  <meta name="description" content="上海信息价数据库比对系统项目详情，记录工程数据查询和比对工具规划。">
+  <meta name="description" content="上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。">
   <meta name="theme-color" content="#f4ead6">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Solaris Wiki">
   <meta property="og:title" content="Solaris Wiki | 上海信息价数据库比对系统">
-  <meta property="og:description" content="上海信息价数据库比对系统项目详情，记录工程数据查询和比对工具规划。">
+  <meta property="og:description" content="上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。">
   <meta property="og:url" content="https://solaris.wiki/project-sh-info-price.html">
   <meta property="og:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Solaris Wiki | 上海信息价数据库比对系统">
-  <meta name="twitter:description" content="上海信息价数据库比对系统项目详情，记录工程数据查询和比对工具规划。">
+  <meta name="twitter:description" content="上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。">
   <meta name="twitter:image" content="https://solaris.wiki/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif">
   <link rel="canonical" href="https://solaris.wiki/project-sh-info-price.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -61,7 +61,7 @@
       <div class="container">
         <p class="eyebrow"><i class="ri-database-2-line"></i> Project Detail</p>
         <h1 class="project-title">上海信息价数据库比对系统</h1>
-        <p>面向信息价 JSON、历史数据和工程清单的比对查询工具。</p>
+        <p>已接入 82 期上海材料信息价，支持材料检索、趋势查看和历史价格比对。</p>
       </div>
     </section>
 
@@ -70,25 +70,27 @@
         <article class="detail-panel">
           <div class="detail-meta">
             <span class="tag">工程数据</span>
-                <span class="tag alert">开发中</span>
-                <span class="tag alert">开发中</span>
+                <span class="tag dev">82期数据</span>
+                <span class="tag alert">待部署外链</span>
           </div>
           <h2>项目概览</h2>
-          <p>这个系统计划作为独立 Vercel 应用部署，主站只承担入口、预览和项目说明。核心目标是让信息价数据查询、比对和工程清单辅助分析更顺手。</p>
-          <h2>规划功能</h2>
+          <p>这个系统作为独立 Next.js 应用维护，主站只承担入口和项目说明。当前已经接入上海市建设市场信息服务平台 2019.05 至 2026.04 的 82 期材料信息价，前端首屏加载最新期数据，历史走势按材料懒加载。</p>
+          <h2>已完成能力</h2>
           <ul class="detail-list">
-            <li>信息价 JSON 数据导入、索引和关键词查询。</li>
-            <li>历史价格比对、地区/类别筛选和结果导出。</li>
-            <li>主站后续接入预览截图、iframe 或完整外链。</li>
+            <li>采集官方材料信息价附件并解析为结构化数据。</li>
+            <li>生成最新期索引、检索索引和按材料拆分的历史价格文件。</li>
+            <li>在独立应用中支持关键词筛选、材料详情和 82 期历史趋势查看。</li>
+            <li>主站卡片已更新项目进度，生产外链等待 Vercel 地址替换。</li>
           </ul>
         </article>
 
         <aside class="detail-side-panel">
           <div class="detail-visual" aria-hidden="true"><i class="ri-database-2-line"></i></div>
           <div class="detail-status">
-            <div class="detail-status-row"><span>状态</span><strong>独立项目开发中</strong></div>
-            <div class="detail-status-row"><span>集成</span><strong>主站暂作入口</strong></div>
-            <div class="detail-status-row"><span>下一步</span><strong>等待部署地址</strong></div>
+            <div class="detail-status-row"><span>状态</span><strong>独立应用已完成</strong></div>
+            <div class="detail-status-row"><span>数据范围</span><strong>2019.05 - 2026.04</strong></div>
+            <div class="detail-status-row"><span>材料期数</span><strong>82期 / 541,830条</strong></div>
+            <div class="detail-status-row"><span>下一步</span><strong>接入 Vercel 外链</strong></div>
           </div>
           <div class="detail-actions">
             <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
