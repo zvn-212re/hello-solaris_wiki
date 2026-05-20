@@ -610,3 +610,32 @@ docs/development-log.md
   - `/login.html`
   - `/css/auth.css`
 - `/sh-info-price/data/manifest.json` 读到最新期 `2026-04`，总记录数 `541,830`。
+
+### 修复生产环境查询工具未挂载
+
+问题：
+
+- Vercel 构建主站时只有 `solaris-wiki` 仓库，不一定存在本机相邻目录 `H:\codex\sh-info-price`。
+- 旧版 `scripts/build-price-app.js` 在找不到本地 `public/data` 时会生成“查询工具未挂载”兜底页，导致线上按钮进入后不可用。
+
+处理：
+
+- `scripts/build-price-app.js` 改为始终挂载 `tools/sh-info-price/` 查询工具。
+- 如果本地存在 `sh-info-price/public/data`，构建时继续复制本地数据。
+- 如果本地数据不存在，不再生成兜底页；前端工具会先尝试 `/sh-info-price/data/*`，失败后自动从 `https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/` 读取数据。
+
+验证：
+
+- `node --check scripts/build-price-app.js`
+- `node --check tools/sh-info-price/price-tool.js`
+- 使用不存在的 `SH_INFO_PRICE_DIR` 模拟生产环境，构建结果仍生成真实查询工具入口，不再包含“查询工具未挂载”。
+
+### 切换为独立部署与正式静态数据源
+
+处理：
+
+- 信息价主入口改为独立应用 `https://sh-info-price.vercel.app/`，主站卡片与详情页按钮改为外链打开。
+- 主站备用 `/sh-info-price/` 工具新增 `price-config.js` 运行时配置，默认读取 `https://sh-info-price.vercel.app/data/`。
+- `tools/sh-info-price/price-tool.js` 移除 GitHub raw 数据源，正式数据读取失败时不再回退到 GitHub。
+- `scripts/build-price-app.js` 默认不再复制完整本地 `public/data`，仅在 `SH_INFO_PRICE_COPY_LOCAL_DATA=1` 时为离线预览复制数据。
+- 新增 `docs/sh-info-price-static-hosting.md` 记录主站环境变量与负荷判断。

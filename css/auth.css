@@ -18,6 +18,7 @@
   --shadow-sm: var(--shadow-step-sm) var(--shadow-step-sm) 0 var(--ink);
   --edge: 3px;
   --edge-sm: 2px;
+  --auth-form-width: 450px;
   --font-pixel: "Press Start 2P", "Microsoft YaHei", sans-serif;
   --font-ui: "IBM Plex Mono", "Microsoft YaHei", monospace;
   --lamp-core: #ffe6a6;
@@ -207,11 +208,11 @@ h1 {
 
 .auth-scenery {
   position: absolute;
-  right: max(26px, calc(50% - 560px));
-  bottom: max(30px, calc(50% - 340px));
+  right: max(18px, calc(50% - 620px));
+  bottom: max(18px, calc(50% - 378px));
   z-index: 0;
-  width: min(420px, 42vw);
-  height: 260px;
+  width: min(390px, 38vw);
+  height: 238px;
   border: var(--edge) solid var(--line);
   background:
     linear-gradient(rgba(37, 35, 31, 0.06) 50%, transparent 50%),
@@ -219,7 +220,7 @@ h1 {
     var(--blue-soft);
   background-size: 16px 16px;
   box-shadow: var(--shadow);
-  opacity: 0.92;
+  opacity: 0.58;
 }
 
 .auth-scenery::before {
@@ -326,10 +327,10 @@ html[data-theme="night"] .auth-scenery::after {
 .auth-panel {
   position: relative;
   z-index: 3;
-  width: min(920px, 100%);
-  min-height: 460px;
+  width: min(980px, 100%);
+  min-height: 500px;
   display: grid;
-  grid-template-columns: minmax(250px, 0.78fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(280px, 0.84fr) minmax(520px, 1.16fr);
   gap: 0;
   border: var(--edge) solid var(--line);
   color: var(--ink);
@@ -376,9 +377,10 @@ html[data-theme="night"] .auth-scenery::after {
   position: relative;
   display: grid;
   align-content: center;
+  justify-items: start;
   gap: 22px;
   min-width: 0;
-  padding: 48px 34px;
+  padding: 64px 34px 56px;
   border-right: var(--edge) solid var(--line);
   background:
     linear-gradient(90deg, rgba(37, 35, 31, 0.06) 50%, transparent 50%),
@@ -387,13 +389,19 @@ html[data-theme="night"] .auth-scenery::after {
   background-size: 14px 14px;
 }
 
+.auth-brand > div:first-child {
+  display: grid;
+  gap: 16px;
+  max-width: 280px;
+}
+
 .auth-tools {
   position: absolute;
-  top: 12px;
-  right: 14px;
+  top: 14px;
+  right: 16px;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
 }
 
 .auth-tools a,
@@ -465,50 +473,62 @@ html[data-theme="night"] .auth-scenery::after {
 }
 
 .auth-form {
-  display: grid;
-  align-content: center;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   min-width: 0;
-  padding: 54px 34px 56px;
+  padding: 78px 38px 50px;
 }
 
 .auth-tabs {
+  width: min(var(--auth-form-width), 100%);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 0;
+  overflow: hidden;
+  border: var(--edge) solid var(--line);
+  background: var(--line);
+  box-shadow: 3px 3px 0 var(--ink);
 }
 
 .auth-tab {
-  min-height: 44px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  border: var(--edge) solid var(--line);
+  border: 0;
   color: var(--ink);
   background: var(--cream);
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 900;
   line-height: 1.25;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: none;
+}
+
+.auth-tab + .auth-tab {
+  border-left: var(--edge-sm) solid var(--line);
 }
 
 .auth-tab:hover,
 .auth-tab.is-active {
   background: var(--blue-soft);
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+  transform: none;
+  box-shadow: none;
 }
 
 .auth-tab:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 var(--ink);
+  transform: none;
+  box-shadow: none;
 }
 
 .auth-channel {
+  width: min(var(--auth-form-width), 100%);
   display: none;
-  gap: 14px;
+  gap: 16px;
   animation: authChannelIn 180ms ease;
 }
 
@@ -525,6 +545,11 @@ html[data-theme="night"] .auth-scenery::after {
   background: var(--orange-soft);
 }
 
+.auth-field-group {
+  display: grid;
+  gap: 8px;
+}
+
 .auth-field {
   display: grid;
   gap: 8px;
@@ -534,7 +559,7 @@ html[data-theme="night"] .auth-scenery::after {
 
 .auth-field input {
   width: 100%;
-  min-height: 44px;
+  min-height: 46px;
   border: var(--edge) solid var(--line);
   outline: 0;
   padding: 0 12px;
@@ -551,9 +576,10 @@ html[data-theme="night"] .auth-scenery::after {
 }
 
 .auth-hint {
-  margin: -3px 0 0;
+  margin: 0;
   color: var(--muted);
   font-size: 0.78rem;
+  line-height: 1.48;
 }
 
 .auth-input-action {
@@ -602,22 +628,23 @@ html[data-theme="night"] .auth-scenery::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 4px;
 }
 
 .auth-social {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  min-height: 46px;
   color: var(--ink-soft);
   font-size: 0.76rem;
   font-weight: 900;
 }
 
 .auth-social a {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   border: var(--edge) solid var(--line);
@@ -627,8 +654,8 @@ html[data-theme="night"] .auth-scenery::after {
 }
 
 .auth-submit {
-  min-width: 126px;
-  min-height: 42px;
+  min-width: 140px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -660,10 +687,12 @@ html[data-theme="night"] .auth-scenery::after {
 }
 
 .auth-status {
+  width: min(var(--auth-form-width), 100%);
   min-height: 22px;
   margin: 0;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
+  line-height: 1.48;
 }
 
 .auth-status.is-error {
@@ -680,22 +709,29 @@ html[data-theme="night"] .auth-scenery::after {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 48px;
-  padding: 14px 34px;
+  min-height: 52px;
+  padding: 12px 28px;
   border-top: var(--edge) solid var(--line);
   color: var(--ink-soft);
   background: var(--cream);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
 
 .auth-foot a {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 8px;
-  border: var(--edge) solid var(--line);
+  padding: 5px 8px;
+  border: var(--edge-sm) solid var(--line);
   background: var(--paper-panel);
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-size: 0.74rem;
+}
+
+.auth-foot a:hover {
+  background: var(--paper-panel);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
 .auth-transition {
@@ -911,7 +947,6 @@ html[data-theme="night"] .lamp-glow {
     font-size: 1.95rem;
   }
 
-  .auth-tabs,
   .auth-row,
   .auth-foot {
     grid-template-columns: 1fr;
@@ -919,6 +954,7 @@ html[data-theme="night"] .lamp-glow {
 
   .auth-tabs {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .auth-row,

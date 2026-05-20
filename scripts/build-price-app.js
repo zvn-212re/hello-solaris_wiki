@@ -6,10 +6,21 @@ const OUT_DIR = path.join(ROOT, "dist");
 const MOUNT_NAME = "sh-info-price";
 const TOOL_SOURCE_DIR = path.join(ROOT, "tools", MOUNT_NAME);
 const DEFAULT_PRICE_APP_DIR = path.resolve(ROOT, "..", "..", "sh-info-price");
+const DEFAULT_PRICE_APP_URL = "https://sh-info-price.vercel.app/";
 const PRICE_APP_DIR = process.env.SH_INFO_PRICE_DIR
   ? path.resolve(process.env.SH_INFO_PRICE_DIR)
   : DEFAULT_PRICE_APP_DIR;
 const PRICE_DATA_DIR = path.join(PRICE_APP_DIR, "public", "data");
+const PRICE_APP_URL = normalizeUrl(process.env.SH_INFO_PRICE_APP_URL || DEFAULT_PRICE_APP_URL);
+const PRICE_DATA_BASE_URL = normalizeUrl(
+  process.env.SH_INFO_PRICE_DATA_BASE_URL || new URL("data/", PRICE_APP_URL).toString()
+);
+const COPY_LOCAL_DATA = process.env.SH_INFO_PRICE_COPY_LOCAL_DATA === "1";
+
+function normalizeUrl(value) {
+  const text = String(value || "").trim();
+  return text ? text.replace(/\/?$/, "/") : "";
+}
 
 function isInside(child, parent) {
   const relative = path.relative(parent, child);
@@ -25,35 +36,16 @@ function ensureCleanDir(dir, allowedParent) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
-function writeFallbackPage(to, allowedParent, reason) {
-  ensureCleanDir(to, allowedParent);
+function writeRuntimeConfig(destDir, copiedLocalData) {
+  const config = {
+    appUrl: PRICE_APP_URL,
+    dataBaseUrl: copiedLocalData ? "" : PRICE_DATA_BASE_URL,
+    fallbackDataBaseUrl: PRICE_DATA_BASE_URL
+  };
+
   fs.writeFileSync(
-    path.join(to, "index.html"),
-    `<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
-  <title>上海信息价数据库比对系统</title>
-  <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-  <main>
-    <section class="page-hero">
-      <div class="container">
-        <p class="eyebrow">SH INFO PRICE</p>
-        <h1 class="project-title">查询工具未挂载</h1>
-        <p>${reason}</p>
-        <div class="actions">
-          <a class="button secondary" href="../project-sh-info-price.html">返回项目详情</a>
-        </div>
-      </div>
-    </section>
-  </main>
-</body>
-</html>
-`,
+    path.join(destDir, "price-config.js"),
+    `window.SolarisPriceConfig = ${JSON.stringify(config, null, 2)};\n`,
     "utf8"
   );
 }
@@ -61,7 +53,15 @@ function writeFallbackPage(to, allowedParent, reason) {
 function copyStaticTool(destDir, allowedParent) {
   ensureCleanDir(destDir, allowedParent);
   fs.cpSync(TOOL_SOURCE_DIR, destDir, { recursive: true });
-  fs.cpSync(PRICE_DATA_DIR, path.join(destDir, "data"), { recursive: true });
+
+  const copiedLocalData = COPY_LOCAL_DATA && fs.existsSync(PRICE_DATA_DIR);
+
+  if (copiedLocalData) {
+    fs.cpSync(PRICE_DATA_DIR, path.join(destDir, "data"), { recursive: true });
+  }
+
+  writeRuntimeConfig(destDir, copiedLocalData);
+  return copiedLocalData;
 }
 
 function buildMountedPriceTool() {
@@ -69,24 +69,22 @@ function buildMountedPriceTool() {
   const rootDest = path.join(ROOT, MOUNT_NAME);
 
   if (!fs.existsSync(TOOL_SOURCE_DIR)) {
-    const reason = `未找到站内查询工具模板：${TOOL_SOURCE_DIR}`;
-    console.warn(`[price-app] ${reason}`);
-    writeFallbackPage(distDest, OUT_DIR, reason);
-    writeFallbackPage(rootDest, ROOT, reason);
-    return;
+    throw new Error(`未找到站内查询工具模板：${TOOL_SOURCE_DIR}`);
   }
 
-  if (!fs.existsSync(PRICE_DATA_DIR)) {
-    const reason = `未找到价格项目静态数据：${PRICE_DATA_DIR}`;
-    console.warn(`[price-app] ${reason}`);
-    writeFallbackPage(distDest, OUT_DIR, reason);
-    writeFallbackPage(rootDest, ROOT, reason);
-    return;
-  }
-
-  copyStaticTool(distDest, OUT_DIR);
+  const copiedLocalData = copyStaticTool(distDest, OUT_DIR);
   copyStaticTool(rootDest, ROOT);
-  console.log(`[price-app] Mounted static query tool at ${distDest}`);
+
+  if (copiedLocalData) {
+    console.log(`[price-app] Mounted static query tool with local data at ${distDest}`);
+    return;
+  }
+
+  if (COPY_LOCAL_DATA) {
+    console.warn(`[price-app] Local data not found at ${PRICE_DATA_DIR}; using ${PRICE_DATA_BASE_URL}`);
+  }
+
+  console.log(`[price-app] Mounted static query tool at ${distDest}; data source ${PRICE_DATA_BASE_URL}`);
 }
 
 buildMountedPriceTool();

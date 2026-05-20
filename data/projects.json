@@ -132,34 +132,34 @@
     "detailUrl": "project-sh-info-price.html",
     "icon": "ri-database-2-line",
     "summary": "已接入 82 期上海材料信息价，支持材料检索、趋势查看和历史价格比对。",
-    "homeSummary": "82 期材料信息价查询工具已挂载到站内，可直接检索和看趋势。",
+    "homeSummary": "独立应用承载 82 期材料信息价查询，主站保留入口和备用工具。",
     "homeFeatured": true,
     "tags": [
       { "text": "工程数据" },
       { "text": "82期数据", "tone": "dev" }
     ],
     "actions": [
-      { "label": "打开查询", "href": "sh-info-price/", "icon": "ri-search-eye-line", "primary": true }
+      { "label": "打开查询", "href": "https://sh-info-price.vercel.app/", "icon": "ri-external-link-line", "primary": true, "external": true }
     ],
     "detail": {
       "description": "上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。",
-      "statusTag": { "text": "站内可用", "tone": "dev" },
-      "overview": "这个系统仍作为独立 Next.js 应用维护，主站构建时会用同一份静态数据生成站内查询工具并挂载到 /sh-info-price/。当前已经接入上海市建设市场信息服务平台 2019.05 至 2026.04 的 82 期材料信息价，前端首屏加载最新期数据，历史走势按材料懒加载。",
+      "statusTag": { "text": "独立部署", "tone": "dev" },
+      "overview": "这个系统作为独立 Next.js 应用维护和部署，完整查询体验与 /data/ 静态 JSON 数据源由信息价项目承载。Solaris Wiki 主站保留入口按钮，并生成备用站内工具；备用工具默认从正式静态数据源读取，不再依赖 GitHub raw。",
       "listTitle": "已完成能力",
       "items": [
         "采集官方材料信息价附件并解析为结构化数据。",
         "生成最新期索引、检索索引和按材料拆分的历史价格文件。",
         "在独立应用中支持关键词筛选、材料详情和 82 期历史趋势查看。",
-        "主站构建会把查询工具挂载到站内路径，项目卡片和详情页可直接打开。"
+        "主站按钮跳转独立应用，备用站内工具从正式静态数据源读取。"
       ],
       "statusRows": [
-        ["状态", "站内静态挂载"],
+        ["状态", "独立应用部署"],
         ["数据范围", "2019.05 - 2026.04"],
         ["材料期数", "82期 / 541,830条"],
-        ["站内路径", "/sh-info-price/"]
+        ["正式数据源", "/data/ 静态托管"]
       ],
       "actions": [
-        { "label": "打开查询工具", "href": "sh-info-price/", "icon": "ri-search-eye-line", "primary": true }
+        { "label": "打开查询工具", "href": "https://sh-info-price.vercel.app/", "icon": "ri-external-link-line", "primary": true, "external": true }
       ]
     }
   }

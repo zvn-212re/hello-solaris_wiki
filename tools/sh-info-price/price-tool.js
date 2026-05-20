@@ -1,6 +1,10 @@
 (function () {
   const PAGE_SIZE = 50;
   const SVG_NS = "http://www.w3.org/2000/svg";
+  const DEFAULT_DATA_BASE_URL = "https://sh-info-price.vercel.app/data/";
+  const runtimeConfig = window.SolarisPriceConfig || {};
+  let dataBaseUrl = normalizeBaseUrl(runtimeConfig.dataBaseUrl || "");
+  const fallbackDataBaseUrl = normalizeBaseUrl(runtimeConfig.fallbackDataBaseUrl || DEFAULT_DATA_BASE_URL);
   const state = {
     manifest: null,
     latest: [],
@@ -48,12 +52,23 @@
     compareDiffCard: root.querySelector("[data-compare-diff-card]")
   };
 
+  function normalizeBaseUrl(value) {
+    return value ? String(value).replace(/\/?$/, "/") : "";
+  }
+
   function dataUrl(path) {
-    return new URL(path, window.location.href).toString();
+    const normalizedPath = dataBaseUrl ? path.replace(/^data\//, "") : path;
+    return new URL(normalizedPath, dataBaseUrl || window.location.href).toString();
   }
 
   async function readJson(path) {
-    const response = await fetch(dataUrl(path), { cache: "no-store" });
+    const usedRemote = Boolean(dataBaseUrl);
+    let response = await fetch(dataUrl(path), { cache: usedRemote ? "default" : "no-store" });
+
+    if (!response.ok && !usedRemote && fallbackDataBaseUrl) {
+      dataBaseUrl = fallbackDataBaseUrl;
+      response = await fetch(dataUrl(path), { cache: "default" });
+    }
 
     if (!response.ok) {
       throw new Error(`读取数据失败：${path}`);

@@ -20,9 +20,37 @@ const STATIC_FILES = [
 const projects = JSON.parse(
   fs.readFileSync(path.join(ROOT, "data", "projects.json"), "utf8")
 );
+const PRICE_APP_URL = normalizeOptionalUrl(process.env.SH_INFO_PRICE_APP_URL);
 const siteUpdates = JSON.parse(
   fs.readFileSync(path.join(ROOT, "data", "site-updates.json"), "utf8")
 );
+
+function normalizeOptionalUrl(value) {
+  const text = String(value || "").trim();
+  return text ? text.replace(/\/?$/, "/") : "";
+}
+
+function applyRuntimeProjectConfig() {
+  if (!PRICE_APP_URL) {
+    return;
+  }
+
+  const priceProject = projects.find((project) => project.slug === "sh-info-price");
+  if (!priceProject) {
+    return;
+  }
+
+  const applyAction = (action) => {
+    action.href = PRICE_APP_URL;
+    action.external = true;
+    action.icon = "ri-external-link-line";
+  };
+
+  priceProject.actions?.forEach(applyAction);
+  priceProject.detail?.actions?.forEach(applyAction);
+}
+
+applyRuntimeProjectConfig();
 
 const site = {
   name: "Solaris Wiki",

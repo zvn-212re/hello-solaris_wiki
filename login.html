@@ -65,12 +65,14 @@
         </div>
 
         <form class="auth-channel is-active" id="visitorPanel" role="tabpanel" aria-labelledby="visitorTab" data-auth-form="visitor">
-          <p class="auth-mode-label">VISITOR PASS</p>
-          <label class="auth-field">
-            <span>访客邀请码</span>
-            <input type="password" name="inviteCode" autocomplete="one-time-code" placeholder="输入邀请码" data-invite-code required>
-          </label>
-          <p class="auth-hint">普通权限可访问首页、项目档案、文章和搜索内容。</p>
+          <div class="auth-field-group">
+            <p class="auth-mode-label">VISITOR PASS</p>
+            <label class="auth-field">
+              <span>访客邀请码</span>
+              <input type="password" name="inviteCode" autocomplete="one-time-code" placeholder="输入邀请码" data-invite-code required>
+            </label>
+            <p class="auth-hint">普通权限可访问首页、项目档案、文章和搜索内容。</p>
+          </div>
           <div class="auth-row">
             <div class="auth-social">
               <span>默认去向：</span>
@@ -81,16 +83,18 @@
         </form>
 
         <form class="auth-channel" id="adminPanel" role="tabpanel" aria-labelledby="adminTab" data-auth-form="admin" hidden>
-          <p class="auth-mode-label">ADMIN ACCESS</p>
-          <label class="auth-field">
-            <span>管理员账号</span>
-            <input type="text" name="username" autocomplete="username" placeholder="admin" data-admin-username required>
-          </label>
-          <label class="auth-field">
-            <span>管理员密码</span>
-            <input type="password" name="password" autocomplete="current-password" placeholder="输入管理员密码" data-admin-password required>
-          </label>
-          <p class="auth-hint">管理员权限可进入 CMS 后台和留言投稿审核台。</p>
+          <div class="auth-field-group">
+            <p class="auth-mode-label">ADMIN ACCESS</p>
+            <label class="auth-field">
+              <span>管理员账号</span>
+              <input type="text" name="username" autocomplete="username" placeholder="admin" data-admin-username required>
+            </label>
+            <label class="auth-field">
+              <span>管理员密码</span>
+              <input type="password" name="password" autocomplete="current-password" placeholder="输入管理员密码" data-admin-password required>
+            </label>
+            <p class="auth-hint">管理员权限可进入 CMS 后台和留言投稿审核台。</p>
+          </div>
           <div class="auth-row">
             <div class="auth-social">
               <span>默认去向：</span>
