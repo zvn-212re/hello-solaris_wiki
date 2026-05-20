@@ -6,6 +6,15 @@
   <meta name="robots" content="noindex">
   <meta name="description" content="Solaris Wiki 私有访问验证入口。">
   <meta name="theme-color" content="#f4ead6">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
   <title>Solaris Wiki · 访问验证</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +43,11 @@
           <p class="auth-tagline">访问验证 · 让信号回到档案室</p>
         </div>
         <div class="auth-tools" aria-label="辅助入口">
+          <button class="theme-lamp auth-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+            <span class="lamp-cord" aria-hidden="true"></span>
+            <span class="lamp-head" aria-hidden="true"></span>
+            <span class="lamp-glow" aria-hidden="true"></span>
+          </button>
           <a href="login.html?next=/index.html" aria-label="首页需要验证"><i class="ri-home-4-line"></i></a>
         </div>
       </div>
@@ -41,10 +55,12 @@
       <div class="auth-form" data-auth-root>
         <div class="auth-tabs" role="tablist" aria-label="选择登录方式">
           <button class="auth-tab is-active" type="button" id="visitorTab" role="tab" aria-selected="true" aria-controls="visitorPanel" data-auth-tab="visitor">
-            访客邀请码
+            <i class="ri-key-2-line" aria-hidden="true"></i>
+            <span>访客邀请码</span>
           </button>
           <button class="auth-tab" type="button" id="adminTab" role="tab" aria-selected="false" aria-controls="adminPanel" data-auth-tab="admin">
-            管理员登录
+            <i class="ri-shield-keyhole-line" aria-hidden="true"></i>
+            <span>管理员登录</span>
           </button>
         </div>
 
@@ -60,7 +76,7 @@
               <span>默认去向：</span>
               <a href="login.html?next=/projects.html" aria-label="项目档案需要验证"><i class="ri-archive-2-line"></i></a>
             </div>
-            <button class="auth-submit" type="submit">访客进入</button>
+            <button class="auth-submit" type="submit"><i class="ri-login-box-line" aria-hidden="true"></i> 访客进入</button>
           </div>
         </form>
 
@@ -80,7 +96,7 @@
               <span>默认去向：</span>
               <a href="login.html?mode=admin&next=/admin/" aria-label="内容后台需要管理员验证"><i class="ri-settings-3-line"></i></a>
             </div>
-            <button class="auth-submit" type="submit">进入后台</button>
+            <button class="auth-submit" type="submit"><i class="ri-login-circle-line" aria-hidden="true"></i> 进入后台</button>
           </div>
         </form>
 
@@ -98,6 +114,7 @@
     </div>
   </main>
 
+  <script src="js/theme-toggle.js"></script>
   <script src="js/login.js"></script>
 </body>
 </html>

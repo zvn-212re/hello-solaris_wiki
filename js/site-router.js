@@ -21,6 +21,10 @@ function isRoutablePage(pageName) {
   );
 }
 
+function isMountedToolPath(url) {
+  return url.pathname === "/sh-info-price" || url.pathname.startsWith("/sh-info-price/");
+}
+
 function updateActiveNav(pageName) {
   document.querySelectorAll(".nav-links a").forEach((link) => {
     const linkPage = getPageName(new URL(link.href, window.location.href));
@@ -109,6 +113,10 @@ document.addEventListener("click", (event) => {
 
   const url = new URL(link.href, window.location.href);
   const pageName = getPageName(url);
+
+  if (isMountedToolPath(url)) {
+    return;
+  }
 
   if (
     url.origin === window.location.origin &&

@@ -1,0 +1,348 @@
+.price-main {
+  min-width: 0;
+}
+
+.price-hero {
+  padding-bottom: var(--space-4);
+}
+
+.price-section {
+  padding-top: var(--space-4);
+}
+
+.price-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.price-controls,
+.price-stats {
+  grid-column: 1 / -1;
+}
+
+.price-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, auto);
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.price-search-box {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+  border: var(--edge-sm) solid var(--line);
+  background: var(--paper-panel);
+  box-shadow: 2px 2px 0 var(--ink);
+  padding: 0 12px;
+}
+
+.price-search-box input {
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+}
+
+.price-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.price-stats .tool-panel {
+  min-height: 90px;
+}
+
+.price-stats span,
+.price-panel-head > span,
+.price-pager,
+.price-table td span,
+.compare-result span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.price-stats strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 1.65rem;
+  line-height: 1.1;
+}
+
+.price-results-panel,
+.price-detail-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.price-panel-head {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--edge) solid var(--line);
+  background: var(--cream);
+}
+
+.price-panel-head h2 {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 1.15rem;
+  line-height: 1.35;
+  text-shadow: none;
+}
+
+.price-panel-head .panel-kicker {
+  margin: 0 0 4px;
+}
+
+.price-table-wrap {
+  max-height: 590px;
+  overflow: auto;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.price-table th,
+.price-table td {
+  padding: 12px 14px;
+  border-bottom: var(--edge-sm) solid var(--line);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.price-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--ink);
+  background: var(--orange-soft);
+  font-size: 0.78rem;
+}
+
+.price-table td {
+  color: var(--ink);
+  background: var(--paper-panel);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.price-table td strong,
+.price-table td span {
+  display: block;
+}
+
+.price-table tbody tr {
+  cursor: pointer;
+}
+
+.price-table tbody tr:hover td,
+.price-table tbody tr.is-selected td {
+  background: var(--blue-soft);
+}
+
+.price-table tbody tr.is-empty td {
+  color: var(--muted);
+  cursor: default;
+  text-align: center;
+}
+
+.price-pager {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 10px var(--space-4);
+  border-top: var(--edge) solid var(--line);
+  background: var(--cream);
+}
+
+.price-pager div {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.price-pager .button {
+  min-width: 42px;
+  padding: 8px 10px;
+}
+
+.price-pager .button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
+}
+
+.price-chart {
+  padding: var(--space-3);
+  border-bottom: var(--edge) solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(37, 35, 31, 0.05) 50%, transparent 50%),
+    linear-gradient(rgba(37, 35, 31, 0.05) 50%, transparent 50%),
+    var(--paper-panel);
+  background-size: 14px 14px;
+}
+
+.price-chart svg {
+  width: 100%;
+  min-height: 260px;
+  display: block;
+  overflow: visible;
+}
+
+.price-chart text {
+  fill: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.price-chart .axis,
+.price-chart .grid-line {
+  stroke: var(--line);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.price-chart .grid-line {
+  opacity: 0.24;
+}
+
+.price-chart .trend-line {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: square;
+  vector-effect: non-scaling-stroke;
+}
+
+.price-chart .trend-point {
+  fill: var(--orange);
+  stroke: var(--line);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.price-compare {
+  padding: var(--space-4);
+}
+
+.compare-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.price-compare select {
+  width: 100%;
+  min-height: 42px;
+  border: var(--edge-sm) solid var(--line);
+  color: var(--ink);
+  background: var(--paper-panel);
+  font: inherit;
+  font-weight: 800;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.compare-result {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.compare-result > div {
+  min-height: 96px;
+  padding: 14px;
+  border: var(--edge-sm) solid var(--line);
+  background: var(--blue-soft);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.compare-result strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 1.35rem;
+}
+
+.compare-result .is-up {
+  background: #ffd9d5;
+}
+
+.compare-result .is-down {
+  background: #d8f0df;
+}
+
+html[data-theme="night"] .compare-result .is-up {
+  background: rgba(255, 107, 122, 0.18);
+}
+
+html[data-theme="night"] .compare-result .is-down {
+  background: rgba(125, 211, 252, 0.16);
+}
+
+@media (max-width: 1040px) {
+  .price-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .price-detail-panel {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .price-controls,
+  .price-stats,
+  .compare-controls,
+  .compare-result {
+    grid-template-columns: 1fr;
+  }
+
+  .price-panel-head,
+  .price-pager {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .price-table th:nth-child(2),
+  .price-table td:nth-child(2),
+  .price-table th:nth-child(5),
+  .price-table td:nth-child(5) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .price-table th,
+  .price-table td {
+    padding: 11px 10px;
+  }
+
+  .price-chart {
+    padding: 12px 8px;
+  }
+
+  .price-chart svg {
+    min-height: 230px;
+  }
+}

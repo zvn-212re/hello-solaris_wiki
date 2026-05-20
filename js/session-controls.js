@@ -18,7 +18,7 @@
         // Session storage may be unavailable in privacy modes.
       }
 
-      window.location.href = "login.html";
+      window.location.href = "/login.html";
     }
   }
 

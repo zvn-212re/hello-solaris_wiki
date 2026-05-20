@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="上海信息价数据库比对系统站内查询工具，支持材料检索、历史趋势和多期价格比对。">
+  <meta name="theme-color" content="#f4ead6">
+  <title>上海信息价数据库比对系统 · Solaris Wiki</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="price-tool.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark"><i class="ri-planet-line"></i></span>
+        <span>Solaris Wiki</span>
+      </a>
+      <div class="nav-links">
+        <a href="../index.html">首页</a>
+        <a class="active" aria-current="page" href="../projects.html">项目</a>
+        <a href="../articles.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-lamp" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+          <span class="lamp-cord" aria-hidden="true"></span>
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="lamp-glow" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="price-main" data-price-app>
+    <section class="page-hero price-hero">
+      <div class="container">
+        <p class="eyebrow"><i class="ri-database-2-line"></i> SH Info Price</p>
+        <h1 class="project-title">上海信息价数据库比对系统</h1>
+        <p>检索 82 期材料信息价，查看单项材料历史趋势，并对比任意两期含税信息价。</p>
+        <div class="actions">
+          <a class="button secondary" href="../project-sh-info-price.html"><i class="ri-arrow-left-line"></i> 返回项目详情</a>
+          <button class="button" type="button" data-price-export><i class="ri-download-2-line"></i> 导出 CSV</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section price-section" aria-label="价格查询工具">
+      <div class="container price-layout">
+        <div class="tool-panel price-controls">
+          <label class="field-stack">
+            <span>材料关键词</span>
+            <span class="price-search-box">
+              <i class="ri-search-line" aria-hidden="true"></i>
+              <input type="search" value="水泥" placeholder="输入材料名称、编码、规格或单位" data-price-keyword>
+            </span>
+          </label>
+          <p class="guestbook-status" data-price-status aria-live="polite">正在加载信息价数据...</p>
+        </div>
+
+        <div class="price-stats" aria-label="数据概况">
+          <div class="tool-panel">
+            <span>最新期</span>
+            <strong data-stat-latest-period>--</strong>
+          </div>
+          <div class="tool-panel">
+            <span>当前匹配</span>
+            <strong data-stat-matches>--</strong>
+          </div>
+          <div class="tool-panel">
+            <span>覆盖月份</span>
+            <strong data-stat-periods>--</strong>
+          </div>
+          <div class="tool-panel">
+            <span>总记录</span>
+            <strong data-stat-total>--</strong>
+          </div>
+        </div>
+
+        <section class="tool-panel price-results-panel">
+          <div class="price-panel-head">
+            <div>
+              <p class="panel-kicker">Search Result</p>
+              <h2>材料查询结果</h2>
+            </div>
+            <span data-price-page-summary>--</span>
+          </div>
+          <div class="price-table-wrap">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>材料</th>
+                  <th>规格</th>
+                  <th>单位</th>
+                  <th>含税价</th>
+                  <th>期号</th>
+                </tr>
+              </thead>
+              <tbody data-price-results></tbody>
+            </table>
+          </div>
+          <div class="price-pager">
+            <span data-price-range>--</span>
+            <div>
+              <button class="button secondary" type="button" data-page-prev aria-label="上一页"><i class="ri-arrow-left-s-line"></i></button>
+              <button class="button secondary" type="button" data-page-next aria-label="下一页"><i class="ri-arrow-right-s-line"></i></button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="tool-panel price-detail-panel">
+          <div class="price-panel-head">
+            <div>
+              <p class="panel-kicker">Material Trend</p>
+              <h2 data-detail-title>请选择材料</h2>
+            </div>
+            <span data-detail-spec>--</span>
+          </div>
+
+          <div class="price-chart" aria-label="材料历史趋势图">
+            <svg viewBox="0 0 720 260" role="img" data-price-chart>
+              <text x="360" y="130" text-anchor="middle">等待数据加载</text>
+            </svg>
+          </div>
+
+          <div class="price-compare">
+            <div class="compare-controls">
+              <label class="field-stack">
+                <span>月份 A</span>
+                <select data-month-a></select>
+              </label>
+              <label class="field-stack">
+                <span>月份 B</span>
+                <select data-month-b></select>
+              </label>
+            </div>
+            <div class="compare-result">
+              <div>
+                <span data-compare-a-label>月份 A</span>
+                <strong data-compare-a>--</strong>
+              </div>
+              <div>
+                <span data-compare-b-label>月份 B</span>
+                <strong data-compare-b>--</strong>
+              </div>
+              <div data-compare-diff-card>
+                <span>差额 / 涨跌幅</span>
+                <strong data-compare-diff>--</strong>
+                <span data-compare-percent>--</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="../index.html">solaris.wiki</a>
+      <div class="footer-links">
+        <a href="../projects.html"><i class="ri-archive-2-line"></i> 项目档案</a>
+        <a href="mailto:xiechanghui9@gmail.com"><i class="ri-mail-line"></i> xiechanghui9@gmail.com</a>
+        <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/theme-toggle.js"></script>
+  <script src="../js/session-controls.js"></script>
+  <script src="price-tool.js"></script>
+</body>
+</html>

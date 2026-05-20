@@ -4,4 +4,5 @@ node_modules/
 .vercel/
 dist/
 build/
+/sh-info-price/
 *.log

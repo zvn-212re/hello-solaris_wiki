@@ -39,6 +39,7 @@ http://localhost:3000
 
 ```bash
 npm run build
+npm run serve
 npm run build:ps
 npm run check
 npm run check:supabase
@@ -46,11 +47,13 @@ npm run check:supabase
 
 `npm run build` 会根据 `data/projects.json` 生成首页、项目页、项目详情页、404 页面，再根据 `content/posts/*.md` 生成文章页、文章列表、搜索索引和 `sitemap.xml`。
 在当前 Windows 环境中也可以用 `npm run build:ps` 执行同等生成流程。
+`npm run serve` 会在 `http://127.0.0.1:4173` 启动零依赖静态预览，适合验证需要 `fetch()` 读取 JSON 的页面。
 `npm run check:supabase` 会读取 `.env.local` / `.env`，验证 Supabase service role key 是否能访问留言和投稿表，不会打印密钥。
 
 ## 内容维护
 
 - 新增或修改项目：优先编辑 `data/projects.json`，再运行 `npm run build`。
+- 信息价查询工具：`npm run build` 会从相邻的 `H:\codex\sh-info-price\public\data` 复制数据，并挂载到 `dist/sh-info-price/` 与本地预览目录 `sh-info-price/`。
 - 修改公共导航、页脚、全站 meta：同步编辑 `scripts/build-site.js` 和 `scripts/build-cms-content.js`。
 - 修改视觉样式：编辑 `css/styles.css`。
 - 修改番茄钟、音乐、主题、路由等交互：编辑 `js/` 下对应脚本。
@@ -84,6 +87,7 @@ npm run check:supabase
 - 在 Vercel 配置生产环境变量，并轮换已经泄露过的 Supabase service role key。
 - 在 Supabase SQL Editor 执行 `supabase/schema.sql`，让留言、投稿和审核进入真实云端数据。
 - Decap CMS 的 GitHub OAuth / Git Gateway 仍需正式配置，否则 `/admin/` 只能算入口页。
+- 如果在独立仓库或 Vercel 项目中构建主站，需要确保 `sh-info-price` 数据源目录可用，或先部署独立信息价应用后改为外链入口。
 - 如果未来要公开个人站，需要把 `robots.txt` 从 `Disallow: /` 改回开放策略，并决定哪些页面不再需要登录。
 - 仍缺正式 OG 分享图、站点截图、项目截图、个人头像或可公开展示的作品封面。
 

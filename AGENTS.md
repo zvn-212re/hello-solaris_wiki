@@ -109,7 +109,7 @@
 - Vercel 生产环境变量、Supabase 表结构和 Decap CMS OAuth / Git Gateway 仍需在平台侧配置。
 - 当前是整站私有访问；如果未来要公开首页或文章，需要重新调整 `robots.txt`、middleware 放行规则和 sitemap 策略。
 - 主站核心页面已添加 Open Graph / Twitter Card 分享信息，独立页面新增时仍需继续同步。
-- “上海信息价数据库比对系统”尚未接入预览 iframe、截图或完整外链。
+- “上海信息价数据库比对系统”已接入站内静态查询工具，路径为 `/sh-info-price/`。
 - `api/` 与 `data/` 已启用；后续变更需同步检查构建输出和 Vercel 环境变量。
 - 尚未做系统的移动端视觉验收。
 - 尚未做无障碍和 SEO 细节检查。
@@ -124,12 +124,13 @@ H:\codex\sh-info-price
 
 集成策略：
 
-- 信息价系统作为独立 Vercel 应用部署。
-- 主站只展示预览卡片、截图或 iframe。
-- 主站提供“打开完整版本”的外部链接。
-- 不要把完整 Next.js 项目直接塞进本静态站目录。
+- 信息价系统源码仍作为独立 Next.js 应用维护。
+- 主站使用 `tools/sh-info-price/` 中的轻量静态查询页，并在构建时从 `H:\codex\sh-info-price\public\data` 复制同一份静态数据。
+- `scripts/build-price-app.js` 会把查询工具挂载到 `dist/sh-info-price/`，同时生成本地预览用的根目录 `sh-info-price/`。
+- 根目录 `sh-info-price/` 是生成产物，已加入 `.gitignore`，不要手动维护或提交。
+- 不要把完整 Next.js 项目源码直接塞进本静态站目录。
 
-当前主站中的信息价卡片仍为占位状态，需要等完整系统部署后再替换链接。
+当前主站中的信息价卡片、首页卡片和详情页按钮都指向站内 `/sh-info-price/`。
 
 ## 本地预览建议
 

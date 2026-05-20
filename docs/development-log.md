@@ -565,3 +565,48 @@ docs/development-log.md
 后续：
 
 - 独立应用部署到 Vercel 后，需要把主站按钮中的本地地址替换为正式外链。
+
+### 站内查询工具与登录页风格统一
+
+需求：
+
+- 价格查询项目需要在 Solaris Wiki 网站中可直接使用，不再只停留在项目说明或占位按钮。
+- 登录页面需要和主站当前复古像素纸张风统一。
+
+处理：
+
+- 新增 `tools/sh-info-price/`，实现站内静态查询工具：
+  - 读取相邻独立项目 `H:\codex\sh-info-price\public\data` 中的 `manifest.json`、`latest.json`、`search-index.json` 和按材料拆分的历史文件。
+  - 支持关键词检索、分页、材料历史趋势 SVG 折线图、两个月份含税信息价对比和 CSV 导出。
+  - 使用主站导航、页脚、昼夜主题和像素纸张风控件。
+- 新增 `scripts/build-price-app.js`，主站构建后把查询工具挂载到：
+  - `dist/sh-info-price/`：Vercel 输出目录。
+  - `sh-info-price/`：本地静态预览目录，已加入 `.gitignore`。
+- 更新 `data/projects.json`，首页卡片、项目档案和项目详情页都指向 `sh-info-price/`。
+- 更新 `js/site-router.js`，让 `/sh-info-price/` 走整页导航，避免 SPA 局部路由误吞独立工具页。
+- 更新 `js/session-controls.js`，退出登录统一跳转到 `/login.html`，兼容子路径页面。
+- 新增 `scripts/serve-static.js` 和 `npm run serve`，用于在没有 Python 的本机环境中预览需要 `fetch()` 读取 JSON 的静态页面。
+- 重写 `css/auth.css`，将登录页从深色山景风改为和主站一致的纸张网格、硬边框、像素阴影、彩条、像素标签和昼夜主题。
+- `login.html` 增加主题预加载、吊灯按钮和登录按钮图标。
+
+说明：
+
+- 曾尝试让独立 Next.js 项目做 `/sh-info-price/` 子路径静态导出，但当前本机 Next CLI 在构建启动阶段长时间卡住。为保证站内可用，本轮采用主站轻量静态工具复用同一份数据的方案；独立 Next 项目源码仍保留，不直接塞入主站。
+
+验证：
+
+- `node --check scripts/build-price-app.js`
+- `node --check scripts/serve-static.js`
+- `node --check tools/sh-info-price/price-tool.js`
+- `node --check js/site-router.js`
+- `node --check js/session-controls.js`
+- `node scripts/build-site.js`
+- `node scripts/build-cms-content.js`
+- `node scripts/build-price-app.js`
+- 本地临时静态服务检查以下资源返回 `200`：
+  - `/sh-info-price/`
+  - `/sh-info-price/data/manifest.json`
+  - `/sh-info-price/price-tool.js`
+  - `/login.html`
+  - `/css/auth.css`
+- `/sh-info-price/data/manifest.json` 读到最新期 `2026-04`，总记录数 `541,830`。
