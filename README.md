@@ -10,7 +10,7 @@ Solaris Wiki 是一个以静态页面为主的个人网站，用来记录 Vibe C
 
 - 原生 HTML / CSS / JavaScript
 - 零依赖静态生成脚本：`scripts/build-site.js`、`scripts/build-cms-content.js`
-- 项目数据源：`data/projects.json`
+- 项目数据源：`data/projects.json`，可在 `/admin/` 的“站点数据”里可视化维护
 - 内容源：`content/posts/*.md`
 - 互动接口：`api/guestbook.js`、`api/submissions.js`、`api/moderation.js`
 - 私有访问：`middleware.js` + `api/auth.js`
@@ -52,8 +52,9 @@ npm run check:supabase
 
 ## 内容维护
 
-- 新增或修改项目：优先编辑 `data/projects.json`，再运行 `npm run build`。
-- 信息价查询工具：主入口跳转独立部署的 `sh-info-price` 应用；`npm run build` 仍会生成 `/sh-info-price/` 备用工具，默认从 `SH_INFO_PRICE_DATA_BASE_URL` 指向的正式静态数据源读取。
+- 新增或修改项目：优先进入 `/admin/` 的“站点数据 -> 项目档案”可视化编辑；也可以直接编辑 `data/projects.json`，再运行 `npm run build`。
+- 新增或修改站点更新：进入 `/admin/` 的“站点数据 -> 站点更新”维护，保存后由 Vercel 重新构建页面。
+- 信息价查询工具：主站按钮固定进入站内 `/sh-info-price/` 工具，避免独立应用域名未就绪时出现 404；工具数据默认从 `SH_INFO_PRICE_DATA_BASE_URL` 指向的正式静态数据源读取。
 - 修改公共导航、页脚、全站 meta：同步编辑 `scripts/build-site.js` 和 `scripts/build-cms-content.js`。
 - 修改视觉样式：编辑 `css/styles.css`。
 - 修改番茄钟、音乐、主题、路由等交互：编辑 `js/` 下对应脚本。
@@ -87,7 +88,7 @@ npm run check:supabase
 - 在 Vercel 配置生产环境变量，并轮换已经泄露过的 Supabase service role key。
 - 在 Supabase SQL Editor 执行 `supabase/schema.sql`，让留言、投稿和审核进入真实云端数据。
 - Decap CMS 的 GitHub OAuth / Git Gateway 仍需正式配置，否则 `/admin/` 只能算入口页。
-- 如果在独立仓库或 Vercel 项目中构建主站，优先设置 `SH_INFO_PRICE_APP_URL` 与 `SH_INFO_PRICE_DATA_BASE_URL`。只有离线预览需要完整本地数据时，才设置 `SH_INFO_PRICE_COPY_LOCAL_DATA=1`。
+- 如果在独立仓库或 Vercel 项目中构建主站，优先设置 `SH_INFO_PRICE_DATA_BASE_URL`。只有离线预览需要完整本地数据时，才设置 `SH_INFO_PRICE_COPY_LOCAL_DATA=1`。
 - 如果未来要公开个人站，需要把 `robots.txt` 从 `Disallow: /` 改回开放策略，并决定哪些页面不再需要登录。
 - 仍缺正式 OG 分享图、站点截图、项目截图、个人头像或可公开展示的作品封面。
 

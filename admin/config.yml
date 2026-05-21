@@ -60,3 +60,94 @@ collections:
       - { label: 类型, name: type, widget: select, options: ["Init", "Design", "Tool", "Feature", "Fix", "Layout", "Content", "Architecture", "Ops"] }
       - { label: 更新级别, name: level, widget: select, options: ["patch", "minor", "major"], default: "patch" }
       - { label: 摘要, name: summary, widget: text }
+
+  - name: site_data
+    label: 站点数据
+    files:
+      - name: projects
+        label: 项目档案
+        file: data/projects.json
+        format: json
+        fields:
+          - label: 项目列表
+            name: projects
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: 标识, name: slug, widget: string, hint: "用于生成内部标识，例如 sh-info-price" }
+              - { label: 标题, name: title, widget: string }
+              - { label: 详情页, name: detailUrl, widget: string, hint: "例如 project-sh-info-price.html" }
+              - { label: 图标类名, name: icon, widget: string, default: "ri-folder-3-line" }
+              - { label: 项目摘要, name: summary, widget: text }
+              - { label: 首页摘要, name: homeSummary, widget: text, required: false }
+              - { label: 首页展示, name: homeFeatured, widget: boolean, required: false, default: false }
+              - label: 标签
+                name: tags
+                widget: list
+                required: false
+                summary: "{{fields.text}}"
+                fields:
+                  - { label: 文案, name: text, widget: string }
+                  - { label: 样式, name: tone, widget: select, options: ["dev", "alert"], required: false }
+              - label: 列表按钮
+                name: actions
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: 文案, name: label, widget: string }
+                  - { label: 链接, name: href, widget: string }
+                  - { label: 图标类名, name: icon, widget: string, default: "ri-external-link-line" }
+                  - { label: 主按钮, name: primary, widget: boolean, required: false, default: false }
+                  - { label: 外部链接, name: external, widget: boolean, required: false, default: false }
+              - label: 详情内容
+                name: detail
+                widget: object
+                fields:
+                  - { label: SEO 描述, name: description, widget: text }
+                  - label: 状态标签
+                    name: statusTag
+                    widget: object
+                    required: false
+                    fields:
+                      - { label: 文案, name: text, widget: string }
+                      - { label: 样式, name: tone, widget: select, options: ["dev", "alert"], required: false }
+                  - { label: 概览, name: overview, widget: text }
+                  - { label: 列表标题, name: listTitle, widget: string, default: "当前进展" }
+                  - { label: 列表条目, name: items, widget: list }
+                  - label: 状态信息
+                    name: statusRows
+                    widget: list
+                    required: false
+                    summary: "{{fields.label}}: {{fields.value}}"
+                    fields:
+                      - { label: 标签, name: label, widget: string }
+                      - { label: 内容, name: value, widget: string }
+                  - label: 详情按钮
+                    name: actions
+                    widget: list
+                    required: false
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: 文案, name: label, widget: string }
+                      - { label: 链接, name: href, widget: string }
+                      - { label: 图标类名, name: icon, widget: string, default: "ri-external-link-line" }
+                      - { label: 主按钮, name: primary, widget: boolean, required: false, default: false }
+                      - { label: 外部链接, name: external, widget: boolean, required: false, default: false }
+
+      - name: site_updates
+        label: 站点更新
+        file: data/site-updates.json
+        format: json
+        fields:
+          - label: 更新列表
+            name: updates
+            widget: list
+            summary: "{{fields.version}} · {{fields.title}}"
+            fields:
+              - { label: 版本号, name: version, widget: string }
+              - { label: 日期, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - { label: 标题, name: title, widget: string }
+              - { label: 摘要, name: summary, widget: text }
+              - { label: 类型, name: type, widget: select, options: ["Init", "Design", "Tool", "Feature", "Fix", "Layout", "Content", "Architecture", "Ops"] }
+              - { label: 更新级别, name: level, widget: select, options: ["patch", "minor", "major"], default: "patch" }

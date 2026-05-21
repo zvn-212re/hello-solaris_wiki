@@ -639,3 +639,33 @@ docs/development-log.md
 - `tools/sh-info-price/price-tool.js` 移除 GitHub raw 数据源，正式数据读取失败时不再回退到 GitHub。
 - `scripts/build-price-app.js` 默认不再复制完整本地 `public/data`，仅在 `SH_INFO_PRICE_COPY_LOCAL_DATA=1` 时为离线预览复制数据。
 - 新增 `docs/sh-info-price-static-hosting.md` 记录主站环境变量与负荷判断。
+
+## 2026-05-21
+
+### 修复信息价入口 404 与 CMS 可视化管理
+
+问题：
+
+- 主站信息价项目按钮指向独立应用域名，线上域名未就绪时会进入 404。
+- `/admin/` 已接入 Decap CMS，但主要管理文章、项目草稿和更新草稿，不能直接可视化维护驱动页面的项目档案和站点更新数据。
+
+处理：
+
+- 将信息价项目首页卡片、项目档案按钮和详情页按钮固定改为站内 `/sh-info-price/` 查询工具。
+- 移除主站构建时用 `SH_INFO_PRICE_APP_URL` 覆盖项目按钮的逻辑，避免生产环境遗留变量再次把入口改到失效外链。
+- 将 `data/projects.json` 和 `data/site-updates.json` 调整为 Decap CMS 更容易编辑的对象结构，并让构建脚本兼容数组旧结构。
+- `/admin/` 新增“站点数据”集合，可视化维护项目档案、项目详情、按钮、状态信息和首页站点更新。
+- 更新 README、CMS 文档、信息价静态托管说明和接手说明。
+
+验证：
+
+- `node --check scripts/build-site.js`
+- `node --check scripts/build-cms-content.js`
+- `node --check scripts/build-price-app.js`
+- `node --check tools/sh-info-price/price-tool.js`
+- `node scripts/build-site.js`
+- `node scripts/build-cms-content.js`
+- `node scripts/build-price-app.js`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`
+- 临时本地 HTTP 服务检查 `/`、`/projects.html`、`/project-sh-info-price.html` 和 `/sh-info-price/` 均返回 `200`。
+- `npm run check` / `npm run build` 在当前沙箱内因 npm 读取 `C:\Users\banabann` 被拒绝失败；已用等价 Node 脚本完成验证。

@@ -17,40 +17,22 @@ const STATIC_FILES = [
   "submit.html",
 ];
 
-const projects = JSON.parse(
-  fs.readFileSync(path.join(ROOT, "data", "projects.json"), "utf8")
-);
-const PRICE_APP_URL = normalizeOptionalUrl(process.env.SH_INFO_PRICE_APP_URL);
-const siteUpdates = JSON.parse(
-  fs.readFileSync(path.join(ROOT, "data", "site-updates.json"), "utf8")
-);
+function readDataArray(relativePath, key) {
+  const payload = JSON.parse(fs.readFileSync(path.join(ROOT, relativePath), "utf8"));
 
-function normalizeOptionalUrl(value) {
-  const text = String(value || "").trim();
-  return text ? text.replace(/\/?$/, "/") : "";
-}
-
-function applyRuntimeProjectConfig() {
-  if (!PRICE_APP_URL) {
-    return;
+  if (Array.isArray(payload)) {
+    return payload;
   }
 
-  const priceProject = projects.find((project) => project.slug === "sh-info-price");
-  if (!priceProject) {
-    return;
+  if (Array.isArray(payload?.[key])) {
+    return payload[key];
   }
 
-  const applyAction = (action) => {
-    action.href = PRICE_APP_URL;
-    action.external = true;
-    action.icon = "ri-external-link-line";
-  };
-
-  priceProject.actions?.forEach(applyAction);
-  priceProject.detail?.actions?.forEach(applyAction);
+  return [];
 }
 
-applyRuntimeProjectConfig();
+const projects = readDataArray("data/projects.json", "projects");
+const siteUpdates = readDataArray("data/site-updates.json", "updates");
 
 const site = {
   name: "Solaris Wiki",
@@ -122,6 +104,14 @@ function renderActions(actions = [], includePlaceholders = false) {
   }
 
   return actions.map((action) => actionLink(action)).join("\n                ");
+}
+
+function statusRowParts(row) {
+  if (Array.isArray(row)) {
+    return [row[0], row[1]];
+  }
+
+  return [row?.label, row?.value];
 }
 
 function themeBootScript() {
@@ -264,7 +254,7 @@ ${main}
 }
 
 function homeProjectCard(project) {
-  const action = project.actions.find((item) => item.primary);
+  const action = (project.actions || []).find((item) => item.primary);
   return `<article class="card">
             <div class="icon-field" aria-hidden="true">
               <i class="${attr(project.icon)}"></i>
@@ -430,7 +420,7 @@ function projectRow(project) {
                 ${tagList(project.tags)}
               </div>
               <div class="actions">
-                ${renderActions(project.actions, true)}
+                ${renderActions(project.actions || [], true)}
               </div>
             </div>
           </article>`;
@@ -576,7 +566,7 @@ function pomodoroMain() {
 
 function projectDetailMain(project) {
   const detail = project.detail;
-  const tags = [...project.tags, detail.statusTag].filter(Boolean);
+  const tags = [...(project.tags || []), detail.statusTag].filter(Boolean);
   const actions = [...(detail.actions || []), { label: "返回项目档案", href: "projects.html", icon: "ri-arrow-left-line" }];
 
   return `    <section class="page-hero">
@@ -597,14 +587,17 @@ function projectDetailMain(project) {
           <p>${escapeHtml(detail.overview)}</p>
           <h2>${escapeHtml(detail.listTitle)}</h2>
           <ul class="detail-list">
-            ${detail.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n            ")}
+            ${(detail.items || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("\n            ")}
           </ul>
         </article>
 
         <aside class="detail-side-panel">
           <div class="detail-visual" aria-hidden="true"><i class="${attr(project.icon)}"></i></div>
           <div class="detail-status">
-            ${detail.statusRows.map(([label, value]) => `<div class="detail-status-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("\n            ")}
+            ${(detail.statusRows || []).map((row) => {
+              const [label, value] = statusRowParts(row);
+              return `<div class="detail-status-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`;
+            }).join("\n            ")}
           </div>
           <div class="detail-actions">
             ${actions.map((action) => actionLink(action)).join("\n            ")}

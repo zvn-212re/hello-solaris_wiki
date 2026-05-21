@@ -17,6 +17,20 @@ function readJson(relativePath, fallback) {
   }
 }
 
+function readJsonArray(relativePath, key, fallback = []) {
+  const payload = readJson(relativePath, fallback);
+
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(payload?.[key])) {
+    return payload[key];
+  }
+
+  return fallback;
+}
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -388,8 +402,8 @@ function renderArticle(post) {
 }
 
 function buildSearchIndex(posts) {
-  const projects = readJson("data/projects.json", []);
-  const updates = readJson("data/site-updates.json", []);
+  const projects = readJsonArray("data/projects.json", "projects");
+  const updates = readJsonArray("data/site-updates.json", "updates");
   const records = [
     {
       title: "首页",
@@ -443,7 +457,7 @@ function buildSearchIndex(posts) {
 }
 
 function writeSitemap(posts) {
-  const projects = readJson("data/projects.json", []);
+  const projects = readJsonArray("data/projects.json", "projects");
   const urls = [
     "index.html",
     "projects.html",

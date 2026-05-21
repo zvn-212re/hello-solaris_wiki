@@ -19,6 +19,7 @@ Push-Location $Root
 try {
   & $Node.Source scripts\build-site.js
   & $Node.Source scripts\build-cms-content.js
+  & $Node.Source scripts\build-price-app.js
 }
 finally {
   Pop-Location

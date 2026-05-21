@@ -2,7 +2,7 @@
 
 这套方案把站点拆成两类能力：
 
-- 内容发布：`/admin/` 使用 Decap CMS，把文章、项目草稿和站点更新草稿写回 GitHub 仓库。
+- 内容发布：`/admin/` 使用 Decap CMS，把文章、项目草稿、站点更新草稿和站点数据写回 GitHub 仓库。
 - 互动数据：留言、投稿、审核走 Vercel Serverless Function + Supabase。
 
 ## Vercel 环境变量
@@ -63,6 +63,18 @@ npm run check:supabase
 - 投稿页：`/submit.html`
 - 文章列表：`/articles.html`
 - 站内搜索：`/search.html`
+
+## 可视化管理范围
+
+进入 `/admin/` 后，当前 Decap CMS 提供这些可视化集合：
+
+- `文章`：写作并发布 `content/posts/*.md`，构建后生成 `article-*.html` 和文章列表。
+- `项目草稿`：暂存项目想法，不会直接影响公开项目页。
+- `站点更新草稿`：暂存更新记录，不会直接影响首页。
+- `站点数据 -> 项目档案`：直接维护首页项目卡片、项目档案列表、项目详情页按钮和状态信息。
+- `站点数据 -> 站点更新`：直接维护首页“站点更新”时间线。
+
+`站点数据` 保存后会改动 `data/projects.json` 或 `data/site-updates.json`。推送到 `main` 后由 Vercel 重新执行 `npm run build`，生成最终静态页面。
 
 Decap CMS 的 GitHub 登录需要配置 GitHub OAuth。部署到 Vercel 时，推荐后续补一个 OAuth 代理或改用支持 Git Gateway 的托管服务；本地可用 `npx decap-server` 配合 `local_backend: true` 调试。
 

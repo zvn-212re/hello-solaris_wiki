@@ -1,166 +1,290 @@
-[
-  {
-    "slug": "pomodoro",
-    "title": "番茄钟 Web 应用",
-    "detailUrl": "project-pomodoro.html",
-    "icon": "ri-timer-flash-line",
-    "summary": "一个轻量、专注、适合长时间编码和资料整理的计时器。",
-    "homeSummary": "25 分钟专注、5 分钟短休息，带进度环和番茄计数。",
-    "homeFeatured": true,
-    "tags": [
-      { "text": "Web 应用" },
-      { "text": "效率工具", "tone": "dev" }
-    ],
-    "actions": [
-      { "label": "在线演示", "href": "pomodoro.html", "icon": "ri-external-link-line", "primary": true },
-      { "label": "独立工具页", "href": "pomodoro-tool.html", "icon": "ri-window-line" },
-      { "label": "源代码", "href": "https://github.com/zvn-212re/hello-solaris_wiki", "icon": "ri-github-line", "external": true }
-    ],
-    "detail": {
-      "description": "番茄钟 Web 应用项目详情，记录 Solaris Wiki 的专注计时工具设计和开发状态。",
-      "statusTag": { "text": "已上线初版" },
-      "overview": "这个工具用于快速进入专注节奏，主站版偏展示和轻量使用，独立工具页保留更多参数设置。当前重点是把计时、状态、番茄数量和基础交互跑顺。",
-      "listTitle": "当前功能",
-      "items": [
-        "25 分钟专注和 5 分钟短休息模式。",
-        "进度环、状态提示和完成番茄计数。",
-        "独立工具页支持自定义时长、长休息和提示音。"
-      ],
-      "statusRows": [
-        ["状态", "可用初版"],
-        ["页面", "站内版 + 独立工具页"],
-        ["下一步", "移动端细节验收"]
+{
+  "projects": [
+    {
+      "slug": "pomodoro",
+      "title": "番茄钟 Web 应用",
+      "detailUrl": "project-pomodoro.html",
+      "icon": "ri-timer-flash-line",
+      "summary": "一个轻量、专注、适合长时间编码和资料整理的计时器。",
+      "homeSummary": "25 分钟专注、5 分钟短休息，带进度环和番茄计数。",
+      "homeFeatured": true,
+      "tags": [
+        {
+          "text": "Web 应用"
+        },
+        {
+          "text": "效率工具",
+          "tone": "dev"
+        }
       ],
       "actions": [
-        { "label": "打开站内版", "href": "pomodoro.html", "icon": "ri-external-link-line", "primary": true },
-        { "label": "打开独立工具页", "href": "pomodoro-tool.html", "icon": "ri-window-line" }
-      ]
-    }
-  },
-  {
-    "slug": "3d-printing",
-    "title": "酒厂厂房 3D 打印",
-    "detailUrl": "project-3d-printing.html",
-    "icon": "ri-building-4-line",
-    "summary": "把厂房设计、结构表达和 3D 打印流程连接起来的实践记录。",
-    "tags": [
-      { "text": "3D Printing" },
-      { "text": "工程实践", "tone": "dev" }
-    ],
-    "actions": [],
-    "detail": {
-      "description": "酒厂厂房 3D 打印项目详情，记录设计、结构表达和打印流程实践。",
-      "statusTag": { "text": "整理中", "tone": "alert" },
-      "overview": "这个项目用于整理从工程设计表达走向实体模型打印的流程，包括模型拆分、比例控制、打印限制和展示方式。",
-      "listTitle": "计划整理",
-      "items": [
-        "模型来源、打印比例和构件拆分策略。",
-        "打印失败点、材料选择和后处理记录。",
-        "最终展示照片、过程截图和复盘笔记。"
+        {
+          "label": "在线演示",
+          "href": "pomodoro.html",
+          "icon": "ri-external-link-line",
+          "primary": true
+        },
+        {
+          "label": "独立工具页",
+          "href": "pomodoro-tool.html",
+          "icon": "ri-window-line"
+        },
+        {
+          "label": "源代码",
+          "href": "https://github.com/zvn-212re/hello-solaris_wiki",
+          "icon": "ri-github-line",
+          "external": true
+        }
       ],
-      "statusRows": [
-        ["状态", "内容整理中"],
-        ["素材", "待补充图片"],
-        ["下一步", "补过程记录"]
+      "detail": {
+        "description": "番茄钟 Web 应用项目详情，记录 Solaris Wiki 的专注计时工具设计和开发状态。",
+        "statusTag": {
+          "text": "已上线初版"
+        },
+        "overview": "这个工具用于快速进入专注节奏，主站版偏展示和轻量使用，独立工具页保留更多参数设置。当前重点是把计时、状态、番茄数量和基础交互跑顺。",
+        "listTitle": "当前功能",
+        "items": [
+          "25 分钟专注和 5 分钟短休息模式。",
+          "进度环、状态提示和完成番茄计数。",
+          "独立工具页支持自定义时长、长休息和提示音。"
+        ],
+        "statusRows": [
+          {
+            "label": "状态",
+            "value": "可用初版"
+          },
+          {
+            "label": "页面",
+            "value": "站内版 + 独立工具页"
+          },
+          {
+            "label": "下一步",
+            "value": "移动端细节验收"
+          }
+        ],
+        "actions": [
+          {
+            "label": "打开站内版",
+            "href": "pomodoro.html",
+            "icon": "ri-external-link-line",
+            "primary": true
+          },
+          {
+            "label": "打开独立工具页",
+            "href": "pomodoro-tool.html",
+            "icon": "ri-window-line"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "3d-printing",
+      "title": "酒厂厂房 3D 打印",
+      "detailUrl": "project-3d-printing.html",
+      "icon": "ri-building-4-line",
+      "summary": "把厂房设计、结构表达和 3D 打印流程连接起来的实践记录。",
+      "tags": [
+        {
+          "text": "3D Printing"
+        },
+        {
+          "text": "工程实践",
+          "tone": "dev"
+        }
       ],
-      "actions": []
-    }
-  },
-  {
-    "slug": "agent-workflow",
-    "title": "AI Agent 工作流实验",
-    "detailUrl": "project-agent-workflow.html",
-    "icon": "ri-robot-2-line",
-    "summary": "测试 Agent 在资料检索、代码修改和自动化执行中的协作边界。",
-    "homeSummary": "整理多工具协作、MCP 连接和自动化任务的使用心得。",
-    "homeFeatured": true,
-    "tags": [
-      { "text": "AI Agent" },
-      { "text": "工作流", "tone": "dev" }
-    ],
-    "actions": [],
-    "detail": {
-      "description": "AI Agent 工作流实验项目详情，记录资料检索、代码修改和自动化协作边界。",
-      "statusTag": { "text": "实验中", "tone": "alert" },
-      "overview": "这里用来沉淀 Agent 协作的真实使用方法，包括怎样拆任务、怎样记录上下文、怎样处理验证和回滚风险。",
-      "listTitle": "记录方向",
-      "items": [
-        "多工具协作中的任务边界和交接格式。",
-        "MCP、CLI、浏览器验证和本地脚本之间的配合。",
-        "高风险操作前的检查清单和复盘记录。"
+      "actions": [],
+      "detail": {
+        "description": "酒厂厂房 3D 打印项目详情，记录设计、结构表达和打印流程实践。",
+        "statusTag": {
+          "text": "整理中",
+          "tone": "alert"
+        },
+        "overview": "这个项目用于整理从工程设计表达走向实体模型打印的流程，包括模型拆分、比例控制、打印限制和展示方式。",
+        "listTitle": "计划整理",
+        "items": [
+          "模型来源、打印比例和构件拆分策略。",
+          "打印失败点、材料选择和后处理记录。",
+          "最终展示照片、过程截图和复盘笔记。"
+        ],
+        "statusRows": [
+          {
+            "label": "状态",
+            "value": "内容整理中"
+          },
+          {
+            "label": "素材",
+            "value": "待补充图片"
+          },
+          {
+            "label": "下一步",
+            "value": "补过程记录"
+          }
+        ],
+        "actions": []
+      }
+    },
+    {
+      "slug": "agent-workflow",
+      "title": "AI Agent 工作流实验",
+      "detailUrl": "project-agent-workflow.html",
+      "icon": "ri-robot-2-line",
+      "summary": "测试 Agent 在资料检索、代码修改和自动化执行中的协作边界。",
+      "homeSummary": "整理多工具协作、MCP 连接和自动化任务的使用心得。",
+      "homeFeatured": true,
+      "tags": [
+        {
+          "text": "AI Agent"
+        },
+        {
+          "text": "工作流",
+          "tone": "dev"
+        }
       ],
-      "statusRows": [
-        ["状态", "持续实验"],
-        ["输出", "待整理文章"],
-        ["下一步", "补案例索引"]
+      "actions": [],
+      "detail": {
+        "description": "AI Agent 工作流实验项目详情，记录资料检索、代码修改和自动化协作边界。",
+        "statusTag": {
+          "text": "实验中",
+          "tone": "alert"
+        },
+        "overview": "这里用来沉淀 Agent 协作的真实使用方法，包括怎样拆任务、怎样记录上下文、怎样处理验证和回滚风险。",
+        "listTitle": "记录方向",
+        "items": [
+          "多工具协作中的任务边界和交接格式。",
+          "MCP、CLI、浏览器验证和本地脚本之间的配合。",
+          "高风险操作前的检查清单和复盘记录。"
+        ],
+        "statusRows": [
+          {
+            "label": "状态",
+            "value": "持续实验"
+          },
+          {
+            "label": "输出",
+            "value": "待整理文章"
+          },
+          {
+            "label": "下一步",
+            "value": "补案例索引"
+          }
+        ],
+        "actions": []
+      }
+    },
+    {
+      "slug": "claude-notes",
+      "title": "Claude Code 深度使用笔记",
+      "detailUrl": "project-claude-notes.html",
+      "icon": "ri-book-open-line",
+      "summary": "沉淀命令行编码、项目重构、上下文管理和提示词策略。",
+      "tags": [
+        {
+          "text": "Claude Code"
+        },
+        {
+          "text": "笔记",
+          "tone": "dev"
+        }
       ],
-      "actions": []
-    }
-  },
-  {
-    "slug": "claude-notes",
-    "title": "Claude Code 深度使用笔记",
-    "detailUrl": "project-claude-notes.html",
-    "icon": "ri-book-open-line",
-    "summary": "沉淀命令行编码、项目重构、上下文管理和提示词策略。",
-    "tags": [
-      { "text": "Claude Code" },
-      { "text": "笔记", "tone": "dev" }
-    ],
-    "actions": [],
-    "detail": {
-      "description": "Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。",
-      "statusTag": { "text": "草稿中", "tone": "alert" },
-      "overview": "这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。",
-      "listTitle": "笔记结构",
-      "items": [
-        "上下文压缩、任务拆解和验证策略。",
-        "代码审查、重构和多文件修改的协作方式。",
-        "失败案例、提示词调整和复盘记录。"
-      ],
-      "statusRows": [
-        ["状态", "内容草稿"],
-        ["形式", "长期笔记"],
-        ["下一步", "补目录结构"]
-      ],
-      "actions": []
-    }
-  },
-  {
-    "slug": "sh-info-price",
-    "title": "上海信息价数据库比对系统",
-    "detailUrl": "project-sh-info-price.html",
-    "icon": "ri-database-2-line",
-    "summary": "已接入 82 期上海材料信息价，支持材料检索、趋势查看和历史价格比对。",
-    "homeSummary": "独立应用承载 82 期材料信息价查询，主站保留入口和备用工具。",
-    "homeFeatured": true,
-    "tags": [
-      { "text": "工程数据" },
-      { "text": "82期数据", "tone": "dev" }
-    ],
-    "actions": [
-      { "label": "打开查询", "href": "https://sh-info-price.vercel.app/", "icon": "ri-external-link-line", "primary": true, "external": true }
-    ],
-    "detail": {
-      "description": "上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。",
-      "statusTag": { "text": "独立部署", "tone": "dev" },
-      "overview": "这个系统作为独立 Next.js 应用维护和部署，完整查询体验与 /data/ 静态 JSON 数据源由信息价项目承载。Solaris Wiki 主站保留入口按钮，并生成备用站内工具；备用工具默认从正式静态数据源读取，不再依赖 GitHub raw。",
-      "listTitle": "已完成能力",
-      "items": [
-        "采集官方材料信息价附件并解析为结构化数据。",
-        "生成最新期索引、检索索引和按材料拆分的历史价格文件。",
-        "在独立应用中支持关键词筛选、材料详情和 82 期历史趋势查看。",
-        "主站按钮跳转独立应用，备用站内工具从正式静态数据源读取。"
-      ],
-      "statusRows": [
-        ["状态", "独立应用部署"],
-        ["数据范围", "2019.05 - 2026.04"],
-        ["材料期数", "82期 / 541,830条"],
-        ["正式数据源", "/data/ 静态托管"]
+      "actions": [],
+      "detail": {
+        "description": "Claude Code 深度使用笔记项目详情，记录命令行编码、项目重构和上下文管理。",
+        "statusTag": {
+          "text": "草稿中",
+          "tone": "alert"
+        },
+        "overview": "这个条目会整理实际使用 Claude Code 和相关编码 Agent 的经验，把一次次项目协作变成可复用的工作方法。",
+        "listTitle": "笔记结构",
+        "items": [
+          "上下文压缩、任务拆解和验证策略。",
+          "代码审查、重构和多文件修改的协作方式。",
+          "失败案例、提示词调整和复盘记录。"
+        ],
+        "statusRows": [
+          {
+            "label": "状态",
+            "value": "内容草稿"
+          },
+          {
+            "label": "形式",
+            "value": "长期笔记"
+          },
+          {
+            "label": "下一步",
+            "value": "补目录结构"
+          }
+        ],
+        "actions": []
+      }
+    },
+    {
+      "slug": "sh-info-price",
+      "title": "上海信息价数据库比对系统",
+      "detailUrl": "project-sh-info-price.html",
+      "icon": "ri-database-2-line",
+      "summary": "已接入 82 期上海材料信息价，支持材料检索、趋势查看和历史价格比对。",
+      "homeSummary": "站内工具承载 82 期材料信息价查询，避免外部应用未就绪时进入 404。",
+      "homeFeatured": true,
+      "tags": [
+        {
+          "text": "工程数据"
+        },
+        {
+          "text": "82期数据",
+          "tone": "dev"
+        }
       ],
       "actions": [
-        { "label": "打开查询工具", "href": "https://sh-info-price.vercel.app/", "icon": "ri-external-link-line", "primary": true, "external": true }
-      ]
+        {
+          "label": "打开查询",
+          "href": "sh-info-price/",
+          "icon": "ri-search-line",
+          "primary": true,
+          "external": false
+        }
+      ],
+      "detail": {
+        "description": "上海信息价数据库比对系统项目详情，记录 82 期材料信息价采集、检索和历史价格比对能力。",
+        "statusTag": {
+          "text": "站内工具",
+          "tone": "dev"
+        },
+        "overview": "这个系统作为独立 Next.js 应用维护完整查询体验和 /data/ 静态 JSON 数据源；Solaris Wiki 主站固定提供站内查询入口，避免独立应用域名未就绪时出现 404。站内工具默认从正式静态数据源读取，不再依赖 GitHub raw。",
+        "listTitle": "已完成能力",
+        "items": [
+          "采集官方材料信息价附件并解析为结构化数据。",
+          "生成最新期索引、检索索引和按材料拆分的历史价格文件。",
+          "支持关键词筛选、材料详情和 82 期历史趋势查看。",
+          "主站按钮进入站内查询工具，工具从正式静态数据源读取。"
+        ],
+        "statusRows": [
+          {
+            "label": "状态",
+            "value": "站内查询入口"
+          },
+          {
+            "label": "数据范围",
+            "value": "2019.05 - 2026.04"
+          },
+          {
+            "label": "材料期数",
+            "value": "82期 / 541,830条"
+          },
+          {
+            "label": "正式数据源",
+            "value": "/data/ 静态托管"
+          }
+        ],
+        "actions": [
+          {
+            "label": "打开查询工具",
+            "href": "sh-info-price/",
+            "icon": "ri-search-line",
+            "primary": true,
+            "external": false
+          }
+        ]
+      }
     }
-  }
-]
+  ]
+}
