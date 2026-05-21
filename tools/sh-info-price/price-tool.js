@@ -1,10 +1,13 @@
 (function () {
   const PAGE_SIZE = 50;
   const SVG_NS = "http://www.w3.org/2000/svg";
-  const DEFAULT_DATA_BASE_URL = "https://sh-info-price.vercel.app/data/";
+  const SOLARIS_PROXY_DATA_URL = "/api/price-data?path={path}";
+  const GITHUB_RAW_DATA_BASE_URL = "https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/";
+  const VERCEL_DATA_BASE_URL = "https://sh-info-price.vercel.app/data/";
+  const DATA_REQUEST_TIMEOUT = 8000;
   const runtimeConfig = window.SolarisPriceConfig || {};
-  let dataBaseUrl = normalizeBaseUrl(runtimeConfig.dataBaseUrl || "");
-  const fallbackDataBaseUrl = normalizeBaseUrl(runtimeConfig.fallbackDataBaseUrl || DEFAULT_DATA_BASE_URL);
+  const dataSources = buildDataSources();
+  let activeDataSourceIndex = 0;
   const state = {
     manifest: null,
     latest: [],
@@ -53,28 +56,87 @@
   };
 
   function normalizeBaseUrl(value) {
+    if (String(value || "").includes("{path}")) {
+      return String(value).trim();
+    }
+
     return value ? String(value).replace(/\/?$/, "/") : "";
   }
 
-  function dataUrl(path) {
-    const normalizedPath = dataBaseUrl ? path.replace(/^data\//, "") : path;
-    return new URL(normalizedPath, dataBaseUrl || window.location.href).toString();
+  function uniqueSources(sources) {
+    const seen = new Set();
+
+    return sources
+      .map((source) => normalizeBaseUrl(source))
+      .filter((source) => {
+        if (seen.has(source)) {
+          return false;
+        }
+
+        seen.add(source);
+        return true;
+      });
+  }
+
+  function buildDataSources() {
+    const configuredSources = Array.isArray(runtimeConfig.dataBaseUrls)
+      ? runtimeConfig.dataBaseUrls
+      : [];
+
+    return uniqueSources([
+      runtimeConfig.dataBaseUrl || "",
+      ...configuredSources,
+      runtimeConfig.fallbackDataBaseUrl,
+      SOLARIS_PROXY_DATA_URL,
+      GITHUB_RAW_DATA_BASE_URL,
+      VERCEL_DATA_BASE_URL
+    ]);
+  }
+
+  function dataUrl(path, baseUrl) {
+    if (baseUrl.includes("{path}")) {
+      const normalizedPath = path.replace(/^data\//, "");
+      return new URL(baseUrl.replace("{path}", encodeURIComponent(normalizedPath)), window.location.href).toString();
+    }
+
+    const normalizedPath = baseUrl ? path.replace(/^data\//, "") : path;
+    return new URL(normalizedPath, baseUrl || window.location.href).toString();
+  }
+
+  async function fetchWithTimeout(url, options) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), DATA_REQUEST_TIMEOUT);
+
+    try {
+      return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   async function readJson(path) {
-    const usedRemote = Boolean(dataBaseUrl);
-    let response = await fetch(dataUrl(path), { cache: usedRemote ? "default" : "no-store" });
+    for (let offset = 0; offset < dataSources.length; offset += 1) {
+      const index = (activeDataSourceIndex + offset) % dataSources.length;
+      const source = dataSources[index];
+      const usedRemote = Boolean(source);
 
-    if (!response.ok && !usedRemote && fallbackDataBaseUrl) {
-      dataBaseUrl = fallbackDataBaseUrl;
-      response = await fetch(dataUrl(path), { cache: "default" });
+      try {
+        const response = await fetchWithTimeout(dataUrl(path, source), {
+          cache: usedRemote ? "default" : "no-store"
+        });
+
+        if (!response.ok) {
+          continue;
+        }
+
+        activeDataSourceIndex = index;
+        return response.json();
+      } catch {
+        // Try the next source. The UI reports a single readable error after all sources fail.
+      }
     }
 
-    if (!response.ok) {
-      throw new Error(`读取数据失败：${path}`);
-    }
-
-    return response.json();
+    throw new Error(`读取数据失败：${path}`);
   }
 
   function setStatus(message, tone) {

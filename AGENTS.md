@@ -21,6 +21,7 @@
 - `login.html` 是双通道独立访问首页：访客邀请码进入普通内容，管理员账号密码进入 `/admin/` 和审核台。
 - `api/auth.js` 校验访客邀请码或管理员账号密码，并设置带角色签名的 `HttpOnly` Cookie；`middleware.js` 根据该 Cookie 中的 `visitor/admin` 角色放行站点页面和 API。生产环境必须配置 `SOLARIS_AUTH_SECRET`、访客邀请码和管理员账号密码。
 - `api/auth.js`、`api/guestbook.js`、`api/submissions.js` 已有轻量 IP 限流；所有 API JSON 响应默认 `no-store`。
+- `api/price-data.js` 为站内信息价工具提供同域数据代理，默认代理 `sh-info-price` 仓库的 GitHub raw 数据；独立应用部署后，站内工具优先读取独立应用 `/data/`，代理作为兜底。
 - `vercel.json` 已配置基础安全响应头；当前私有期 `robots.txt` 使用 `Disallow: /`。
 - `data/` 已启用项目数据、站点更新和搜索索引。
 - `content/posts/` 已启用 Markdown 文章源，构建时生成文章页和文章列表。
@@ -109,7 +110,7 @@
 - Vercel 生产环境变量、Supabase 表结构和 Decap CMS OAuth / Git Gateway 仍需在平台侧配置。
 - 当前是整站私有访问；如果未来要公开首页或文章，需要重新调整 `robots.txt`、middleware 放行规则和 sitemap 策略。
 - 主站核心页面已添加 Open Graph / Twitter Card 分享信息，独立页面新增时仍需继续同步。
-- “上海信息价数据库比对系统”主站入口固定指向 `/sh-info-price/` 站内查询工具，避免独立应用域名未就绪时出现 404。
+- “上海信息价数据库比对系统”应作为独立 Vercel 应用部署；主站入口固定指向 `/sh-info-price/` 站内查询工具，并额外提供完整应用外链。
 - `api/` 与 `data/` 已启用；后续变更需同步检查构建输出和 Vercel 环境变量。
 - 尚未做系统的移动端视觉验收。
 - 尚未做无障碍和 SEO 细节检查。
@@ -125,12 +126,12 @@ H:\codex\sh-info-price
 集成策略：
 
 - 信息价系统源码仍作为独立 Next.js 应用维护。
-- 主站使用 `tools/sh-info-price/` 中的轻量静态查询页作为正式入口，默认从正式静态数据源读取，不再依赖 GitHub raw。
+- 主站使用 `tools/sh-info-price/` 中的轻量静态查询页作为站内入口，默认先尝试独立应用 `/data/`，再走 `/api/price-data` 同域代理，最后回退到 GitHub raw 上已提交的 `public/data`。
 - `scripts/build-price-app.js` 会把查询工具挂载到 `dist/sh-info-price/`，同时生成本地预览用的根目录 `sh-info-price/`；仅当 `SH_INFO_PRICE_COPY_LOCAL_DATA=1` 时复制本地 `public/data`。
 - 根目录 `sh-info-price/` 是生成产物，已加入 `.gitignore`，不要手动维护或提交。
 - 不要把完整 Next.js 项目源码直接塞进本静态站目录。
 
-当前主站中的信息价卡片、首页卡片和详情页按钮都指向 `/sh-info-price/`；如数据源域名变化，设置 `SH_INFO_PRICE_DATA_BASE_URL`。
+当前主站中的信息价卡片、首页卡片和详情页主按钮都指向 `/sh-info-price/`，详情页同时提供 `https://sh-info-price.vercel.app/` 完整应用外链；如 Vercel 域名变化，设置 `SH_INFO_PRICE_APP_URL` 和 `SH_INFO_PRICE_DATA_BASE_URL`。
 
 ## 本地预览建议
 

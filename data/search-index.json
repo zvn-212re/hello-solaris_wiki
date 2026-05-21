@@ -88,6 +88,17 @@
     ]
   },
   {
+    "title": "信息价独立应用与站内兜底",
+    "url": "index.html#siteUpdatesTitle",
+    "type": "Update",
+    "summary": "信息价项目改为独立 Vercel 应用优先，主站保留站内查询入口、数据代理和 GitHub raw 兜底，保证线上可访问。",
+    "tags": [
+      "v.0.3.2",
+      "Fix",
+      "patch"
+    ]
+  },
+  {
     "title": "信息价入口与 CMS 可视化",
     "url": "index.html#siteUpdatesTitle",
     "type": "Update",

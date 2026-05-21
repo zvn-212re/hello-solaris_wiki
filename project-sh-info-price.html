@@ -71,29 +71,30 @@
           <div class="detail-meta">
             <span class="tag">工程数据</span>
                 <span class="tag dev">82期数据</span>
-                <span class="tag dev">站内工具</span>
+                <span class="tag dev">独立应用 + 站内备份</span>
           </div>
           <h2>项目概览</h2>
-          <p>这个系统作为独立 Next.js 应用维护完整查询体验和 /data/ 静态 JSON 数据源；Solaris Wiki 主站固定提供站内查询入口，避免独立应用域名未就绪时出现 404。站内工具默认从正式静态数据源读取，不再依赖 GitHub raw。</p>
+          <p>这个系统作为独立 Next.js 应用维护完整查询体验和 /data/ 静态 JSON 数据源；Solaris Wiki 主站固定提供站内查询入口，并在独立数据源不可用时回退到主站代理或 GitHub raw 数据。</p>
           <h2>已完成能力</h2>
           <ul class="detail-list">
             <li>采集官方材料信息价附件并解析为结构化数据。</li>
             <li>生成最新期索引、检索索引和按材料拆分的历史价格文件。</li>
             <li>支持关键词筛选、材料详情和 82 期历史趋势查看。</li>
-            <li>主站按钮进入站内查询工具，工具从正式静态数据源读取。</li>
+            <li>独立应用作为正式线上系统，主站站内工具作为入口与兜底查询。</li>
           </ul>
         </article>
 
         <aside class="detail-side-panel">
           <div class="detail-visual" aria-hidden="true"><i class="ri-database-2-line"></i></div>
           <div class="detail-status">
-            <div class="detail-status-row"><span>状态</span><strong>站内查询入口</strong></div>
+            <div class="detail-status-row"><span>状态</span><strong>独立应用待部署</strong></div>
             <div class="detail-status-row"><span>数据范围</span><strong>2019.05 - 2026.04</strong></div>
             <div class="detail-status-row"><span>材料期数</span><strong>82期 / 541,830条</strong></div>
             <div class="detail-status-row"><span>正式数据源</span><strong>/data/ 静态托管</strong></div>
           </div>
           <div class="detail-actions">
-            <a class="button" href="sh-info-price/"><i class="ri-search-line"></i> 打开查询工具</a>
+            <a class="button" href="/sh-info-price/"><i class="ri-search-line"></i> 站内查询</a>
+            <a class="button secondary" href="https://sh-info-price.vercel.app/" target="_blank" rel="noopener noreferrer"><i class="ri-external-link-line"></i> 打开完整应用</a>
             <a class="button secondary" href="projects.html"><i class="ri-arrow-left-line"></i> 返回项目档案</a>
           </div>
         </aside>

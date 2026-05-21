@@ -669,3 +669,27 @@ docs/development-log.md
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`
 - 临时本地 HTTP 服务检查 `/`、`/projects.html`、`/project-sh-info-price.html` 和 `/sh-info-price/` 均返回 `200`。
 - `npm run check` / `npm run build` 在当前沙箱内因 npm 读取 `C:\Users\banabann` 被拒绝失败；已用等价 Node 脚本完成验证。
+
+### 信息价独立应用优先与站内兜底
+
+问题：
+
+- `H:\codex\sh-info-price` 本地仓库没有 `.vercel/` 绑定，说明独立 Vercel 应用并未在当前环境完成真实部署。
+- 主站 `/sh-info-price/` 虽然有查询页面，但默认读取 `https://sh-info-price.vercel.app/data/`；如果该独立域名不可用，线上页面会显示数据读取失败。
+
+处理：
+
+- 主站项目信息价入口改为绝对路径 `/sh-info-price/`，详情页增加 `https://sh-info-price.vercel.app/` 完整应用外链。
+- 新增 `api/price-data.js`，作为同域数据代理；默认代理 `https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/`，也支持用 `SH_INFO_PRICE_DATA_BASE_URL` 指向更稳定的静态数据源。
+- `tools/sh-info-price/price-tool.js` 改为多数据源加载：先尝试站内相对数据，再尝试独立应用 `/data/`、`/api/price-data`，最后回退到 GitHub raw。
+- `scripts/build-price-app.js` 默认写入 `https://sh-info-price.vercel.app/data/` 作为主数据源，并保留 `SH_INFO_PRICE_APP_URL` / `SH_INFO_PRICE_DATA_BASE_URL` 覆盖项。
+- 更新 README、信息价静态托管说明和接手说明。
+
+验证：
+
+- `node --check api/price-data.js`
+- `node --check scripts/build-price-app.js`
+- `node --check tools/sh-info-price/price-tool.js`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`
+- 使用 mock `fetch` 调用 `api/price-data.js`，确认 `manifest.json` 会代理到 GitHub raw 数据源并返回 JSON。
+- 检查生成后的首页、项目页和详情页按钮均指向 `/sh-info-price/`，`dist/sh-info-price/price-config.js` 默认数据源为 `/api/price-data?path={path}`。

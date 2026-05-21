@@ -7,6 +7,8 @@ const MOUNT_NAME = "sh-info-price";
 const TOOL_SOURCE_DIR = path.join(ROOT, "tools", MOUNT_NAME);
 const DEFAULT_PRICE_APP_DIR = path.resolve(ROOT, "..", "..", "sh-info-price");
 const DEFAULT_PRICE_APP_URL = "https://sh-info-price.vercel.app/";
+const DEFAULT_PROXY_DATA_BASE_URL = "/api/price-data?path={path}";
+const DEFAULT_DATA_BASE_URL = "https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/";
 const PRICE_APP_DIR = process.env.SH_INFO_PRICE_DIR
   ? path.resolve(process.env.SH_INFO_PRICE_DIR)
   : DEFAULT_PRICE_APP_DIR;
@@ -19,6 +21,10 @@ const COPY_LOCAL_DATA = process.env.SH_INFO_PRICE_COPY_LOCAL_DATA === "1";
 
 function normalizeUrl(value) {
   const text = String(value || "").trim();
+  if (text.includes("{path}")) {
+    return text;
+  }
+
   return text ? text.replace(/\/?$/, "/") : "";
 }
 
@@ -37,10 +43,17 @@ function ensureCleanDir(dir, allowedParent) {
 }
 
 function writeRuntimeConfig(destDir, copiedLocalData) {
+  const remoteSources = uniqueUrls([
+    PRICE_DATA_BASE_URL,
+    DEFAULT_PROXY_DATA_BASE_URL,
+    DEFAULT_DATA_BASE_URL,
+    new URL("data/", PRICE_APP_URL).toString()
+  ]);
   const config = {
     appUrl: PRICE_APP_URL,
     dataBaseUrl: copiedLocalData ? "" : PRICE_DATA_BASE_URL,
-    fallbackDataBaseUrl: PRICE_DATA_BASE_URL
+    dataBaseUrls: remoteSources,
+    fallbackDataBaseUrl: DEFAULT_DATA_BASE_URL
   };
 
   fs.writeFileSync(
@@ -62,6 +75,10 @@ function copyStaticTool(destDir, allowedParent) {
 
   writeRuntimeConfig(destDir, copiedLocalData);
   return copiedLocalData;
+}
+
+function uniqueUrls(urls) {
+  return [...new Set(urls.map(normalizeUrl).filter(Boolean))];
 }
 
 function buildMountedPriceTool() {
