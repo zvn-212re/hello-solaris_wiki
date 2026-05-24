@@ -55,7 +55,7 @@ npm run check:supabase
 
 - 新增或修改项目：优先进入 `/admin/` 的“站点数据 -> 项目档案”可视化编辑；也可以直接编辑 `data/projects.json`，再运行 `npm run build`。
 - 新增或修改站点更新：进入 `/admin/` 的“站点数据 -> 站点更新”维护，保存后由 Vercel 重新构建页面。
-- 信息价查询工具：正式系统部署在独立 `sh-info-price` Vercel 项目，主站按钮固定提供站内 `/sh-info-price/` 查询入口；站内工具优先读取独立应用 `/data/`，再通过同域 `/api/price-data` 和 GitHub raw 兜底。
+- 信息价查询工具：正式系统部署在独立 `sh-info-price` Vercel 项目，主站按钮优先打开完整应用；`/sh-info-price/` 仅作为站内备用入口，优先读取独立应用 `/data/`，再通过同域 `/api/price-data` 代理读取正式静态数据源。
 - 修改公共导航、页脚、全站 meta：同步编辑 `scripts/build-site.js` 和 `scripts/build-cms-content.js`。
 - 修改视觉样式：编辑 `css/styles.css`。
 - 修改番茄钟、音乐、主题、路由等交互：编辑 `js/` 下对应脚本。

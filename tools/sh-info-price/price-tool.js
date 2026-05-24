@@ -2,7 +2,6 @@
   const PAGE_SIZE = 50;
   const SVG_NS = "http://www.w3.org/2000/svg";
   const SOLARIS_PROXY_DATA_URL = "/api/price-data?path={path}";
-  const GITHUB_RAW_DATA_BASE_URL = "https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/";
   const VERCEL_DATA_BASE_URL = "https://sh-info-price.vercel.app/data/";
   const DATA_REQUEST_TIMEOUT = 8000;
   const runtimeConfig = window.SolarisPriceConfig || {};
@@ -86,9 +85,7 @@
     return uniqueSources([
       runtimeConfig.dataBaseUrl || "",
       ...configuredSources,
-      runtimeConfig.fallbackDataBaseUrl,
       SOLARIS_PROXY_DATA_URL,
-      GITHUB_RAW_DATA_BASE_URL,
       VERCEL_DATA_BASE_URL
     ]);
   }

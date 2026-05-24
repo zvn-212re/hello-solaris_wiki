@@ -693,3 +693,43 @@ docs/development-log.md
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build-site.ps1`
 - 使用 mock `fetch` 调用 `api/price-data.js`，确认 `manifest.json` 会代理到 GitHub raw 数据源并返回 JSON。
 - 检查生成后的首页、项目页和详情页按钮均指向 `/sh-info-price/`，`dist/sh-info-price/price-config.js` 默认数据源为 `/api/price-data?path={path}`。
+
+## 2026-05-23
+
+### 页脚作者信息低调补充
+
+处理：
+
+- 在公共页脚模板中加入低调的 `by zvn-212re` 作者标识，保留既有 GitHub 与邮箱入口。
+- 为手写静态页 `search.html`、`submit.html`、`moderation.html` 和站内信息价工具页同步页脚内容，其中信息价工具页补充 GitHub 链接。
+- 新增 `.footer-author` 样式，将作者标识处理为透明背景、弱化文字，不占据主要视觉焦点。
+- 重新生成首页、项目页、文章页、详情页和 `dist/sh-info-price/` 产物，保持模板与静态输出一致。
+
+验证：
+
+- `node --check scripts/build-site.js`
+- `node --check scripts/build-cms-content.js`
+- `node scripts/build-site.js`
+- `node scripts/build-cms-content.js`
+- `node scripts/build-price-app.js`
+
+## 2026-05-24
+
+### 信息价入口与数据源约定同步
+
+处理：
+
+- 主站信息价项目按钮改为优先打开独立完整应用，`/sh-info-price/` 保留为站内备用查询入口。
+- 站内备用工具顶部说明改为备用入口，并提供完整应用主按钮。
+- 主站信息价数据代理默认指向正式静态数据源 `https://sh-info-price.vercel.app/data/`。
+- 移除站内备用工具和构建配置中的显式 GitHub raw 数据兜底，避免与独立应用的数据源约定不一致。
+- 更新 README、静态数据源说明和站点更新文案。
+
+验证：
+
+- `node --check api/price-data.js`
+- `node --check scripts/build-price-app.js`
+- `node --check tools/sh-info-price/price-tool.js`
+- `node scripts/build-site.js`
+- `node scripts/build-cms-content.js`
+- `node scripts/build-price-app.js`

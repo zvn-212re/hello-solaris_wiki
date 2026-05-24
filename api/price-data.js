@@ -1,4 +1,4 @@
-const DEFAULT_DATA_BASE_URL = "https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/";
+const DEFAULT_DATA_BASE_URL = "https://sh-info-price.vercel.app/data/";
 const CACHE_CONTROL = "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800";
 const ALLOWED_ROOT_FILES = new Set(["manifest.json", "latest.json", "search-index.json"]);
 

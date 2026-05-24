@@ -223,7 +223,7 @@
       "detailUrl": "project-sh-info-price.html",
       "icon": "ri-database-2-line",
       "summary": "已接入 82 期上海材料信息价，支持材料检索、趋势查看和历史价格比对。",
-      "homeSummary": "独立应用承载 82 期材料信息价查询，主站保留站内查询入口和数据兜底。",
+      "homeSummary": "独立应用承载 82 期材料信息价查询，主站保留站内备用入口。",
       "homeFeatured": true,
       "tags": [
         {
@@ -236,17 +236,17 @@
       ],
       "actions": [
         {
-          "label": "站内查询",
-          "href": "/sh-info-price/",
-          "icon": "ri-search-line",
-          "primary": true,
-          "external": false
-        },
-        {
           "label": "完整应用",
           "href": "https://sh-info-price.vercel.app/",
           "icon": "ri-external-link-line",
+          "primary": true,
           "external": true
+        },
+        {
+          "label": "站内备用",
+          "href": "/sh-info-price/",
+          "icon": "ri-search-line",
+          "external": false
         }
       ],
       "detail": {
@@ -255,18 +255,18 @@
           "text": "独立应用 + 站内备份",
           "tone": "dev"
         },
-        "overview": "这个系统作为独立 Next.js 应用维护完整查询体验和 /data/ 静态 JSON 数据源；Solaris Wiki 主站固定提供站内查询入口，并在独立数据源不可用时回退到主站代理或 GitHub raw 数据。",
+        "overview": "这个系统作为独立 Next.js 应用维护完整查询体验和 /data/ 静态 JSON 数据源；Solaris Wiki 主站优先指向完整应用，并保留站内备用查询入口。",
         "listTitle": "已完成能力",
         "items": [
           "采集官方材料信息价附件并解析为结构化数据。",
           "生成最新期索引、检索索引和按材料拆分的历史价格文件。",
           "支持关键词筛选、材料详情和 82 期历史趋势查看。",
-          "独立应用作为正式线上系统，主站站内工具作为入口与兜底查询。"
+          "独立应用作为正式线上系统，主站站内工具作为备用查询入口。"
         ],
         "statusRows": [
           {
             "label": "状态",
-            "value": "独立应用待部署"
+            "value": "独立应用优先"
           },
           {
             "label": "数据范围",
@@ -283,17 +283,17 @@
         ],
         "actions": [
           {
-            "label": "站内查询",
-            "href": "/sh-info-price/",
-            "icon": "ri-search-line",
-            "primary": true,
-            "external": false
-          },
-          {
             "label": "打开完整应用",
             "href": "https://sh-info-price.vercel.app/",
             "icon": "ri-external-link-line",
+            "primary": true,
             "external": true
+          },
+          {
+            "label": "站内备用",
+            "href": "/sh-info-price/",
+            "icon": "ri-search-line",
+            "external": false
           }
         ]
       }

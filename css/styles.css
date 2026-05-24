@@ -1868,6 +1868,14 @@ h3 {
   box-shadow: 3px 3px 0 var(--ink);
 }
 
+.footer-links .footer-author {
+  padding-inline: 2px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+}
+
 .footer-action {
   color: inherit;
   cursor: pointer;

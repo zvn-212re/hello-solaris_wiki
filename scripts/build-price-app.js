@@ -8,7 +8,6 @@ const TOOL_SOURCE_DIR = path.join(ROOT, "tools", MOUNT_NAME);
 const DEFAULT_PRICE_APP_DIR = path.resolve(ROOT, "..", "..", "sh-info-price");
 const DEFAULT_PRICE_APP_URL = "https://sh-info-price.vercel.app/";
 const DEFAULT_PROXY_DATA_BASE_URL = "/api/price-data?path={path}";
-const DEFAULT_DATA_BASE_URL = "https://raw.githubusercontent.com/zvn-212re/sh-info-price/main/public/data/";
 const PRICE_APP_DIR = process.env.SH_INFO_PRICE_DIR
   ? path.resolve(process.env.SH_INFO_PRICE_DIR)
   : DEFAULT_PRICE_APP_DIR;
@@ -46,14 +45,12 @@ function writeRuntimeConfig(destDir, copiedLocalData) {
   const remoteSources = uniqueUrls([
     PRICE_DATA_BASE_URL,
     DEFAULT_PROXY_DATA_BASE_URL,
-    DEFAULT_DATA_BASE_URL,
     new URL("data/", PRICE_APP_URL).toString()
   ]);
   const config = {
     appUrl: PRICE_APP_URL,
     dataBaseUrl: copiedLocalData ? "" : PRICE_DATA_BASE_URL,
-    dataBaseUrls: remoteSources,
-    fallbackDataBaseUrl: DEFAULT_DATA_BASE_URL
+    dataBaseUrls: remoteSources
   };
 
   fs.writeFileSync(

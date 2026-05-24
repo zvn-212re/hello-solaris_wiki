@@ -39,6 +39,7 @@ const site = {
   tagline: "索拉里斯星档案",
   email: "xiechanghui9@gmail.com",
   github: "https://github.com/zvn-212re",
+  author: "zvn-212re",
 };
 
 function escapeHtml(value) {
@@ -193,6 +194,7 @@ function footer() {
     <div class="footer-inner">
       <a href="${SITE_URL}" target="_blank" rel="noopener noreferrer">solaris.wiki</a>
       <div class="footer-links">
+        <span class="footer-author">by ${escapeHtml(site.author)}</span>
         <a href="${site.github}" target="_blank" rel="noopener noreferrer" aria-label="GitHub 主页"><i class="ri-github-line"></i> GitHub</a>
         <a href="mailto:${site.email}"><i class="ri-mail-line"></i> ${site.email}</a>
         <button class="footer-action" type="button" data-auth-logout><i class="ri-logout-box-r-line"></i> 退出</button>
