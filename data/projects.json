@@ -4,6 +4,7 @@
       "slug": "fretwise",
       "title": "Fretwise 吉他指板训练器",
       "detailUrl": "project-fretwise.html",
+      "cardUrl": "/guitar/",
       "icon": "ri-music-2-line",
       "summary": "交互式 24 品吉他指板，支持音阶可视化、点按听音与十题随机找音训练。",
       "homeSummary": "在完整 24 品指板上练习音名、级数与音程，用每天十题建立肌肉记忆。",

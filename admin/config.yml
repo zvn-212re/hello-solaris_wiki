@@ -77,6 +77,7 @@ collections:
               - { label: 标识, name: slug, widget: string, hint: "用于生成内部标识，例如 sh-info-price" }
               - { label: 标题, name: title, widget: string }
               - { label: 详情页, name: detailUrl, widget: string, hint: "例如 project-sh-info-price.html" }
+              - { label: 卡片跳转, name: cardUrl, widget: string, required: false, hint: "可选；填写后，点击项目卡片会直接前往该地址，例如 /guitar/" }
               - { label: 图标类名, name: icon, widget: string, default: "ri-folder-3-line" }
               - { label: 项目摘要, name: summary, widget: text }
               - { label: 首页摘要, name: homeSummary, widget: text, required: false }

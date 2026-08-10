@@ -411,7 +411,9 @@ ${guestbookSection()}`;
 }
 
 function projectRow(project) {
-  return `<article class="card project-card" data-detail-url="${attr(project.detailUrl)}" tabindex="0" role="link" aria-label="查看${attr(project.title)}详情">
+  const cardUrl = project.cardUrl || project.detailUrl;
+  const cardLabel = project.cardUrl ? `打开${project.title}` : `查看${project.title}详情`;
+  return `<article class="card project-card" data-detail-url="${attr(cardUrl)}" tabindex="0" role="link" aria-label="${attr(cardLabel)}">
             <div class="screenshot" aria-hidden="true">
               <i class="${attr(project.icon)}"></i>
             </div>

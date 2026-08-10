@@ -772,3 +772,19 @@ docs/development-log.md
 - `npm run check`
 - `npm run build`
 - 检查 `dist/guitar/` 产物包含原版 Fretwise 类名、迷你指板与 150 音位生成逻辑。
+
+## 2026-08-11
+
+### Fretwise 项目卡片直达训练器
+
+处理：
+
+- 为项目数据增加可选的 `cardUrl`，用于区分项目详情页地址和整张项目卡片的点击目标。
+- 将 Fretwise 在项目档案中的卡片点击目标从旧详情页改为 `/guitar/`，与“开始练习”按钮保持一致。
+- 在 Decap CMS 项目字段中增加可选“卡片跳转”，方便后续维护独立工具入口。
+
+验证：
+
+- `npm run check`
+- `npm run build`
+- 检查生成的 `projects.html` 与 `dist/projects.html` 中 Fretwise 卡片均直接指向 `/guitar/`。
