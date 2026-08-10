@@ -5,7 +5,7 @@ const ROOT = path.resolve(__dirname, "..");
 const OUT_DIR = path.join(ROOT, "dist");
 const SITE_URL = "https://solaris.wiki";
 const OG_IMAGE = `${SITE_URL}/images/3818c2c7aa04f65ddb23e7d25a159026522770383.png@360w_270h_1s.avif`;
-const STATIC_DIRS = ["admin", "css", "images", "js"];
+const STATIC_DIRS = ["admin", "css", "guitar", "images", "js"];
 const STATIC_FILES = [
   "favicon.svg",
   "login.html",

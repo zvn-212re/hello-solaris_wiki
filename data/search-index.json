@@ -27,6 +27,16 @@
     ]
   },
   {
+    "title": "Fretwise 吉他指板训练器",
+    "url": "project-fretwise.html",
+    "type": "Project",
+    "summary": "交互式 24 品吉他指板，支持音阶可视化、点按听音与十题随机找音训练。",
+    "tags": [
+      "音乐工具",
+      "交互训练"
+    ]
+  },
+  {
     "title": "番茄钟 Web 应用",
     "url": "project-pomodoro.html",
     "type": "Project",

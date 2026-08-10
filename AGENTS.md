@@ -17,7 +17,7 @@
 - `vercel.json` 使用 `npm run build`，输出目录为 `dist`。
 - 根目录 HTML 可以直接打开；涉及局部路由、搜索、投稿或 API 时建议用 Vercel 预览或 `vercel dev`，普通静态服务器不会执行 middleware。
 - `api/` 已启用 Vercel Serverless Function，用于留言、投稿和审核。
-- 当前访问策略为整站私有访问，未登录访问普通页面会先跳转到 `login.html`。
+- 当前访问策略暂时放开普通站点内容，不要求访客登录；`/admin/`、审核页和审核 API 仍要求管理员登录。访客门禁代码保留，可通过 middleware 中的 `SITE_ACCESS_GATE_ENABLED` 恢复。
 - `login.html` 是双通道独立访问首页：访客邀请码进入普通内容，管理员账号密码进入 `/admin/` 和审核台。
 - `api/auth.js` 校验访客邀请码或管理员账号密码，并设置带角色签名的 `HttpOnly` Cookie；`middleware.js` 根据该 Cookie 中的 `visitor/admin` 角色放行站点页面和 API。生产环境必须配置 `SOLARIS_AUTH_SECRET`、访客邀请码和管理员账号密码。
 - `api/auth.js`、`api/guestbook.js`、`api/submissions.js` 已有轻量 IP 限流；所有 API JSON 响应默认 `no-store`。

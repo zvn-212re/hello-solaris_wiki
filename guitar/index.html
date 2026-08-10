@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem("solarisTheme") === "night") {
+          document.documentElement.dataset.theme = "night";
+        }
+      } catch {}
+    })();
+  </script>
+  <title>Fretwise 指板训练器 | Solaris Wiki</title>
+  <meta name="description" content="Solaris Wiki 站内吉他指板、音阶与随机找音训练器。">
+  <meta name="theme-color" content="#f4ead6">
+  <link rel="canonical" href="https://solaris.wiki/guitar/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="guitar.css">
+</head>
+<body>
+  <header class="tool-header">
+    <a class="back-link" href="../projects.html" aria-label="返回 Solaris Wiki 项目档案">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span><strong>Solaris Wiki</strong><small>返回项目档案</small></span>
+    </a>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换夜间模式" aria-pressed="false">
+      <span aria-hidden="true">☼</span><span aria-hidden="true">☾</span>
+    </button>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">SOLARIS LAB / GUITAR</p>
+        <h1 id="page-title">Fretwise<br><span>指板训练器</span></h1>
+        <p>选择调式与显示方式，点按 24 品完整指板试听音高，再用十题随机训练把位置变成肌肉记忆。</p>
+      </div>
+      <aside class="signal-card" aria-label="训练统计">
+        <div class="signal-head"><span>FRET SIGNAL</span><b>ONLINE</b></div>
+        <div class="signal-note" data-current-scale>C · 自然大调</div>
+        <div class="stats-grid">
+          <div><span>准确率</span><strong data-accuracy>—</strong></div>
+          <div><span>最佳连续</span><strong data-best>—</strong></div>
+          <div><span>累计命中</span><strong data-total>0</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="control-panel" aria-label="指板设置">
+      <label>根音<select data-root aria-label="选择根音"></select></label>
+      <label>音阶<select data-scale aria-label="选择音阶"></select></label>
+      <fieldset>
+        <legend>显示方式</legend>
+        <div class="segments" data-display-modes>
+          <button type="button" data-mode="音名">音名</button>
+          <button type="button" data-mode="级数">级数</button>
+          <button type="button" data-mode="音程">音程</button>
+        </div>
+      </fieldset>
+      <button class="train-button" type="button" data-train>开始 10 题训练</button>
+    </section>
+
+    <section class="practice-card" aria-live="polite" aria-atomic="true">
+      <div>
+        <span class="practice-kicker" data-round>自由练习</span>
+        <strong data-target>点击任意音符试听</strong>
+        <p data-feedback>先观察音阶在整块指板上的分布，再开始训练。</p>
+      </div>
+      <div class="target-orb" data-target-orb hidden><small>目标音</small><b data-target-note>—</b></div>
+    </section>
+
+    <section class="fretboard-section" aria-labelledby="fretboard-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">INTERACTIVE FRETBOARD</p><h2 id="fretboard-title">完整 24 品指板</h2></div>
+        <div class="legend" aria-label="图例"><span><i class="root-dot"></i>根音</span><span><i class="scale-dot"></i>音阶内音</span><span><i class="out-dot"></i>音阶外音</span></div>
+      </div>
+      <div class="fretboard-scroll" role="region" aria-label="可横向滚动的完整吉他指板" tabindex="0">
+        <div class="fretboard" data-fretboard></div>
+      </div>
+      <p class="scroll-hint">← 在手机上左右滑动查看全部 24 品 →</p>
+    </section>
+
+    <section class="tips" aria-label="练习建议">
+      <article><span>01</span><div><h3>先听再找</h3><p>点同一个音在不同琴弦上的位置，建立音高与空间的联系。</p></div></article>
+      <article><span>02</span><div><h3>切换视角</h3><p>在音名、级数和音程之间切换，理解形状背后的音乐关系。</p></div></article>
+      <article><span>03</span><div><h3>每天十题</h3><p>短而稳定的练习比一次刷很久更容易留下清晰记忆。</p></div></article>
+    </section>
+  </main>
+
+  <footer class="tool-footer"><span>Fretwise · Solaris Wiki</span><a href="../index.html">返回主站</a></footer>
+  <script src="guitar.js"></script>
+</body>
+</html>

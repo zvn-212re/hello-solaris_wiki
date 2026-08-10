@@ -8,6 +8,10 @@ const DAILY_SCHEDULED_WINDOW = {
   endMinute: 0,
 };
 
+// Temporary public-reading mode. Keep admin and moderation routes protected so
+// the visitor gate can be restored later without rebuilding the auth system.
+const SITE_ACCESS_GATE_ENABLED = false;
+
 const TEMPORARY_MAINTENANCE_WINDOWS = [
   // Set enabled to true and adjust the ISO timestamps for one-off maintenance.
   // Example:
@@ -270,7 +274,11 @@ export default async function middleware(request) {
   const url = new URL(request.url);
   const sessionRole = await verifySiteSession(request);
 
-  if (!isPublicPath(url.pathname) && !hasAccess(sessionRole, url.pathname)) {
+  const requiresSession =
+    isAdminPath(url.pathname) ||
+    (SITE_ACCESS_GATE_ENABLED && !isPublicPath(url.pathname));
+
+  if (requiresSession && !hasAccess(sessionRole, url.pathname)) {
     return unauthorizedResponse(url);
   }
 

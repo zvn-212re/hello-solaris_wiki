@@ -733,3 +733,26 @@ docs/development-log.md
 - `node scripts/build-site.js`
 - `node scripts/build-cms-content.js`
 - `node scripts/build-price-app.js`
+
+## 2026-08-10
+
+### Fretwise 吉他训练器接入 Solaris Wiki
+
+处理：
+
+- 新增站内 `/guitar/` 独立工具页，沿用 Solaris Wiki 的复古像素纸张、硬边框与昼夜主题视觉语言。
+- 提供标准调弦六弦 24 品完整指板，共 150 个可点击位置，支持浏览器合成音试听。
+- 支持自然大小调、大小调五声音阶、布鲁斯音阶和多利亚调式，并可切换音名、级数、音程显示。
+- 增加十题随机找音训练、准确率、最佳连续、累计命中以及浏览器本地记录。
+- 在项目数据中新增 Fretwise 条目，首页、项目档案和自动生成的项目详情页均提供站内入口。
+- 构建脚本新增 `guitar/` 静态目录复制，确保 Vercel 输出包含完整工具。
+- 优化窄屏布局：手机端压缩首屏高度与统计卡片，控制区改为单列，训练提示在超窄屏纵向排列，指板格缩至适合触控的 49px 节奏并强化横向惯性滑动。
+- 暂时关闭普通站点内容的访客登录门禁，同时继续保护 `/admin/`、审核页和审核 API；完整登录机制保留，便于之后恢复。
+
+验证：
+
+- `node --check guitar/guitar.js`
+- `npm run check`
+- `npm run build`
+- 检查 `dist/guitar/index.html`、`dist/guitar/guitar.css`、`dist/guitar/guitar.js` 均已生成。
+- 检查生成首页、项目档案、Fretwise 详情页与搜索索引均包含 `/guitar/` 入口。

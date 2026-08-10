@@ -466,6 +466,7 @@ function writeSitemap(posts) {
     "about.html",
     "pomodoro.html",
     "pomodoro-tool.html",
+    "guitar/",
     "search.html",
     "submit.html",
     ...projects.map((project) => project.detailUrl),

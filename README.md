@@ -2,7 +2,7 @@
 
 Solaris Wiki 是一个以静态页面为主的个人网站，用来记录 Vibe Coding、AI Agent 实验、工程数据工具、个人项目和技术笔记。当前项目已经接入轻量构建脚本、Decap CMS 文章生成、Vercel API 和 Supabase 留言/投稿审核能力。
 
-当前访问策略：整站私有访问。首次打开普通页面会先跳转到 `login.html`，访客可用邀请码进入普通内容，管理员可用账号密码进入 CMS 后台。验证后由服务端设置带角色签名的 `HttpOnly` Cookie，再由 middleware 按权限放行。生产环境必须配置 `SOLARIS_AUTH_SECRET`、访客邀请码和管理员账号密码。
+当前访问策略：普通站点内容暂时免登录公开访问；`/admin/`、审核页和审核 API 仍保留管理员验证。访客与管理员登录代码、带角色签名的 `HttpOnly` Cookie 机制均保留，之后可以通过 middleware 中的 `SITE_ACCESS_GATE_ENABLED` 恢复整站访客门禁。
 
 目标域名：`https://solaris.wiki`
 
