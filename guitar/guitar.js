@@ -25,17 +25,21 @@
   const rootSelect = document.querySelector("[data-root]");
   const scaleSelect = document.querySelector("[data-scale]");
   const board = document.querySelector("[data-fretboard]");
+  const miniBoard = document.querySelector("[data-mini-fretboard]");
   const trainButton = document.querySelector("[data-train]");
   const feedback = document.querySelector("[data-feedback]");
   const roundLabel = document.querySelector("[data-round]");
   const targetLabel = document.querySelector("[data-target]");
-  const targetOrb = document.querySelector("[data-target-orb]");
+  const practiceCard = document.querySelector("[data-practice-card]");
+  const practiceSide = document.querySelector("[data-practice-side]");
   const targetNote = document.querySelector("[data-target-note]");
+  const progressHits = document.querySelector("[data-progress-hits]");
+  const progressTrack = document.querySelector("[data-progress-track]");
+  const progressBar = document.querySelector("[data-progress-bar]");
   const scaleLabel = document.querySelector("[data-current-scale]");
   const accuracyLabel = document.querySelector("[data-accuracy]");
   const bestLabel = document.querySelector("[data-best]");
   const totalLabel = document.querySelector("[data-total]");
-  const themeToggle = document.querySelector("[data-theme-toggle]");
 
   let audioContext = null;
   let nextTimer = null;
@@ -126,9 +130,26 @@
     });
   }
 
+  function renderMiniBoard() {
+    miniBoard.setAttribute("aria-label", `${NOTES[state.root]} ${state.scale}的迷你指板预览`);
+    miniBoard.innerHTML = STRINGS.map((string) => {
+      const cells = Array.from({ length: 13 }, (_, fret) => {
+        const pitch = pitchAt(string.midi, fret);
+        const classes = [
+          inScale(pitch) ? "mini-note" : "",
+          intervalFromRoot(pitch) === 0 ? "mini-root" : "",
+          [3, 5, 7, 9, 12].includes(fret) ? "mini-marker-fret" : ""
+        ].filter(Boolean).join(" ");
+        const title = inScale(pitch) ? ` title="${string.number} 弦 ${fret} 品 ${NOTES[pitch]}"` : "";
+        return `<span class="${classes}"${title}></span>`;
+      }).join("");
+      return `<div class="mini-string">${cells}</div>`;
+    }).join("");
+  }
+
   function renderBoard() {
     const markerFrets = new Set([3, 5, 7, 9, 12, 15, 17, 19, 21, 24]);
-    const numberCells = Array.from({ length: 25 }, (_, fret) => `<span>${fret}</span>`).join("");
+    const numberCells = Array.from({ length: 25 }, (_, fret) => `<div class="fret-number">${fret}</div>`).join("");
     const strings = STRINGS.map((string, stringIndex) => {
       const cells = Array.from({ length: 25 }, (_, fret) => {
         const pitch = pitchAt(string.midi, fret);
@@ -139,27 +160,36 @@
         const label = noteLabel(pitch);
         return `<button class="${classes}" type="button" data-string="${stringIndex}" data-fret="${fret}" aria-label="${string.number} 弦 ${fret} 品，${NOTES[pitch]}"><span>${label}</span></button>`;
       }).join("");
-      return `<div class="fret-row string-row"><div class="string-label"><b>${string.number}</b><span>${string.name}</span></div>${cells}</div>`;
+      return `<div class="fret-row string-row"><div class="string-label"><strong>${string.number}</strong><span>${string.name}</span></div>${cells}</div>`;
     }).join("");
-    const markers = Array.from({ length: 25 }, (_, fret) => `<span>${markerFrets.has(fret) ? (fret === 12 || fret === 24 ? "••" : "•") : ""}</span>`).join("");
-    board.innerHTML = `<div class="fret-row fret-numbers"><div class="string-label">弦 / 品</div>${numberCells}</div>${strings}<div class="fret-row fret-markers"><div class="string-label"></div>${markers}</div>`;
+    const markers = Array.from({ length: 25 }, (_, fret) => `<div class="fret-marker">${markerFrets.has(fret) ? (fret === 12 || fret === 24 ? "••" : "•") : ""}</div>`).join("");
+    board.innerHTML = `<div class="fret-row fret-number-row" aria-hidden="true"><div class="string-label">弦 / 品</div>${numberCells}</div>${strings}<div class="fret-row marker-row" aria-hidden="true"><div class="string-label"></div>${markers}</div>`;
   }
 
   function renderTraining() {
     const training = state.training;
-    trainButton.textContent = training ? "结束训练" : "开始 10 题训练";
-    trainButton.classList.toggle("is-stop", Boolean(training));
-    targetOrb.hidden = !training;
-    if (!training) return;
+    trainButton.className = training ? "secondary-button" : "primary-button";
+    trainButton.innerHTML = training ? "结束训练" : '<span aria-hidden="true">▶</span>开始 10 题训练';
+    practiceCard.classList.toggle("is-training", Boolean(training));
+    practiceSide.hidden = !training;
+    if (!training) {
+      roundLabel.textContent = "自由练习";
+      targetLabel.textContent = `${NOTES[state.root]} ${state.scale}`;
+      return;
+    }
     roundLabel.textContent = `第 ${training.round} / ${SESSION_LENGTH} 题`;
     targetLabel.textContent = `找到指板上的 ${NOTES[training.target]}`;
     targetNote.textContent = NOTES[training.target];
+    progressHits.textContent = `${training.correct} 命中`;
+    progressTrack.setAttribute("aria-valuenow", String(training.round - 1));
+    progressBar.style.width = `${((training.round - 1) / SESSION_LENGTH) * 100}%`;
   }
 
   function renderAll() {
     rootSelect.value = String(state.root);
     scaleSelect.value = state.scale;
     renderModes();
+    renderMiniBoard();
     renderBoard();
     renderStats();
     renderTraining();
@@ -262,6 +292,7 @@
     feedback.textContent = `答对了，${NOTES[pitch]}！准备下一题…`;
     renderBoard();
     renderStats();
+    renderTraining();
     nextTimer = setTimeout(() => {
       const previous = training.target;
       training.target = pickTarget(previous);
@@ -299,12 +330,5 @@
     handleNote(Number(button.dataset.string), Number(button.dataset.fret));
   });
   trainButton.addEventListener("click", () => state.training ? stopTraining() : startTraining());
-  themeToggle.addEventListener("click", () => {
-    const night = document.documentElement.dataset.theme !== "night";
-    document.documentElement.dataset.theme = night ? "night" : "";
-    themeToggle.setAttribute("aria-pressed", String(night));
-    try { localStorage.setItem("solarisTheme", night ? "night" : "day"); } catch {}
-  });
-  themeToggle.setAttribute("aria-pressed", String(document.documentElement.dataset.theme === "night"));
   renderAll();
 })();

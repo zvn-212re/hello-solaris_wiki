@@ -756,3 +756,19 @@ docs/development-log.md
 - `npm run build`
 - 检查 `dist/guitar/index.html`、`dist/guitar/guitar.css`、`dist/guitar/guitar.js` 均已生成。
 - 检查生成首页、项目档案、Fretwise 详情页与搜索索引均包含 `/guitar/` 入口。
+
+### Fretwise 原版视觉还原
+
+处理：
+
+- 将 `/guitar/` 从 Solaris 像素纸张主题切换为原版 Fretwise 的森林绿、木质指板与杂志式排版。
+- 按原版组件结构补齐迷你指板预览、训练进度、原版控制面板和提示卡片，同时保留返回 Solaris Wiki 的轻量入口。
+- 静态脚本继续提供 150 个指板音位、六类音阶、三种标注、合成音试听、十题训练和本地统计。
+- 保留手机端 49px 品格、62px 固定弦标签列与横向惯性滑动，避免原版视觉还原影响触控体验。
+
+验证：
+
+- `node --check guitar/guitar.js`
+- `npm run check`
+- `npm run build`
+- 检查 `dist/guitar/` 产物包含原版 Fretwise 类名、迷你指板与 150 音位生成逻辑。
